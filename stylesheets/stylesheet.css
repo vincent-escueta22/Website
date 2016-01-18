@@ -105,9 +105,9 @@ a {
   .project-tagline {
     font-size: 1rem; } }
 
-.about-me {
+/*.about-me {
   background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true);
-}
+}*/
 .about-me :first-child {
   margin-top: 0; }
 .about-me img {
@@ -207,7 +207,7 @@ a {
   background-color: #eff0f1;
   border: 0; }
 
-/*@media screen and (min-width: 64em) {
+@media screen and (min-width: 64em) {
   .about-me {
     max-width: 64rem;
     padding: 2rem 6rem;
@@ -222,11 +222,11 @@ a {
 @media screen and (max-width: 42em) {
   .about-me {
     padding: 2rem 1rem;
-    font-size: 1rem; } }*/
+    font-size: 1rem; } }
 
-.resume {
+/*.resume {
   background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/drawing.jpg?raw=true)
-}
+}*/
 .resume :first-child {
   margin-top: 0; }
 .resume img {
@@ -441,7 +441,7 @@ a {
   margin: 1rem 0;
   background-color: #eff0f1;
   border: 0; }
-/*
+
 @media screen and (min-width: 64em) {
   .contact-me {
     max-width: 64rem;
@@ -457,5 +457,5 @@ a {
 @media screen and (max-width: 42em) {
   .contact-me {
     padding: 2rem 1rem;
-    font-size: 1rem; } }*/
+    font-size: 1rem; } }
 
