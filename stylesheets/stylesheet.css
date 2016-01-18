@@ -57,12 +57,7 @@ a {
   color: #fff;
   text-align: center;
   background-color: #159957;
-  background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  /*background-image: linear-gradient(120deg, #155799, #159957); */
+  background-image: linear-gradient(120deg, #155799, #159957); 
 }
 
 @media screen and (min-width: 64em) {
@@ -111,11 +106,7 @@ a {
     font-size: 1rem; } }
 
 .about-me {
-  background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true);
 }
 .about-me :first-child {
   margin-top: 0; }
@@ -216,7 +207,7 @@ a {
   background-color: #eff0f1;
   border: 0; }
 
-@media screen and (min-width: 64em) {
+/*@media screen and (min-width: 64em) {
   .about-me {
     max-width: 64rem;
     padding: 2rem 6rem;
@@ -231,7 +222,7 @@ a {
 @media screen and (max-width: 42em) {
   .about-me {
     padding: 2rem 1rem;
-    font-size: 1rem; } }
+    font-size: 1rem; } }*/
 
 .resume {
   background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/drawing.jpg?raw=true)
@@ -335,7 +326,7 @@ a {
   background-color: #eff0f1;
   border: 0; }
 
-@media screen and (min-width: 64em) {
+/*@media screen and (min-width: 64em) {
   .resume {
     max-width: 64rem;
     padding: 2rem 6rem;
@@ -350,7 +341,7 @@ a {
 @media screen and (max-width: 42em) {
   .resume {
     padding: 2rem 1rem;
-    font-size: 1rem; } }
+    font-size: 1rem; } }*/
 
 .contact-me :first-child {
   margin-top: 0; }
@@ -450,7 +441,7 @@ a {
   margin: 1rem 0;
   background-color: #eff0f1;
   border: 0; }
-
+/*
 @media screen and (min-width: 64em) {
   .contact-me {
     max-width: 64rem;
@@ -466,5 +457,5 @@ a {
 @media screen and (max-width: 42em) {
   .contact-me {
     padding: 2rem 1rem;
-    font-size: 1rem; } }
+    font-size: 1rem; } }*/
 
