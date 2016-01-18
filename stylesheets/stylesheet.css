@@ -142,7 +142,7 @@ a {
     color: #567482;
     word-break: normal;
     white-space: pre;
-    background: transparent;
+    background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true);
     border: 0; }
 .about-me .highlight {
   margin-bottom: 1rem; }
@@ -260,7 +260,7 @@ a {
     color: #567482;
     word-break: normal;
     white-space: pre;
-    background: transparent;
+    background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/drawing.jpg?raw=true);
     border: 0; }
 .resume .highlight {
   margin-bottom: 1rem; }
