@@ -111,7 +111,11 @@ a {
     font-size: 1rem; } }
 
 .about-me {
-  background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true);
+  background-image: url(https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 .about-me :first-child {
   margin-top: 0; }
