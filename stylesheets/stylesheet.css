@@ -57,7 +57,8 @@ a {
   color: #fff;
   text-align: center;
   background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-image: linear-gradient(120deg, #155799, #159957); 
+}
 
 @media screen and (min-width: 64em) {
   .page-header {
@@ -104,25 +105,26 @@ a {
   .project-tagline {
     font-size: 1rem; } }
 
-.main-content :first-child {
+.about-me :first-child {
   margin-top: 0; }
-.main-content img {
+.about-me img {
   max-width: 100%; }
-.main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+.about-me h1, .about-me h2, .about-me h3, .about-me h4, .about-me h5, .about-me h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
   color: #159957; }
-.main-content p {
+.about-me p {
   margin-bottom: 1em; }
-.main-content code {
+.about-me code {
   padding: 2px 4px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 0.9rem;
   color: #383e41;
   background-color: #f3f6fa;
+  background-image: url(selfpose.png);
   border-radius: 0.3rem; }
-.main-content pre {
+.about-me pre {
   padding: 0.8rem;
   margin-top: 0;
   margin-bottom: 1rem;
@@ -132,7 +134,7 @@ a {
   background-color: #f3f6fa;
   border: solid 1px #dce6f0;
   border-radius: 0.3rem; }
-  .main-content pre > code {
+  .about-me pre > code {
     padding: 0;
     margin: 0;
     font-size: 0.9rem;
@@ -141,18 +143,18 @@ a {
     white-space: pre;
     background: transparent;
     border: 0; }
-.main-content .highlight {
+.about-me .highlight {
   margin-bottom: 1rem; }
-  .main-content .highlight pre {
+  .about-me .highlight pre {
     margin-bottom: 0;
     word-break: normal; }
-.main-content .highlight pre, .main-content pre {
+.about-me .highlight pre, .about-me pre {
   padding: 0.8rem;
   overflow: auto;
   font-size: 0.9rem;
   line-height: 1.45;
   border-radius: 0.3rem; }
-.main-content pre code, .main-content pre tt {
+.about-me pre code, .about-me pre tt {
   display: inline;
   max-width: initial;
   padding: 0;
@@ -162,41 +164,41 @@ a {
   word-wrap: normal;
   background-color: transparent;
   border: 0; }
-  .main-content pre code:before, .main-content pre code:after, .main-content pre tt:before, .main-content pre tt:after {
+  .about-me pre code:before, .about-me pre code:after, .about-me pre tt:before, .about-me pre tt:after {
     content: normal; }
-.main-content ul, .main-content ol {
+.about-me ul, .about-me ol {
   margin-top: 0; }
-.main-content blockquote {
+.about-me blockquote {
   padding: 0 1rem;
   margin-left: 0;
   color: #819198;
   border-left: 0.3rem solid #dce6f0; }
-  .main-content blockquote > :first-child {
+  .about-me blockquote > :first-child {
     margin-top: 0; }
-  .main-content blockquote > :last-child {
+  .about-me blockquote > :last-child {
     margin-bottom: 0; }
-.main-content table {
+.about-me table {
   display: block;
   width: 100%;
   overflow: auto;
   word-break: normal;
   word-break: keep-all; }
-  .main-content table th {
+  .about-me table th {
     font-weight: bold; }
-  .main-content table th, .main-content table td {
+  .about-me table th, .about-me table td {
     padding: 0.5rem 1rem;
     border: 1px solid #e9ebec; }
-.main-content dl {
+.about-me dl {
   padding: 0; }
-  .main-content dl dt {
+  .about-me dl dt {
     padding: 0;
     margin-top: 1rem;
     font-size: 1rem;
     font-weight: bold; }
-  .main-content dl dd {
+  .about-me dl dd {
     padding: 0;
     margin-bottom: 1rem; }
-.main-content hr {
+.about-me hr {
   height: 2px;
   padding: 0;
   margin: 1rem 0;
@@ -204,42 +206,251 @@ a {
   border: 0; }
 
 @media screen and (min-width: 64em) {
-  .main-content {
+  .about-me {
     max-width: 64rem;
     padding: 2rem 6rem;
     margin: 0 auto;
     font-size: 1.1rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
-  .main-content {
+  .about-me {
     padding: 2rem 4rem;
     font-size: 1.1rem; } }
 
 @media screen and (max-width: 42em) {
-  .main-content {
+  .about-me {
     padding: 2rem 1rem;
     font-size: 1rem; } }
 
-.site-footer {
-  padding-top: 2rem;
+.resume :first-child {
+  margin-top: 0; }
+.resume img {
+  max-width: 100%; }
+.resume h1, .resume h2, .resume h3, .resume h4, .resume h5, .resume h6 {
   margin-top: 2rem;
-  border-top: solid 1px #eff0f1; }
-
-.site-footer-owner {
+  margin-bottom: 1rem;
+  font-weight: normal;
+  color: #159957; }
+.resume p {
+  margin-bottom: 1em; }
+.resume code {
+  padding: 2px 4px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 0.9rem;
+  color: #383e41;
+  background-color: #f3f6fa;
+  border-radius: 0.3rem; }
+.resume pre {
+  padding: 0.8rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  color: #567482;
+  word-wrap: normal;
+  background-color: #f3f6fa;
+  border: solid 1px #dce6f0;
+  border-radius: 0.3rem; }
+  .resume pre > code {
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #567482;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0; }
+.resume .highlight {
+  margin-bottom: 1rem; }
+  .resume .highlight pre {
+    margin-bottom: 0;
+    word-break: normal; }
+.resume .highlight pre, .resume pre {
+  padding: 0.8rem;
+  overflow: auto;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  border-radius: 0.3rem; }
+.resume pre code, .resume pre tt {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0; }
+  .resume pre code:before, .resume pre code:after, .resume pre tt:before, .resume pre tt:after {
+    content: normal; }
+.resume ul, .resume ol {
+  margin-top: 0; }
+.resume blockquote {
+  padding: 0 1rem;
+  margin-left: 0;
+  color: #819198;
+  border-left: 0.3rem solid #dce6f0; }
+  .resume blockquote > :first-child {
+    margin-top: 0; }
+  .resume blockquote > :last-child {
+    margin-bottom: 0; }
+.resume table {
   display: block;
-  font-weight: bold; }
-
-.site-footer-credits {
-  color: #819198; }
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all; }
+  .resume table th {
+    font-weight: bold; }
+  .resume table th, .resume table td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e9ebec; }
+.resume dl {
+  padding: 0; }
+  .resume dl dt {
+    padding: 0;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold; }
+  .resume dl dd {
+    padding: 0;
+    margin-bottom: 1rem; }
+.resume hr {
+  height: 2px;
+  padding: 0;
+  margin: 1rem 0;
+  background-color: #eff0f1;
+  border: 0; }
 
 @media screen and (min-width: 64em) {
-  .site-footer {
-    font-size: 1rem; } }
+  .resume {
+    max-width: 64rem;
+    padding: 2rem 6rem;
+    margin: 0 auto;
+    font-size: 1.1rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
-  .site-footer {
-    font-size: 1rem; } }
+  .resume {
+    padding: 2rem 4rem;
+    font-size: 1.1rem; } }
 
 @media screen and (max-width: 42em) {
-  .site-footer {
-    font-size: 0.9rem; } }
+  .resume {
+    padding: 2rem 1rem;
+    font-size: 1rem; } }
+
+.contact-me :first-child {
+  margin-top: 0; }
+.contact-me img {
+  max-width: 100%; }
+.contact-me h1, .contact-me h2, .contact-me h3, .contact-me h4, .contact-me h5, .contact-me h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
+  color: #159957; }
+.contact-me p {
+  margin-bottom: 1em; }
+.contact-me code {
+  padding: 2px 4px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 0.9rem;
+  color: #383e41;
+  background-color: #f3f6fa;
+  border-radius: 0.3rem; }
+.contact-me pre {
+  padding: 0.8rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  color: #567482;
+  word-wrap: normal;
+  background-color: #f3f6fa;
+  border: solid 1px #dce6f0;
+  border-radius: 0.3rem; }
+  .contact-me pre > code {
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #567482;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0; }
+.contact-me .highlight {
+  margin-bottom: 1rem; }
+  .contact-me .highlight pre {
+    margin-bottom: 0;
+    word-break: normal; }
+.contact-me .highlight pre, .contact-me pre {
+  padding: 0.8rem;
+  overflow: auto;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  border-radius: 0.3rem; }
+.contact-me pre code, .contact-me pre tt {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0; }
+  .contact-me pre code:before, .contact-me pre code:after, .contact-me pre tt:before, .contact-me pre tt:after {
+    content: normal; }
+.contact-me ul, .contact-me ol {
+  margin-top: 0; }
+.contact-me blockquote {
+  padding: 0 1rem;
+  margin-left: 0;
+  color: #819198;
+  border-left: 0.3rem solid #dce6f0; }
+  .contact-me blockquote > :first-child {
+    margin-top: 0; }
+  .contact-me blockquote > :last-child {
+    margin-bottom: 0; }
+.contact-me table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all; }
+  .contact-me table th {
+    font-weight: bold; }
+  .contact-me table th, .contact-me table td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e9ebec; }
+.contact-me dl {
+  padding: 0; }
+  .contact-me dl dt {
+    padding: 0;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold; }
+  .contact-me dl dd {
+    padding: 0;
+    margin-bottom: 1rem; }
+.contact-me hr {
+  height: 2px;
+  padding: 0;
+  margin: 1rem 0;
+  background-color: #eff0f1;
+  border: 0; }
+
+@media screen and (min-width: 64em) {
+  .contact-me {
+    max-width: 64rem;
+    padding: 2rem 6rem;
+    margin: 0 auto;
+    font-size: 1.1rem; } }
+
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .contact-me {
+    padding: 2rem 4rem;
+    font-size: 1.1rem; } }
+
+@media screen and (max-width: 42em) {
+  .contact-me {
+    padding: 2rem 1rem;
+    font-size: 1rem; } }
+
