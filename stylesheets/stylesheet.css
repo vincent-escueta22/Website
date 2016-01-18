@@ -239,6 +239,7 @@ a {
   font-size: 0.9rem;
   color: #383e41;
   background-color: #f3f6fa;
+  background-image: url(drawing.jpg);
   border-radius: 0.3rem; }
 .resume pre {
   padding: 0.8rem;
