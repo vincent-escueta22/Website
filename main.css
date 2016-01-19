@@ -14,6 +14,7 @@
   height: 500px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  box-sizing: border-box;
 }
 
 .title .container {
@@ -35,10 +36,13 @@
 
 .about-me {
 	color:#fff;
+	box-sizing:border-box;
 }
 .resume {
 	color:#fff;
+	box-sizing:border-box;
 }
 .contact-me {
 	color:#fff;
+	box-sizing:border-box;
 }
