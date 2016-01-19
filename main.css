@@ -43,18 +43,19 @@
   background-image:url('Berkeley.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  position: static;
 }
 
 .about-me .container {
   position: relative;
   top: 50px;
+  position: static;
 }
 
 .about-me .container .row .about-me-picture{
   position: relative;
   top: 35px;
   right: 0px;
+  position: static;
 }
 
 .about-me h1 {
