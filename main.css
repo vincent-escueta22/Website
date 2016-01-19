@@ -2,6 +2,9 @@
   padding: 10px;
   display: inline;
 }
+.nav .navbar-header {
+  font: 20px;
+}
 .nav {
   color: #ffffff;
   padding: 14px 30px;
@@ -43,7 +46,7 @@
 
 .about-me .container {
   position: relative;
-  top: 40px;
+  top: 40 px;
 }
 
 .about-me h1 {
