@@ -34,6 +34,22 @@
 }
 
 .about-me {
+  height: 100vh;
+  background-image:url('Berkeley.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.about-me .about-me-body .container {
+  position: relative;
+  top:100px;
+}
+
+.about-me h1 {
+  color: #283018;
+  font-size: 72px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
 }
 .resume li {
 	display: inline;{
