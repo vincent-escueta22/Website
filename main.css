@@ -42,7 +42,7 @@
 
 .about-me .about-me-body .container {
   position: relative;
-  top:100px;
+  top:50px;
 }
 
 .about-me h1 {
@@ -51,9 +51,57 @@
   font-family: 'Shift', sans-serif;
   font-weight: bold;
 }
-.resume li {
-	display: inline;{
+
+.about-me p {
+  font-size: 14px;
+  color: #283018;
 }
-.contact-me li {
-	display: inline;
+
+.resume {
+  height: 100vh;
+  background-image:url('Berkeley.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+.resume .resume-body .container {
+  position: relative;
+  top:100px;
+}
+
+.resume h1 {
+  color: #283018;
+  font-size: 72px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
+}
+
+.resume p {
+  font-size: 30px;
+  color: #283018;
+}
+
+.contact-me {
+  height: 100vh;
+  background-image:url('Berkeley.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.contact-me .contact-me-body .container {
+  position: relative;
+  top:100px;
+}
+
+.contact-me h1 {
+  color: #283018;
+  font-size: 72px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
+}
+
+.contact-me p {
+  font-size: 30px;
+  color: #283018;
+}
+
