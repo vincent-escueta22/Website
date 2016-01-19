@@ -8,11 +8,10 @@
 }
 
 .title {
-  /*background-image:url('https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true');*/
+  background-image:url('Malibu.jpg');
   height: 500px;
-  /*background-repeat: no-repeat;*/
-  /*background-size: cover;*/
-  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .title .container {
