@@ -30,7 +30,7 @@
 }
 
 .title p {
-  font-size: 26px;
+  font-size: 30px;
   color: #283018;
 }
 
@@ -48,7 +48,7 @@
 
 .about-me .about-me-body .container {
   position: relative;
-  top:50px;
+  top: 40px;
 }
 
 .about-me h1 {
