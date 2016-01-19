@@ -42,14 +42,14 @@
 }
 
 .about-me .about-me-picture .container {
-  /*position: relative;*/
-  top:80px;
+  position: relative;
+  top:200px;
 }
 
-.about-me .about-me-body .container {
-  /*position: relative;*/
+/*.about-me .about-me-body .container {
+  position: relative;
   top: 20px;
-}
+}*/
 
 .about-me h1 {
   color: #000000;
