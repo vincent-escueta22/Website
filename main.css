@@ -8,10 +8,17 @@
 }
 
 .title {
-  background-image:url('Malibu.jpg') no-repeat center center;
+  background-image:url('San_Francisco') no-repeat center center;
   height: 100%;
   background-size: cover;
 }
+
+/*.title {
+  background-image:url('Malibu.jpg');
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}*/
 
 .title .title-body .container {
   position: relative;
@@ -30,11 +37,11 @@
   /*color: #fff;*/
 }
 
-.about-me {
+/*.about-me {
 }
 .resume li {
 	display: inline;{
 }
 .contact-me li {
 	display: inline;
-}
+}*/
