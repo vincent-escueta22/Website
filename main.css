@@ -42,12 +42,12 @@
 }
 
 .about-me .about-me-picture .container {
-  position: relative;
-  top:20px;
+  /*position: relative;*/
+  top:80px;
 }
 
 .about-me .about-me-body .container {
-  position: relative;
+  /*position: relative;*/
   top: 20px;
 }
 
