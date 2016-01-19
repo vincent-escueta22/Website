@@ -30,6 +30,7 @@
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
+
 }
 
 .title p {
@@ -42,20 +43,18 @@
   background-image:url('Berkeley.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  position: static;
 }
 
 .about-me .container {
   position: relative;
   top: 50px;
-  width: 80%;
-  height: 50%;
 }
 
 .about-me .container .row .about-me-picture{
   position: relative;
   top: 35px;
-  width: 80%;
-  height: 50%;
+  right: 0px;
 }
 
 .about-me h1 {
