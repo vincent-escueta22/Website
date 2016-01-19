@@ -13,7 +13,7 @@
   background-size: cover;
 }
 
-.title .container {
+.title .title-body .container {
   position: relative;
   top:100px;
 }
