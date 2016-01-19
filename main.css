@@ -3,7 +3,7 @@
   display: inline;
 }
 .nav .navbar-header {
-  font: 20px;
+  font: 30px;
 }
 .nav {
   color: #ffffff;
@@ -46,7 +46,7 @@
 
 .about-me .container {
   position: relative;
-  top: 20px;
+  top: 30px;
 }
 
 .about-me .container .row .about-me-picture{
