@@ -10,15 +10,15 @@
 }
 
 .title {
-  background-image:url('http://goo.gl/04j7Nn');
+  background-image:url('https://github.com/vincent-escueta22/Website/blob/gh-pages/golden_gate.jpg?raw=true');
   height: 500px;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.title .container {
   position: relative;
   top:100px;
+}
+
+.title {
 }
 
 .title h1 {
