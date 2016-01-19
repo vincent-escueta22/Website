@@ -46,7 +46,12 @@
 
 .about-me .container {
   position: relative;
-  top: 40 px;
+  top: 20px;
+}
+
+.about-me .container .row .about-me-picture{
+  position: relative;
+  top: 40px;
 }
 
 .about-me h1 {
