@@ -40,9 +40,14 @@
   background-size: cover;
 }
 
+.about-me .about-me-picture .container {
+  position: relative;
+  top:100px;
+}
+
 .about-me .about-me-body .container {
   position: relative;
-  top:50px;
+  top:100px;
 }
 
 .about-me h1 {
@@ -53,7 +58,7 @@
 }
 
 .about-me p {
-  font-size: 30px;
+  font-size: 18px;
   color: #283018;
 }
 
@@ -66,7 +71,7 @@
 
 .resume .resume-body .container {
   position: relative;
-  top:100px;
+  top:200px;
 }
 
 .resume h1 {
@@ -90,7 +95,7 @@
 
 .contact-me .contact-me-body .container {
   position: relative;
-  top:100px;
+  top:200px;
 }
 
 .contact-me h1 {
