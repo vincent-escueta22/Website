@@ -14,11 +14,11 @@
   height: 500px;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
-  top:100px;
 }
 
-.title {
+.title .container {
+  position: relative;
+  top:100px;
 }
 
 .title h1 {
