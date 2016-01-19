@@ -53,13 +53,13 @@
 }
 
 .about-me p {
-  font-size: 14px;
+  font-size: 30px;
   color: #283018;
 }
 
 .resume {
   height: 100vh;
-  background-image:url('Berkeley.jpg');
+  background-image:url('Malibu.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -83,7 +83,7 @@
 
 .contact-me {
   height: 100vh;
-  background-image:url('Berkeley.jpg');
+  background-image:url('Disneyland.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
