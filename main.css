@@ -41,14 +41,9 @@
   background-size: cover;
 }
 
-.about-me .about-me-picture .container {
+.about-me .container {
   position: relative;
-  top:200px;
-}
-
-.about-me .about-me-body .container {
-  position: relative;
-  top: 20px;
+  top: 40px;
 }
 
 .about-me h1 {
