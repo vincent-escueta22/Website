@@ -1,5 +1,5 @@
 .nav li {
-  padding: 3px;
+  padding: 5px;
   display: inline;
 }
 .nav .navbar-header {
@@ -13,7 +13,7 @@
 
 .nav a{
   color: #ffffff;
-  font-size: 24;
+  font-size: 24px;
   text-transform: uppercase;
 }
 
