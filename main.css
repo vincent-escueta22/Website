@@ -50,13 +50,15 @@
   top: 50px;
 }
 
-.about-me img {
-  max-width: 100%;
-  height: auto;
+.about-me .container .row .about-me-picture{
   position: relative;
   top: 35px;
   right: 0px;
 }
+
+.about-me img {
+  max-width: 100%;
+  height: auto;
 
 .about-me h1 {
   color: #000000;
