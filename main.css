@@ -48,6 +48,11 @@
 }
 /*283018*/
 
+.title li {
+  padding: 5px;
+  display: inline;
+}
+
 .about-me {
   height: 100vh;
   background-image:url('Berkeley.jpg');
