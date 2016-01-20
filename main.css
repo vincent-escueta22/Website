@@ -4,6 +4,7 @@
 }
 .nav .navbar-header {
   font-size: 24px;
+  font-weight: bold;
 }
 .nav .container {
   color: #449d44;
@@ -15,6 +16,7 @@
   color: #449d44;
   font-size: 16px;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 
