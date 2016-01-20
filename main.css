@@ -1,14 +1,7 @@
 .nav li {
+  padding: 10px;
   display: inline;
 }
-
-.navbar-custom {
-    background-color: #000000;
-    border-style: solid;
-    border-radius: 1px;
-    border-color: #ffffff; 
-}
-
 .nav .navbar-header {
   font-size: 30px;
 }
@@ -20,7 +13,8 @@
 
 .nav a{
   color: #ffffff;
-  font-size: 30px;
+  padding: 14px 30px;
+  font-size: 24;
   text-transform: uppercase;
 }
 
