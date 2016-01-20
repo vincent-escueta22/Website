@@ -6,13 +6,13 @@
   font-size: 24px;
 }
 .nav .container {
-  color: #fefff9;
+  color: #fdc789;
   padding: 14px 30px;
   text-transform: uppercase;
 }
 
 .nav a{
-  color: #fefff9;
+  color: #fdc789;
   font-size: 16px;
   text-transform: uppercase;
 }
@@ -95,7 +95,7 @@
 }
 
 .resume h1 {
-  color: #fefff9;
+  color: #fdc789;
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
@@ -103,7 +103,7 @@
 
 .resume p {
   font-size: 30px;
-  color: #fefff9;
+  color: #fdc789;
 }
 
 .contact-me {
@@ -120,7 +120,7 @@
 }
 
 .contact-me h1 {
-  color: #fefff9;
+  color: #fdc789;
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
@@ -128,6 +128,6 @@
 
 .contact-me p {
   font-size: 30px;
-  color: #fefff9;
+  color: #fdc789;
 }
 
