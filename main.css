@@ -26,14 +26,16 @@
 }
 
 .title h1 {
+  height: 100vh;
   color: #283018;
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
-  
+
 }
 
 .title p {
+  height: 100vh;
   font-size: 30px;
   color: #283018;
 }
