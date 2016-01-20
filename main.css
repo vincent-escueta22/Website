@@ -45,6 +45,7 @@
 .title p {
   font-size: 2vw;
   color: #449d44;
+  white-space: 5px;
 }
 /*283018*/
 
@@ -88,7 +89,6 @@
   font-size: 1.1vw;
   color: #449d44;
   font-weight: bold;
-  white-space: 5px;
 }
 
 .resume {
