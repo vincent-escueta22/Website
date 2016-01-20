@@ -71,7 +71,7 @@
 }
 
 .about-me h1 {
-  color: #553f4b;
+  color: #774214;
   font-size: 5vw;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
@@ -79,7 +79,7 @@
 
 .about-me p {
   font-size: 1.2vw;
-  color: #553f4b;
+  color: #774214;
 }
 
 .resume {
@@ -95,7 +95,7 @@
 }
 
 .resume h1 {
-  color: #774214;
+  color: #ffffff;
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
@@ -103,7 +103,7 @@
 
 .resume p {
   font-size: 30px;
-  color: #774214;
+  color: #ffffff;
 }
 
 .contact-me {
@@ -120,7 +120,7 @@
 }
 
 .contact-me h1 {
-  color: #774214;
+  color: #ffffff;
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
@@ -128,6 +128,6 @@
 
 .contact-me p {
   font-size: 30px;
-  color: #774214;
+  color: #ffffff;
 }
 
