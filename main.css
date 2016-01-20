@@ -26,7 +26,6 @@
 }
 
 .title h1 {
-  height: 100vh;
   color: #283018;
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
@@ -35,7 +34,6 @@
 }
 
 .title p {
-  height: 100vh;
   font-size: 30px;
   color: #283018;
 }
@@ -48,11 +46,13 @@
 }
 
 .about-me .container {
+  height: 100vh;
   position: relative;
   top: 50px;
 }
 
 .about-me .container .row .about-me-picture{
+  height: 100vh;
   position: relative;
   top: 35px;
   right: 0px;
