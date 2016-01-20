@@ -50,7 +50,9 @@
   top: 50px;
 }
 
-.about-me .container .row .about-me-picture{
+.about-meimg {
+  max-width: 100%;
+  height: auto;
   position: relative;
   top: 35px;
   right: 0px;
