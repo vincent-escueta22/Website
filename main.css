@@ -71,7 +71,7 @@
 }
 
 .about-me h1 {
-  color: #8CC739;
+  color: #000000;
   font-size: 5vw;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
@@ -79,7 +79,7 @@
 
 .about-me p {
   font-size: 1.2vw;
-  color: #8CC739;
+  color: #000000;
 }
 
 .resume {
