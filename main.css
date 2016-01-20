@@ -30,7 +30,7 @@
   font-size: 72px;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
-
+  
 }
 
 .title p {
@@ -46,13 +46,11 @@
 }
 
 .about-me .container {
-  height: 100vh;
   position: relative;
   top: 50px;
 }
 
 .about-me .container .row .about-me-picture{
-  height: 100vh;
   position: relative;
   top: 35px;
   right: 0px;
