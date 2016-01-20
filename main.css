@@ -59,13 +59,13 @@
 
 .about-me h1 {
   color: #000000;
-  font-size: 5vw;  
+  font-size: 5vh;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
 }
 
 .about-me p {
-  font-size: 1.25vw;
+  font-size: 1.25vh;
   color: #000000;
 }
 
