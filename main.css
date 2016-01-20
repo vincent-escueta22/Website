@@ -1,12 +1,14 @@
-.nav li {
-  padding: 10px;
-  display: inline;
-}
 .nav .navbar-header {
   font-size: 30px;
 }
 .nav {
-  color: #000000;
+  color: #ffffff;
+  padding: 14px 30px;
+  text-transform: uppercase;
+}
+
+.nav a{
+  color: #ffffff;
   padding: 14px 30px;
   text-transform: uppercase;
 }
