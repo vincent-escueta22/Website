@@ -1,17 +1,74 @@
-.nav li {
+.nav-home li {
   padding: 5px;
   display: inline;
 }
-.nav .navbar-header {
+.nav-home .navbar-header {
   font-size: 24px;
 }
-.nav .container {
+.nav-home .container {
+  color: #283018;
+  padding: 14px 30px;
+  text-transform: uppercase;
+}
+
+.nav-home a{
+  color: #283018;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.nav-about-me li {
+  padding: 5px;
+  display: inline;
+}
+.nav-about-me .navbar-header {
+  font-size: 24px;
+}
+.nav-about-me .container {
+  color: #553f4b;
+  padding: 14px 30px;
+  text-transform: uppercase;
+}
+
+.nav-about-me a{
+  color: #553f4b;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.nav-resume li {
+  padding: 5px;
+  display: inline;
+}
+.nav-resume .navbar-header {
+  font-size: 24px;
+}
+.nav-resume .container {
   color: #ffffff;
   padding: 14px 30px;
   text-transform: uppercase;
 }
 
-.nav a{
+.nav-resume a{
+  color: #ffffff;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.nav-contact-me li {
+  padding: 5px;
+  display: inline;
+}
+.nav-contact-me .navbar-header {
+  font-size: 24px;
+}
+.nav-contact-me .container {
+  color: #ffffff;
+  padding: 14px 30px;
+  text-transform: uppercase;
+}
+
+.nav-contact-me a{
   color: #ffffff;
   font-size: 16px;
   text-transform: uppercase;
