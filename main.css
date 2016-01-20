@@ -115,7 +115,8 @@
 
 .contact-me .contact-me-body .container {
   position: relative;
-  top:100px;
+  top:150px;
+  left: 20px;
 }
 
 .contact-me h1 {
