@@ -54,7 +54,7 @@
   position: relative;
   top: 35px;
   right: 0px;
-  height:8vh;
+  height: auto;
 }
 
 .about-me h1 {
@@ -65,7 +65,7 @@
 }
 
 .about-me p {
-  font-size: 3vh;
+  font-size: 2vh;
   color: #000000;
 }
 
