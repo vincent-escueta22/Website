@@ -24,9 +24,9 @@
 .title { 
   height: 100vh;
   background-image:url('San_Francisco.jpg');
-  webkit-filter: grayscale(100%);
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: #000000;
 }
 
 .title .title-body .container {
