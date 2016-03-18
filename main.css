@@ -26,13 +26,7 @@
   background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.title { 
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-repeat: no-repeat;
-  background-size: cover;
+  opacity: .4;
 }
 
 .title .title-body .container {
