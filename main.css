@@ -65,12 +65,12 @@ body {
 
 .about-me {
   background-color: #009688;
-  background-position: 0px 200px;
+  background-position: center center
 }
 
 .about-me .container {
   position: relative;
-  /*top: 200px;*/
+  top: 200px;
 }
 
 /*.about-me .container .row .about-me-picture {
