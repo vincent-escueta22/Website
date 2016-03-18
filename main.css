@@ -20,18 +20,19 @@
 }
 
 
-header {
-background: #000000; 
-}
-
 
 .title { 
+  background-color: #000000
+  opacity: .4;
+}
+
+.title:before { 
   height: 100vh;
   background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: .4;
 }
+
 
 .title .title-body .container {
   position: relative;
