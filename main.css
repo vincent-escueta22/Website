@@ -23,11 +23,9 @@
 
 .title { 
   height: 100vh;
-  background-color: #000000;
   background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background:transparent;
 }
 
 .title .title-body .container {
@@ -139,5 +137,10 @@
 .contact-me p {
   font-size: 30px;
   color: #449d44;
+}
+
+.container {
+  background-color: #000000;
+  background:transparent;
 }
 
