@@ -63,10 +63,13 @@ body {
   background-size: cover;
 }*/
 
+.about-me {
+  background-color: #B2DFDB;
+}
 
 .about-me .container {
   position: relative;
-  top: 200px;
+  top: 250px;
 }
 
 /*.about-me .container .row .about-me-picture {
@@ -92,7 +95,6 @@ body {
   font-size: 20px;
   color: #FFFFFF;
   font-weight: bold;
-  background-color: #B2DFDB;
 }
 
 /*.resume {
