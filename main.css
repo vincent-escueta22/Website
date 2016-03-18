@@ -26,13 +26,15 @@
 
 
 
-body { 
+/*body { 
   background-color: #00796B;
   padding-top: 80px;
-}
+}*/
 
 
 .title .title-body .container {
+  background-color: #00796B;
+  padding-top: 80px;
   position: relative;
 }
 
@@ -63,13 +65,15 @@ body {
   background-size: cover;
 }*/
 
-.about-me {
+/*.about-me {
   padding-top: 10px;
   background-color: #009688;
-}
+}*/
 
 .about-me .container {
+  padding-top: 10px;
   position: relative;
+  background-color: #009688;
 }
 
 /*.about-me .container .row .about-me-picture {
