@@ -63,30 +63,29 @@ body {
   background-size: cover;
 }*/
 
-.about-me {
-  background-color: #B2DFDB;
-}
+
 
 .about-me .container {
   position: relative;
+  background-color: #B2DFDB
   top: 50px;
 }
 
-.about-me .container .row .about-me-picture {
+/*.about-me .container .row .about-me-picture {
   position: relative;
   top: 35px;
   right: 0px;
-}
+}*/
 
-.about-me img {
+/*.about-me img {
   max-width: 55%;
   width: 55%;
   height: auto;
-}
+}*/
 
 .about-me h1 {
   color: #FFFFFF;
-  font-size: 5vw;  
+  font-size: ;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
 }
