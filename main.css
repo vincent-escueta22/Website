@@ -63,9 +63,6 @@ body {
   background-size: cover;
 }*/
 
-.about-me {
-  background-color: #B2DFDB;
-}
 
 .about-me .container {
   position: relative;
@@ -84,17 +81,18 @@ body {
   height: auto;
 }*/
 
-.about-me h1 {
+/*.about-me h1 {
   color: #FFFFFF;
   font-size: ;  
   font-family: 'Shift', sans-serif;
   font-weight: bold;
-}
+}*/
 
 .about-me p {
-  font-size: 1.1vw;
+  font-size: 20px;
   color: #FFFFFF;
   font-weight: bold;
+  background-color: #B2DFDB;
 }
 
 /*.resume {
