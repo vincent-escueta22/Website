@@ -136,10 +136,7 @@ body {
 }
 
 .contact-me .contact-me-body .container {
-  position: relative;
-  top:100px;
-  left: 40px;
-}
+  position: relative;}
 
 .contact-me h1 {
   color: #FFFFFF;
