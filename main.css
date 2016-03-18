@@ -29,7 +29,7 @@
   background-size: cover;
 }
 
-.title:before { 
+.title:after { 
   height: 100vh;
   background-image:url('San_Francisco.jpg');
   opacity: .6;
