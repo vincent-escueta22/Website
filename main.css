@@ -27,13 +27,14 @@
 
 
 body { 
-  background-color: #00796B;
+  background-color: #FFFFFF;
 }
 
 
 .title .title-body .container {
   position: relative;
   top: 120px;
+  background-color: #00796B
 }
 
 .title h1 {
