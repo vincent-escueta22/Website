@@ -21,21 +21,21 @@
 
 
 
-.title { 
-  background-color: #000000
-  opacity: .4;
-  height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
-.title:before { 
+.title { 
   height: 100vh;
   background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
+.title:before { 
+  background-color: #000000
+  opacity: .4;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .title .title-body .container {
   position: relative;
