@@ -141,8 +141,7 @@
 
 .container {
   height: 100vh;
-  background-color: #000000;
-  background:transparent;
+  background-color: rgba(0, 0, 0, 0.4);
   background-size: cover;
 }
 
