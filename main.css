@@ -28,17 +28,12 @@
 
 body { 
   background-color: #00796B;
-  padding-top: 65px;
+  padding-top: 70px;
 }
 
 
 .title .title-body .container {
   position: relative;
-  top: 10px;
-}
-
-.title .title-body .container .title-picture {
-  top: 200px;
 }
 
 .title h1 {
