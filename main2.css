@@ -22,7 +22,11 @@
 
 
 .title { 
-  background-color: #046380;
+  height: 100vh;
+  background-image:url('San_Francisco.jpg');
+  opacity: .6;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 
