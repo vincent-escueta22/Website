@@ -63,14 +63,13 @@ body {
   background-size: cover;
 }*/
 
-/*.about-me {
-  
-}*/
+.about-me {
+background-color: #009688  
+}
 
 .about-me .container {
   position: relative;
   top: 200px;
-  background-color: #009688;
 }
 
 /*.about-me .container .row .about-me-picture {
