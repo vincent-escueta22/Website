@@ -24,6 +24,9 @@
 .title { 
   background-color: #000000
   opacity: .4;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .title:before { 
