@@ -22,9 +22,11 @@
 
 
 .title { 
+  height: 100vh;
   position: relative;
   background: #5C97FF;
   overflow: hidden;
+  background-size: cover;
 }
 
 .title:before { 
