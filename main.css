@@ -23,6 +23,7 @@
 
 .title { 
   height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
   background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -137,11 +138,5 @@
 .contact-me p {
   font-size: 30px;
   color: #449d44;
-}
-
-.container {
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-size: cover;
 }
 
