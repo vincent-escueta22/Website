@@ -46,15 +46,15 @@ body {
 /*72px*/
 
 .title p {
-  font-size: 40px;
+  font-size: 42px;
   color: #B2DFDB;
 }
 /*283018*/
 
-.title li {
+/*.title li {
   padding: 5px;
   display: inline;
-}
+}*/
 /*
 .about-me {
   height: 100vh;
@@ -63,12 +63,13 @@ body {
   background-size: cover;
 }*/
 
-
+.about-me {
+  background-color: #B2DFDB;
+}
 
 .about-me .container {
   position: relative;
-  background-color: #B2DFDB
-  top: 50px;
+  top: 100px;
 }
 
 /*.about-me .container .row .about-me-picture {
