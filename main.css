@@ -27,6 +27,7 @@
   background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  background:transparent;
 }
 
 .title .title-body .container {
