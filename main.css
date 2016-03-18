@@ -1,5 +1,5 @@
 .nav {
-  background-color: #00796B;
+  background-color: #004D40;
 }
 
 .nav li {
@@ -27,7 +27,7 @@
 
 
 body { 
-  background-color: #009688;
+  background-color: #00796B;
 }
 
 
@@ -47,7 +47,7 @@ body {
 
 .title p {
   font-size: 42px;
-  color: #B2DFDB;
+  color: #4DB6AC;
 }
 /*283018*/
 
@@ -63,13 +63,14 @@ body {
   background-size: cover;
 }*/
 
-.about-me {
-background-color: #009688  
-}
+/*.about-me {
+  
+}*/
 
 .about-me .container {
   position: relative;
   top: 200px;
+  background-color: #009688;
 }
 
 /*.about-me .container .row .about-me-picture {
