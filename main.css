@@ -103,10 +103,14 @@ body {
   background-size: cover;
 }*/
 
+.resume {
+  padding-top: 10px;
+}
+
 .resume .resume-body .container {
   position: relative;
-  top:200px;
 }
+
 
 .resume h1 {
   color: #FFFFFF;
@@ -126,6 +130,10 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }*/
+
+.contact-me {
+  padding-top: 10px;
+}
 
 .contact-me .contact-me-body .container {
   position: relative;
