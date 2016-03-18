@@ -36,6 +36,10 @@ body {
   position: relative;
 }
 
+.title .title-body .container .title-picture {
+  top: 10px;
+}
+
 .title h1 {
   color: #FFFFFF;
   font-size: 80px;  
