@@ -70,7 +70,7 @@ body {
 
 .about-me .container {
   position: relative;
-  top: 200px;
+  /*top: 200px;*/
 }
 
 /*.about-me .container .row .about-me-picture {
