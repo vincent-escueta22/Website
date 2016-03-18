@@ -23,10 +23,10 @@
 
 .title { 
   height: 100vh;
-  /*background-image:url('San_Francisco.jpg');*/
+  background-color: #000000;
+  background-image:url('San_Francisco.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #000000;
 }
 
 .title .title-body .container {
