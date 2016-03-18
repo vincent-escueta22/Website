@@ -33,7 +33,6 @@ body {
 
 .title .title-body .container {
   position: relative;
-  top: 120px;
 }
 
 .title h1 {
@@ -65,12 +64,10 @@ body {
 
 .about-me {
   background-color: #009688;
-  background-position: bottom right;
 }
 
 .about-me .container {
   position: relative;
-  top: 200px;
 }
 
 /*.about-me .container .row .about-me-picture {
