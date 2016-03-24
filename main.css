@@ -108,6 +108,27 @@ body {
   background-size: cover;
 }*/
 
+.projects {
+  padding-top: 10px;
+}
+
+.projects .projects .container {
+  position: relative;
+}
+
+
+.projects h1 {
+  color: #FFFFFF;
+  font-size: 72px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
+}
+
+.projects p {
+  font-size: 30px;
+  color: #FFFFFF;
+}
+
 .resume {
   padding-top: 10px;
 }
