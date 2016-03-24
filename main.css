@@ -1,8 +1,11 @@
 .navbar {
   background-color: #004D40;
-  color: #FFFFFF;
+
 }
 
+.navbar a {
+  color: #B2DFDB;
+}
 /*.nav li {
   padding: 5px;
   display: inline;
