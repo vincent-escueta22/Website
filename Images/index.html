@@ -196,8 +196,15 @@
         <pre align="middle"> < image1 / ||image1||, image2 / ||image2|| ></pre>
         <p> where image1 is the pixels of image1 where we treat the overall image as a vector, ||image1|| is the magnitude of the whol first image, and image2 is just like image1. By dividing each picture by the magnitude we form the unit vector of each image and we get the dot product of the unit vectors to get the correlation. The higher the dot product, the closer the dot product is to 1, the better the correlation between the 2 images. </p>
         <p>However, a lot of images didn't produce good photos. This is because the intensities at pixels of two different colors that are of the same part of the scene may be drastically different. To account for that, I only correlated the middle 50% of the photographs because I assumed the main parts of the picture that would help provide the best correlation would be in the middle 50% of the images.</p>
-        <p>Below are a few examples of the images produced using NCC. The left images(odd Figures) are results when doing NCC on the whole the whole image. The right images(even Figures) are results when doing NCC in the middle 50% of the images.</p>
+        <p>Below are a few examples of the images produced using NCC. The left images(odd Figures) are results when doing NCC on the whole the whole image. The right images(even Figures) are results when doing NCC in the middle 50% of the images. Figure 0 is the original set of images that we are aligning that become Figure 1 and Figure 2.</p>
         <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/monastery.jpg" width="250px" />
+                    <figcaption align="middle">Figure 0: Blue, green, and red filtered images</figcaption></td>
+                </tr>
+            </table>
             <table style="width=100%">
                 <tr>
                     <td align="middle">
