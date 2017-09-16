@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 100px;  
+      padding-bottom: 0.25in;  
+      padding-left: 100px;  
+    }  
+  </style> 
+<title>Vincent Escueta  |  CS 194-26</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="slideshow.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<br />
+<h1 align="middle">Images of the Russian Empire -- colorizing the Prokudin-Gorskii photo collection </h1>
+    <h2 align="middle">Vincent Escueta</h2>
+
+    <div class="padded">
+        <p>Sergei Mikhailovich Prokudin-Gorskii took 3 cameras. He put a blue filter on one, a green filter on another, and a red filter over the last. He put the green camera on top the red camera and the blue camera on top of the green one. He then took these cameras and photographs of scenes with all three cameras. Sergei took thousands of pictures, but never got to see them in color. By aligning his photographs using normalized cross correlation, the colored photographs that Sergei wanted have now come to life.</p>
+
+    <h2 align="middle"> Results for all images </h2>
+        <div class="slideshow-container">
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/emirEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter emir.tif: R:[106  41] G:[49 23] TIME:26.2144749165</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/harvestersEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter harvesters.tif: R:[124  15] G:[60 18] TIME:25.585105896</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/iconEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter icon.tif: R:[91 23] G:[38 16] TIME:26.5196139812</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/ladyEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter lady.tif: R:[114  15] G:[56  9] TIME:29.0473020077</figcaption></td>
+                </tr>
+            </table>
+         </div>
+        <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/self_portraitEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter self_portrait.tif: R:[175  37] G:[77 29] TIME:28.707857132</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/three_generationsEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter three_generations.tif: R:[113  11] G:[54 17] TIME:26.2358720303</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/trainEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter train.tif: R:[85 34] G:[40  8] TIME:26.7940208912</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/turkmenEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter turkmen.tif: R:[116  29] G:[57 22] TIME:27.184166193</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/luganoEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">extra lugano.tif: R:[120  32] G:[54  7] TIME:36.9884650707</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/stmarksEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">extra stmarks.tif: R:[113  30] G:[47 13] TIME:34.7976961136 </figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/telescopeEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">extra telescope.tif: R:[144  54] G:[67 30] TIME:37.0999400616</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/mozhaiskEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">extra mozhaisk.tif: R:[92 25] G:[41 15] TIME:35.2776269913</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/peopleEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">extra people.tif: R:[157  33] G:[72 21] TIME:34.1512980461</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/people2EdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">extra people2.tif: R:[133  39] G:[62 25] TIME:34.4929409027 </figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/cathedralEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter cathedral.jpg: R:[12  3] G:[5 2] TIME:0.789291143417</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/monasteryEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter monastery.jpg: R:[2 2] G:[-3  2] TIME:0.951406002045</figcaption></td>
+                </tr>
+            </table>
+         </div>
+        <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/nativityEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter nativity.jpg: R:[8 0] G:[3 1] TIME:0.773239135742</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <div class="slide fade">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/settlersEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">canny edge filter settlers.jpg: R:[14 -1] G:[7 0] TIME:0.621767044067</figcaption></td>
+                </tr>
+            </table>
+         </div>
+         <a class="prev hvr-grow" onclick="plusSlides(-1)">&#10094;</a>
+         <a class="next hvr-grow" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        </div>
+
+    <h2 align="middle">Normalized Cross Correlation (NCC)</h2>
+        <p>To produce colored images, the blue, green, and red images must be well aligned. To do this, we move the red and green photographs over the blue until they almost perfectly align. To find the best alignment, we took the red and green images and displaceed them horizonally and vertically ([-15, 15] pixels each direction) and found the normalized cross correlation between the green image and the blue image then with the red image and the blue image at each displacement based on gray intensities. The displaced green and red photos that give the best correlation with the blue photos are then used to create the colored rgb image. The equation for the normalized cross correlation is</p>
+        <pre align="middle"> < image1 / ||image1||, image2 / ||image2|| ></pre>
+        <p> where image1 is the pixels of image1 where we treat the overall image as a vector, ||image1|| is the magnitude of the whol first image, and image2 is just like image1. By dividing each picture by the magnitude we form the unit vector of each image and we get the dot product of the unit vectors to get the correlation. The higher the dot product, the closer the dot product is to 1, the better the correlation between the 2 images. </p>
+        <p>However, a lot of images didn't produce good photos. This is because the intensities at pixels of two different colors that are of the same part of the scene may be drastically different. To account for that, I only correlated the middle 50% of the photographs because I assumed the main parts of the picture that would help provide the best correlation would be in the middle 50% of the images.</p>
+        <p>Below are a few examples of the images produced using NCC. The left images(odd Figures) are results when doing NCC on the whole the whole image. The right images(even Figures) are results when doing NCC in the middle 50% of the images. Figure 0 is the original set of images that we are aligning that become Figure 1 and Figure 2.</p>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/monastery.jpg" width="250px" />
+                    <figcaption align="middle">Figure 0: Blue, green, and red filtered images</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/monasteryBasicColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 1: all pixels of monastery.jpg: R:[8 1] G:[-6  0] TIME:0.565473079681</figcaption></td>
+                    <td align="middle">
+                    <img src="img/monasteryNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 2: middle 50% of pixels monastery.jpg: R:[2 2] G:[-3  2] TIME:0.41522693634</figcaption></td>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="img/nativityBasicColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 3: all pixels of nativity.jpg: R:[7 1] G:[4 1] TIME:0.594136953354</figcaption></td>
+                    <td align="middle">
+                    <img src="img/nativityNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 4: middle 50% of pixels nativity.jpg: R:[8 0] G:[3 1] TIME:0.450391054153</figcaption></td>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="img/settlersBasicColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 5: all pixels of settlers.jpg: R:[14 -1] G:[7 0] TIME:0.823676109314</figcaption></td>
+                    <td align="middle">
+                    <img src="img/settlersNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 6: middle 50% of pixels settlers.jpg: R:[14 -1] G:[7 0] TIME:0.405462026596</figcaption></td>
+                </tr>
+            </table>
+        </div>
+        <h2 align="middle">Image Pyramid</h2>
+        <p> The images shown perviously were all smaller photos - about 300 pixels on one side. However, for larger photos that were about 3000 pixels on one side, the amount of time it took to align and color the photos were significantly longer because we had to increase our range of displacements and had to generate NCC's for larger images. </p>
+        <p>To decrease the amount of time it takes to align and color the photos, we used the image pyramid. The way it works is that we continually rescaled an image down by half until rescaling the image down by half would mean that it's height would be less than 128. We then aligned and colored the image using NCC. Once we got a displacement, (x, y), we rescaled the image upward by doubling the size of the current image and did NCC with a displacement range of [(x-2, x+2), (y-2, y+2)]. We repeat this until we align and color the original sized image.</p>
+        <p>The following shows the time difference between the basic scanning of the images versus using the Image Pyramid algorithm.</p>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/cathedralTimeColored.jpg" width="500px"/>
+                    <figcaption align="middle">Figure 7: Naive cathedral.jpg: R:[12  3] G:[5 2] TIME:2.9832880497.</figcaption></td>
+                    <td align="middle">
+                    <img src="img/cathedralNaiveColored.jpg" width="500px"/>
+                    <figcaption align="middle">Figure 8: Image Pyramid cathedral.jpg: R:[12  3] G:[5 2] TIME:0.675570011139.</figcaption></td>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="img/iconTimeColored.jpg" width="500px"/>
+                    <figcaption align="middle">Figure 9: Naive icon.tif: R:[15 12] G:[15 14] TIME:316.376515865.</figcaption></td>
+                    <td align="middle">
+                    <img src="img/iconNaiveColored.jpg" width="500px"/>
+                    <figcaption align="middle">Figure 10: Image Pyramid icon.tif: R:[89 23] G:[41 17] TIME:17.6947059631</figcaption></td>
+                </tr>
+            </table>
+        </div>
+            <p>The time to align and color smaller images with the Image Pyramid is about 2.3 seconds less than before, but the time difference in the larger images is about 300 seconds and because our displacement values are [-15,15], then the best alignment can't be calculated. Making the displacement values even larger would make the time to align larger images even worse.</p>
+            <p>The following are the larger images that used the Image Pyramid algorithm. </p>
+
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/self_portraitNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 1: middle 50% of pixels self_portrait.tif: R:[175  37] G:[78 29] TIME:13.4188771248</figcaption></td>
+                    <td align="middle">
+                    <img src="img/three_generationsNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 12: middle 50% of pixels of three_generations.tif: R:[110  12] G:[52 14] TIME:14.5100548267</figcaption></td>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="img/turkmenNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 13: middle 50% of pixels turkmen.tif: R:[116  28] G:[55 21] TIME:13.3178520203</figcaption></td>
+                    <td align="middle">
+                    <img src="img/villageNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 14: middle 50% of pixels village.tif: R:[137  22] G:[64 12] TIME:15.6597101688</figcaption></td>
+                </tr>
+            </table>
+        </div>
+        <h2 align="middle">Edge Detection</h2>
+        <p>Although all the images that were produced after the image pyramid were good, there were still some exceptions when using pixel intensity to align images that would produce bad results such as in Figure 29. To fix this, instead of doing NCC on raw pixels and pixel intensity, applying the canny edge filter allowed for the best results for all images. The canny edge filter was applied on each image used for calcuating NCC. Figure 29 shows NCC when looking at all the pixels, Figure 30 shows the aligning becoming worse after applying the Image Pyramid algorithm, and Figure 31 shows the alignment becoming perfect after applying the canny edge filter. The runtime increased significantly, but the results were much better</p>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/emirBasicColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 15: all pixels of emir.tif: R:[107  17] G:[-3  7] TIME:14.2561810017</figcaption></td>
+                    <td align="middle">
+                    <img src="img/emirNaiveColored.jpg" width="500px" />
+                    <figcaption align="middle">Figure 16: middle 50% of pixels emir.tif: R:[ 258 -213] G:[48 24] TIME:13.4975399971</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/emirEdgeColored.jpg" width="720px" />
+                    <figcaption align="middle">Figure 17: canny edge filter emir.tif: R:[106  41] G:[49 23] TIME:26.2144749165</figcaption></td>
+                </tr>
+            </table>
+        </div>
+<script src="slideshow.js"></script>
+</body>
+</html>
