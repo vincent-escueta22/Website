@@ -159,8 +159,6 @@
                 </tr>
             </table>
     </div>
-    <h2 align="middle">What I learned Part A</h2>
-    <p>In part A, I learned how panoramas are created and how simple it is, but also how important it is that the pictures have to be a little similar to each other. Yet, it's easy to recognize that so much still happens in our phones because even when my pictures have very similar lighting, they still seem to have hardlines or noticeable differences where the two pictures overlay. Along with that, with manually picking the points, it becomes likely that human error will make the pictures imperfect and not overlay as well as they could.</p>
     <h2 align="middle">Adaptive Non-Maximal Suppression</h2>
     <p>By getting the Harris Corners as given to us, we have to many points that are too close to each other. Using Adaptive Non-Maximal Suppression, we can lower the amount of points and space the chosen Harris Corners. We do this by getting the minimum r_i for each corner where r_i = min|xi-xj| for all j such that f(xi) < 0.9f(xj). f in this case is the corner intensity. We then take the points based on r_i such that we find all the points greater than or equal to r_i where the number of points greater than or equal to r_i is 500. We then use thoe 500 well spaced points, p, moving forward
     <h2 align="middle">Feature Descriptor</h2>
@@ -215,7 +213,5 @@
                 </tr>
     </table>
     </div>
-    <h2 align="middle">What I learned Part B</h2>
-    <p>Manually picking points to create the mosaics was a headache. RANSAC made picking points easier and the results were very similar even though I put a large amount of effort to pick good points.</p>
 </body>
 </html>
