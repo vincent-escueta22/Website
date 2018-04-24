@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 100px;  
+      padding-bottom: 0.25in;  
+      padding-left: 100px;  
+    }  
+  </style> 
+<title>Vincent Escueta  |  CS 194-26</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" media="screen" />
+</head>
+<body>
+<br />
+<h1 align="middle">Image Warping and Mosaicing</h1>
+    <h2 align="middle">Vincent Escueta</h2>
+    
+    <div class="padded">
+
+    
+    <h2 align="middle">Homographies</h2>
+    <p> To warp images, we must first create the homography matrix, H, by recovering 8 unknown entries of the 3x3 matrix. We can find the 8 unknowns, h, by having 4 points to sample from the source image and 4 corresponding points from the warped image. These 4 sets of points are plugged into a matrix A and a set of points, b, to use least-squares to get h. Then having h, we can form H.
+    <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/homography.PNG" height="150px" />
+                    <figcaption align="middle">Homography Matrix</figcaption></td>
+                    <td align="middle">
+                    <img src="img/homography_h.png" height="150px" />
+                    <figcaption align="middle">Ah = b</figcaption></td>
+                </tr>
+            </table>
+    </div>
+    <h2 align="middle">Warp the Images</h2>
+        <p>To warp the image into a desired warp we do the following:</p>
+        <ol>
+         <li>Given 4 or more correspondences, calculate the homography matrix, H.</li>
+         <li>Use the corners of the original image to create the bounding box of the warped image by passing the corners through H.</li>
+         <li>Then use inverse warping to create the warped image
+        </ol>
+        <h3 align="middle">Image Rectification</h3>
+        <p>All the following are pictures with planar surfaces warped so the plane is front-parallel.
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/guadalupe.jpg" height="500px"/>
+                    <figcaption align="middle">Our Lady of Guadalupe</figcaption></td>
+                    <td align="middle">
+                    <img src="img/warped_g2.jpg" height="500px"/>
+                    <figcaption align="middle">Warped Guadalupe</figcaption></td>
+                </tr>
+                 <tr>
+                    <td align="middle">
+                    <img src="img/jtgt.jpg" height="700px"/>
+                    <figcaption align="middle">SF Japanese Tea Garden</figcaption></td>
+                    <td align="middle">
+                    <img src="img/warped_jtgt.jpg" height="700px"/>
+                    <figcaption align="middle">Warped Tea Garden</figcaption></td>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="img/ms.jpg" height="300px"/>
+                    <figcaption align="middle">Memorial Stadium</figcaption></td>
+                    <td align="middle">
+                    <img src="img/warped_ms3.jpg" height="300px"/>
+                    <figcaption align="middle">California</figcaption></td>
+                </tr>
+            </table>
+    </div>
+    <h2 align="middle">Blend the images into a mosaic</h2>
+        <p>For the next part, I combined 2 similar images to create a mosaic panorama. We accomplished this by doing the following:</p>
+         <ol>
+         <li>Plot points on both images where the same objects would correspond to the same points on both images.</li>
+         <li> calculate the homography matrix, H.</li>
+         <li>Warp one of the images to match the projection of objects of the other images and shift both images accordingly to fit into a frame and overlap.</li>
+         <li> Blend (I used both weights and multiresolution blending)
+        </ol>
+        <p> The following are results as I used Yosemite as a clear example of plotting points, warping and overlaying, then blending:
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/27.png" height="500px"/>
+                    <figcaption align="middle">Yosemite points</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tp.png" height="300px"/>
+                    <figcaption align="middle">Lake Tahoe points</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tahoepoints.jpg" height="300px"/>
+                    <figcaption align="middle"> More Lake Tahoe points</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/y1.jpg" height="800px"/>
+                    <figcaption align="middle">Yosemite Left</figcaption></td>
+                    <td align="middle">
+                    <img src="img/y0.jpg" height="800px"/>
+                    <figcaption align="middle">Yosemite Right</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/y2_warp3.jpg" height="500px"/>
+                    <figcaption align="middle">Half Dome overlay</figcaption></td>
+                    <td align="middle">
+                    <img src="img/y2_warp7.jpg" height="500px"/>
+                    <figcaption align="middle">Half Dome weights</figcaption></td>
+                    <td align="middle">
+                    <img src="img/y2_warp_mb.jpg" height="500px"/>
+                    <figcaption align="middle">Half Dome multiresolution blending</figcaption></td>
+                </tr>
+            </table>
+             <table style="width=100%">
+                 <tr>
+                    <td align="middle">
+                    <img src="img/tl.jpg" height="300px"/>
+                    <figcaption align="middle">Lake Tahoe Left</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tr.jpg" height="300px"/>
+                    <figcaption align="middle">Lake Tahoe Right</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/tw.jpg" height="350px"/>
+                    <figcaption align="middle">Lake Tahoe weights</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tahoe.jpg" height="350px"/>
+                    <figcaption align="middle">Lake Tahoe multiresolution blending</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                 <tr>
+                    <td align="middle">
+                    <img src="img/lefttahoe.jpg" height="300px"/>
+                    <figcaption align="middle">More Lake Tahoe Left</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tahoeright.jpg" height="300px"/>
+                    <figcaption align="middle">More Lake Tahoe Right</figcaption></td>
+                </tr>
+            </table>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/tahoewarp.jpg" height="350px"/>
+                    <figcaption align="middle">More Lake Tahoe weights</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tahoewarp3.jpg" height="350px"/>
+                    <figcaption align="middle">More Lake Tahoe multiresolution blending</figcaption></td>
+                </tr>
+            </table>
+    </div>
+    <h2 align="middle">What I learned Part A</h2>
+    <p>In part A, I learned how panoramas are created and how simple it is, but also how important it is that the pictures have to be a little similar to each other. Yet, it's easy to recognize that so much still happens in our phones because even when my pictures have very similar lighting, they still seem to have hardlines or noticeable differences where the two pictures overlay. Along with that, with manually picking the points, it becomes likely that human error will make the pictures imperfect and not overlay as well as they could.</p>
+    <h2 align="middle">Adaptive Non-Maximal Suppression</h2>
+    <p>By getting the Harris Corners as given to us, we have to many points that are too close to each other. Using Adaptive Non-Maximal Suppression, we can lower the amount of points and space the chosen Harris Corners. We do this by getting the minimum r_i for each corner where r_i = min|xi-xj| for all j such that f(xi) < 0.9f(xj). f in this case is the corner intensity. We then take the points based on r_i such that we find all the points greater than or equal to r_i where the number of points greater than or equal to r_i is 500. We then use thoe 500 well spaced points, p, moving forward
+    <h2 align="middle">Feature Descriptor</h2>
+    <p>Now we have to get descriptors of each point. We take 40x40 patches for each point and create 8x8 normalized patches that is flattened into a 64 dimensional vector that can be used for feature matching between 2 images.
+    <h2 align="middle">Feature Matching</h2>
+    <p>For each descriptor in the first image, we pair it with a descriptor from the second image if the ratio of the closest matching descriptor to the second closest descriptor of the second image is less that 0.4.</p>
+    <h2 align="middle">RANSAC</h2>
+    <p>Lastly, we create a homography matrix by running 15000 iterations of picking 4 random points, getting the homography matrix, and picking the homography that includes the most inliers using points from feature matching. Then we use the inliers of the homography matrix to form a least squares homography matrix.</p>
+
+    <p> The following image has yellow points to represent the results of Adaptive Non-Maximal Suppression, the blue points represent the results of Feature Matching, and the red points represent the results of the points used in RANSAC.</p>
+    <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/samples.png" width="1400px" />
+                    <figcaption align="middle">Points as results of project B</figcaption></td>
+                </tr>
+            </table>
+    </div>
+    <p> The following is the manual points compared to RANSAC points:</p>
+    <div align="center">
+    <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/tahoewarp.jpg" height="350px"/>
+                    <figcaption align="middle">Tahoe Sunset Manual weights</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tahoe_sunset.jpg" height="350px"/>
+                    <figcaption align="middle">Tahoe Sunset RANSAC weights</figcaption></td>
+                </tr>
+    </table>
+    <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/tw.jpg" height="350px"/>
+                    <figcaption align="middle">Lake Tahoe Manual weights</figcaption></td>
+                    <td align="middle">
+                    <img src="img/tahoe11.jpg" height="350px"/>
+                    <figcaption align="middle">Lake Tahoe RANSAC weights</figcaption></td>
+                </tr>
+    </table>
+    </div>
+    <div align="center">
+    <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="img/y2_warp7.jpg" height="500px"/>
+                    <figcaption align="middle">Half Dome Manual weights</figcaption></td>
+                    <td align="middle">
+                    <img src="img/ransac_yosemite15.jpg" height="500px"/>
+                    <figcaption align="middle">Half Dome RANSAC weights</figcaption></td>
+                </tr>
+    </table>
+    </div>
+    <h2 align="middle">What I learned Part B</h2>
+    <p>Manually picking points to create the mosaics was a headache. RANSAC made picking points easier and the results were very similar even though I put a large amount of effort to pick good points.</p>
+</body>
+</html>
