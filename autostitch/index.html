@@ -9,12 +9,60 @@
       padding-left: 100px;  
     }  
   </style> 
-<title>Vincent Escueta  |  CS 194-26</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" media="screen" />
+    <title>Vincent Escueta  |  CS 184</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Vincent Escueta">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../main.css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css" type="text/css">
 </head>
 <body>
-<br />
+ <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="../index.html">Vincent Escueta</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="../index.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../about.html">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../index.html#resume">Resume</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="bg"> </header>
+<section class="bg">
 <h1 align="middle">Image Warping and Mosaicing</h1>
     <h2 align="middle">Vincent Escueta</h2>
     
@@ -22,7 +70,8 @@
 
     
     <h2 align="middle">Homographies</h2>
-    <p> To warp images, we must first create the homography matrix, H, by recovering 8 unknown entries of the 3x3 matrix. We can find the 8 unknowns, h, by having 4 points to sample from the source image and 4 corresponding points from the warped image. These 4 sets of points are plugged into a matrix A and a set of points, b, to use least-squares to get h. Then having h, we can form H.
+    <p> To warp images, we must first create the homography matrix, H, by recovering 8 unknown entries of the 3x3 matrix. We can find the 8 unknowns, h, by having 4 points to sample from the source image and 4 corresponding points from the warped image. These 4 sets of points are plugged into a matrix A and a set of points, b, to use least-squares to get h. Then having h, we can form H.</p>
+    </div>
     <div align="center">
             <table style="width=100%">
                 <tr>
@@ -40,10 +89,10 @@
         <ol>
          <li>Given 4 or more correspondences, calculate the homography matrix, H.</li>
          <li>Use the corners of the original image to create the bounding box of the warped image by passing the corners through H.</li>
-         <li>Then use inverse warping to create the warped image
+         <li>Then use inverse warping to create the warped image</li>
         </ol>
         <h3 align="middle">Image Rectification</h3>
-        <p>All the following are pictures with planar surfaces warped so the plane is front-parallel.
+        <p>All the following are pictures with planar surfaces warped so the plane is front-parallel.</p>
         <div align="center">
             <table style="width=100%">
                 <tr>
@@ -78,9 +127,9 @@
          <li>Plot points on both images where the same objects would correspond to the same points on both images.</li>
          <li> calculate the homography matrix, H.</li>
          <li>Warp one of the images to match the projection of objects of the other images and shift both images accordingly to fit into a frame and overlap.</li>
-         <li> Blend (I used both weights and multiresolution blending)
+         <li> Blend (I used both weights and multiresolution blending)</li>
         </ol>
-        <p> The following are results as I used Yosemite as a clear example of plotting points, warping and overlaying, then blending:
+        <p> The following are results as I used Yosemite as a clear example of plotting points, warping and overlaying, then blending:</p>
         <div align="center">
             <table style="width=100%">
                 <tr>
@@ -160,9 +209,9 @@
             </table>
     </div>
     <h2 align="middle">Adaptive Non-Maximal Suppression</h2>
-    <p>By getting the Harris Corners as given to us, we have to many points that are too close to each other. Using Adaptive Non-Maximal Suppression, we can lower the amount of points and space the chosen Harris Corners. We do this by getting the minimum r_i for each corner where r_i = min|xi-xj| for all j such that f(xi) < 0.9f(xj). f in this case is the corner intensity. We then take the points based on r_i such that we find all the points greater than or equal to r_i where the number of points greater than or equal to r_i is 500. We then use thoe 500 well spaced points, p, moving forward
+    <p>By getting the Harris Corners as given to us, we have to many points that are too close to each other. Using Adaptive Non-Maximal Suppression, we can lower the amount of points and space the chosen Harris Corners. We do this by getting the minimum r_i for each corner where r_i = min|xi-xj| for all j such that f(xi) < 0.9f(xj). f in this case is the corner intensity. We then take the points based on r_i such that we find all the points greater than or equal to r_i where the number of points greater than or equal to r_i is 500. We then use thoe 500 well spaced points, p, moving forward</p>
     <h2 align="middle">Feature Descriptor</h2>
-    <p>Now we have to get descriptors of each point. We take 40x40 patches for each point and create 8x8 normalized patches that is flattened into a 64 dimensional vector that can be used for feature matching between 2 images.
+    <p>Now we have to get descriptors of each point. We take 40x40 patches for each point and create 8x8 normalized patches that is flattened into a 64 dimensional vector that can be used for feature matching between 2 images.</p>
     <h2 align="middle">Feature Matching</h2>
     <p>For each descriptor in the first image, we pair it with a descriptor from the second image if the ratio of the closest matching descriptor to the second closest descriptor of the second image is less that 0.4.</p>
     <h2 align="middle">RANSAC</h2>
@@ -215,5 +264,34 @@
                 </tr>
     </table>
     </div>
+</section>
+<section class="bg" id="resume">
+        <div class="container text-center">
+            <div class="row">
+                     <p>
+                        <a href="mailto:vincent.escueta22@gmail.com" target="_blank"><i class="fa fa-envelope-o wow bounceIn" data-wow-delay=".2s"></i></a>
+                        <a href="https://www.linkedin.com/in/vincentescueta/" target="_blank"><i class="fa fa-linkedin wow bounceIn"></i></a>
+                        <a href="https://github.com/vincent-escueta22" target="_blank"><i class="fa fa-github-alt wow bounceIn" data-wow-delay=".3s"></i>
+                        <a href="https://www.facebook.com/vincent.escueta22" target="_blank"<i class="fa fa-facebook wow bounceIn" data-wow-delay=".1s"></i></a>
+                    </p>
+                    <p class="update">Last Updated: December 7, 2018</p>    
+            </div>
+        </div>
+    </section>
+    <script src=../"js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/jquery.fittext.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/scrolling-nav.js"></script>
+    <script src="../js/faded.js"></script>
 </body>
 </html>
+
+
+
+
