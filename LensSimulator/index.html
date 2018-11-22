@@ -9,17 +9,66 @@
       padding-left: 100px;  
     }  
   </style> 
-<title>Vincent Escueta  |  CS 184</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <title>Vincent Escueta  |  CS 184</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Vincent Escueta">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../main.css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css" type="text/css">
 </head>
 <body>
-<br />
-<h1 align="middle">Assignment 4: Len Simulator</h1>
+ <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="../index.html">Vincent Escueta</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="../index.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../about.html">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../index.html#resume">Resume</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="bg"> </header>
+<section class="bg">
+<br/>
+<h1 align="middle">Lens Simulator</h1>
     <h2 align="middle">Vincent Escueta</h2>
 
     <div class="padded">
-        <p>After implementing a pinhole camera, global illumination, and refraction and reflection of glass and mirrored objects. This project uses those and implements a camera systems to create depth of focus and field of view. By having lenses in front of the pinhole camera the camera simulation is created. Furthermore, instead of just having to manually focus to get images with an object in focus, autofocus is also implemented to easily get the right sensor depth to create higher quality images.</p>
+        <p>After implementing a pinhole camera, global illumination, and refraction and reflection of glass and mirrored objects. This project uses those and implements a camera systems to create depth of focus and field of view. By having lenses in front of the pinhole camera the camera simulation is created. Furthermore, instead of just having to manually focus to get images with an object in focus, autofocus is also implemented to easily get the right sensor depth to create higher quality images.</p> </div>
 
     <h2 align="middle">Part 1: Tracing</h2>
         <p>From rendering images using a pinhole camera to rendering images using a simulated lens system, there are many differences between the two ways to render images. A pinhole camera just displays the scene with the right lighting, shadows, and meshes. On the other hand, a lens system adds a depth of focus and depth of field which create a slight blur for objects not in focus and a field of view that changes perspective due to a viewing angle. The lens system does this by simply placing glass lenses in front of the camera for light to refract from the scene, into the camera. Figure 1 shows the result of a pinhole camera, Figure 2 shows a blurred scene due to a lens and Figure 3 shows how a fisheye lens can manipulate a photo.</p>
@@ -28,17 +77,17 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part1_spheres_nolens.png" width="480px" />
-                    <figcaption align="middle">Figure 1: A rendering of spheres using a pinhole camera.</figcaption>
+                    <figcaption align="middle">Figure 1: A rendering of spheres using a pinhole camera.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_spheres_lens.png" width="480px" />
-                    <figcaption align="middle">Figure 2: A blurred rendering of spheres with a lens.</figcaption>
+                    <figcaption align="middle">Figure 2: A blurred rendering of spheres with a lens.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_spheres_len4.png" width="480px" />
-                    <figcaption align="middle">Figure 3: An image with using a fisheye lens.</figcaption>
+                    <figcaption align="middle">Figure 3: An image with using a fisheye lens.</figcaption></td>
                 </tr>
             </table>
         </div>
@@ -48,50 +97,50 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part1_lens1_ray1.png"/>
-                    <figcaption align="middle">Figure 4: D-GAUSS F/2 22deg HFOV rays traced forward.</figcaption>
+                    <figcaption align="middle">Figure 4: D-GAUSS F/2 22deg HFOV rays traced forward.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_lens1_ray2.png"/>
-                    <figcaption align="middle">Figure 5: D-GAUSS F/2 22deg HFOV rays traced backwords, infinite focus.</figcaption>
+                    <figcaption align="middle">Figure 5: D-GAUSS F/2 22deg HFOV rays traced backwords, infinite focus.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_lens1_ray3.png"/>
-                    <figcaption align="middle">Figure 6: D-GAUSS F/2 22deg HFOV rays traced forward with rays intersecting.</figcaption>
+                    <figcaption align="middle">Figure 6: D-GAUSS F/2 22deg HFOV rays traced forward with rays intersecting.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_lens2_ray1.png"/>
-                    <figcaption align="middle">Figure 7: Wide-angle (38-degree) lens. Nakamura. rays traced forward.</figcaption>
+                    <figcaption align="middle">Figure 7: Wide-angle (38-degree) lens. Nakamura. rays traced forward.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_lens2_ray2.png"/>
-                    <figcaption align="middle">Figure 8: Wide-angle (38-degree) lens. Nakamura. rays traced backwards.</figcaption>
+                    <figcaption align="middle">Figure 8: Wide-angle (38-degree) lens. Nakamura. rays traced backwards.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_lens2_ray3.png"/>
-                    <figcaption align="middle">Figure 9: Wide-angle (38-degree) lens. Nakamura. rays traced forward below z axis.</figcaption>
+                    <figcaption align="middle">Figure 9: Wide-angle (38-degree) lens. Nakamura. rays traced forward below z axis.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_lens3_ray1.png"/>
-                    <figcaption align="middle">Figure 10: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" rays traced backwards.</figcaption>
+                    <figcaption align="middle">Figure 10: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" rays traced backwards.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_lens3_ray2.png"/>
-                    <figcaption align="middle">Figure 11: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</figcaption>
+                    <figcaption align="middle">Figure 11: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_lens3_ray3.png"/>
-                    <figcaption align="middle">Figure 12: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</figcaption>
+                    <figcaption align="middle">Figure 12: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_lens4_ray1.png"/>
-                    <figcaption align="middle">Figure 13: Muller 16mm/f4 155.9FOV fisheye lens forward rays intersecting.</figcaption>
+                    <figcaption align="middle">Figure 13: Muller 16mm/f4 155.9FOV fisheye lens forward rays intersecting.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_lens4_ray2.png"/>
-                    <figcaption align="middle">Figure 14: Muller 16mm/f4 155.9FOV fisheye lens backwards rays intersecting.</figcaption>
+                    <figcaption align="middle">Figure 14: Muller 16mm/f4 155.9FOV fisheye lens backwards rays intersecting.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_lens4_ray3.png"/>
-                    <figcaption align="middle">Figure 15: Muller 16mm/f4 155.9FOV fisheye lens demonstrating refraction.</figcaption>
+                    <figcaption align="middle">Figure 15: Muller 16mm/f4 155.9FOV fisheye lens demonstrating refraction.</figcaption></td>
                 </tr>
             </table>
         </div>
@@ -106,7 +155,7 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part1_table.png" />
-                    <figcaption align="middle">Figure 16: Calculations of some camera lenses.</figcaption>
+                    <figcaption align="middle">Figure 16: Calculations of some camera lenses.</figcaption></td>
                 </tr>
             </table>
         </div>
@@ -116,22 +165,22 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part1_Gauss.png" width="1000px"/>
-                    <figcaption align="middle">Figure 17: D-GAUSS F/2 22deg HFOV /  Some points are (51.2587, -1223480), (52.6039, -1925.48), (53.142, -1388.52), (56.7741, -503.47) (60.5407, -317.08), (64.5763, -234.35)</figcaption>
+                    <figcaption align="middle">Figure 17: D-GAUSS F/2 22deg HFOV /  Some points are (51.2587, -1223480), (52.6039, -1925.48), (53.142, -1388.52), (56.7741, -503.47) (60.5407, -317.08), (64.5763, -234.35)</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_Wide-Angle.png" width="1000px"/>
-                    <figcaption align="middle">Figure 18: Wide-angle (38-degree) lens. Nakamura. / Some points are (28.7361, -13947.9), (31.0729, -229.471), (33.5072, -126.268), (35.3572, -98.3175) (37.4994, -80.6369), (38.4731, -751624)</figcaption>
+                    <figcaption align="middle">Figure 18: Wide-angle (38-degree) lens. Nakamura. / Some points are (28.7361, -13947.9), (31.0729, -229.471), (33.5072, -126.268), (35.3572, -98.3175) (37.4994, -80.6369), (38.4731, -751624)</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part1_SIGLER.png" width="1000px"/>
-                    <figcaption align="middle">Figure 19: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" / Some points are (188.754, -3.31E+06), (194.503, -11148), (202.866, -4758.76), (210.184, -3255.26) (225.341, -2053.01), (240.499, -1554.85)</figcaption>
+                    <figcaption align="middle">Figure 19: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" / Some points are (188.754, -3.31E+06), (194.503, -11148), (202.866, -4758.76), (210.184, -3255.26) (225.341, -2053.01), (240.499, -1554.85)</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/Fish_eye.png" width="1000px"/>
-                    <figcaption align="middle">Figure 20: Muller 16mm/f4 155.9FOV fisheye lens / Some points are (28.6893, -4700.97), (31.8559, -51.0458), (33.727, -39.525), (36.1739, -33.1267) (40.2041, -28.5056), (42.9388, -26.8565) </figcaption>
+                    <figcaption align="middle">Figure 20: Muller 16mm/f4 155.9FOV fisheye lens / Some points are (28.6893, -4700.97), (31.8559, -51.0458), (33.727, -39.525), (36.1739, -33.1267) (40.2041, -28.5056), (42.9388, -26.8565) </figcaption></td>
                 </tr>
             </table>
         </div>
@@ -144,27 +193,27 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part1_near_focus_dragon.png" width="480px" />
-                    <figcaption align="middle">Figure 21: A rendering of a dragon with a focus on the right side of its face.</figcaption>
+                    <figcaption align="middle">Figure 21: A rendering of a dragon with a focus on the right side of its face.</figcaption></td>
                     <td align="middle">
                     <img src="images/part1_coil.png" width="480px" />
-                    <figcaption align="middle">Figure 22: A rendering of a coil with a focus towards the end of it.</figcaption>
+                    <figcaption align="middle">Figure 22: A rendering of a coil with a focus towards the end of it.</figcaption></td>
                 </tr>
             </table>
         </div>
-        <p> EXTRA CREDIT: For generating rays for lens cameras, instead of sending backwards rays for rays that didn't trace all the way through all the lenses and hit the camera, retracing rays until a hit occured was used instead. The amount of rays tried were kept track of. After a ray is traced all the way through, a cos^4 is measured by doing the the ray's direction to the z axis to the 4th power while in camera space.<p>
+        <p> EXTRA CREDIT: For generating rays for lens cameras, instead of sending backwards rays for rays that didn't trace all the way through all the lenses and hit the camera, retracing rays until a hit occured was used instead. The amount of rays tried were kept track of. After a ray is traced all the way through, a cos^4 is measured by doing the the ray's direction to the z axis to the 4th power while in camera space.</p><
         <p align="middle"><pre align="middle"> cos^4 = r.d.z^4   </pre></p>
-        <p>If it took more then 10 tries to trace a ray, the ray's cos^4 term is set to 0. In the pathtracer.cpp file, instead of just adding trace_ray(r,true) while in the ray_trace_pixel() function, it now adds trace_ray(r,true) * cos^4. Then when averaging the number of samples, the average is now divided by the number of rays that actually were able to trace a ray all the way through. Figure 23 shows a quick rendering of a scene with just sending backwards rays during a miss. There was a bug with the back lens sampling during the rendering of this image so the top right has less rays traced there than the bottom left, but the center of each image shows the difference of noise the two ways to deal with missed rays. Figure 24 shows the results after fixing the back lens bug and implementing the extra credit. There is a less noticeable amount of black noise on Figure 24 compared to Figure 23.</p>
+        <p>If it took more then 10 tries to trace a ray, the ray's cos^4 term is set to 0. In the pathtracer.cpp file, instead of just adding trace_ray(r,true) while in the ray_trace_pixel() function, it now adds trace_ray(r,true) * cos^4. Then when averaging the number of samples, the average is now divided by the number of rays that actually were able to trace a ray all the way through. Figure 23 shows a quick rendering of a scene with just sending backwards rays during a miss. There was a bug with the back lens sampling during the rendering of this image so the top right has less rays traced there than the bottom left, but the center of each image shows the difference of noise the two ways to deal with missed rays. Figure 24 shows the results after fixing the back lens bug and implementing the extra credit. There is a less noticeable amount of black noise on Figure 24 compared to Figure 23.</p><
         <div align="center">
             <table style="width=100%">
                 <tr>
                     <td align="middle">
                     <img src="images/bunny_before_tricky.png" width="480px" />
-                    <figcaption align="middle">Figure 23: Discarding rays if missed, no extra tries.</figcaption>
+                    <figcaption align="middle">Figure 23: Discarding rays if missed, no extra tries.</figcaption></td>
                     <td align="middle">
                     <img src="images/bunny_after_tricky_no_bugs.png" width="480px" />
-                    <figcaption align="middle">Figure 24: After implementing extra credit.</figcaption>
+                    <figcaption align="middle">Figure 24: After implementing extra credit.</figcaption></td>
                 </tr>
-            </table>
+            </table><
         </div>
 
     <h2 align="middle">Part 2: Lens and LensCamera helper functions</h2>
@@ -178,7 +227,7 @@
         <p align="middle"><pre align="middle"> d = C * (zi / A)</pre></p>
         <p> C is the circle of confusion, which will be the size of a sensor pixel in millimeters which is just </p>
         <p align="middle"><pre align="middle"> C = sqrt(36*36 + 24*24) / sqrt(screenW*screenW + screenH*screenH)</pre></p>
-        <p> 36 and 24 are the dimensions of the sensor and screenW and screenH are the dimensions of the screen dimensions. The square root of the dimensions is the diagonal. The division is to translate what 1 pixel size from the screen would calculate to 1 pixel on the sensor plane. zi / A is just the f number. For the most part, the f number is 2, so the constant, d, incrementing the sensor depth from infinity focus to close focus will just be
+        <p> 36 and 24 are the dimensions of the sensor and screenW and screenH are the dimensions of the screen dimensions. The square root of the dimensions is the diagonal. The division is to translate what 1 pixel size from the screen would calculate to 1 pixel on the sensor plane. zi / A is just the f number. For the most part, the f number is 2, so the constant, d, incrementing the sensor depth from infinity focus to close focus will just be</p>
          <p align="middle"><pre align="middle"> d = 2 * sqrt(36*36 + 24*24) / sqrt(screenW*screenW + screenH*screenH)</pre></p>
          <p> The focus metric is measured for a rendering at each sensor depth and the highest focus metric and its corresponding sensor depth are stored. Once all the sensor depths are incremented through, the lens' sensor depth will move to the stored sensor depth with the highest focus metric. Note that when comparing renderings with different sensor depths, only a selected, small section that contains the object wanted to be in focus and the background should be used to calculate variance. Figure 25 shows a bunny before autofocusing and Figure 26 shows after autofocus is used.</p>
          <div align="center">
@@ -186,10 +235,10 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part2_bunny1.png" width="480px" />
-                    <figcaption align="middle">Figure 25: Bunny before autofocus.</figcaption>
+                    <figcaption align="middle">Figure 25: Bunny before autofocus.</figcaption></td>
                     <td align="middle">
                     <img src="images/part2_bunny2.png" width="480px" />
-                    <figcaption align="middle">Figure 26: Bunny after autofocus.</figcaption>
+                    <figcaption align="middle">Figure 26: Bunny after autofocus.</figcaption></td>
                 </tr>
             </table>
         </div>
@@ -199,7 +248,7 @@
                 <tr>
                     <td align="middle">
                     <img src="images/Focus_metric.png" width="1000px"/>
-                    <figcaption align="middle">Figure 27: Sensor depths tested in autofocus function / Some points are (51.2587, 408.701), (53.0587, 977.744), (53.8087, 1306.53), (54.4087, 1416.44) (55.1587, 1067.81), (57.1087, 487.911) (64.6087, 105.209)</figcaption>
+                    <figcaption align="middle">Figure 27: Sensor depths tested in autofocus function / Some points are (51.2587, 408.701), (53.0587, 977.744), (53.8087, 1306.53), (54.4087, 1416.44) (55.1587, 1067.81), (57.1087, 487.911) (64.6087, 105.209)</figcaption></td>
                 </tr>
             </table>
         </div>
@@ -209,22 +258,47 @@
                 <tr>
                     <td align="middle">
                     <img src="images/part2_dragon_lens1.png"/>
-                    <figcaption align="middle">Figure 28: D-GAUSS F/2 22deg HFOV</figcaption>
+                    <figcaption align="middle">Figure 28: D-GAUSS F/2 22deg HFOV</figcaption></td>
                     <td align="middle">
                     <img src="images/part2_dragon_lens2.png"/>
-                    <figcaption align="middle">Figure 29: Wide-angle (38-degree) lens. Nakamura.</figcaption>
+                    <figcaption align="middle">Figure 29: Wide-angle (38-degree) lens. Nakamura.</figcaption></td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part2_dragon_lens3.png"/>
-                    <figcaption align="middle">Figure 30: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" lens</figcaption>
+                    <figcaption align="middle">Figure 30: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" lens</figcaption></td>
                     <td align="middle">
                     <img src="images/part2_dragon_lens4.png"/>
-                    <figcaption align="middle">Figure 31: Muller 16mm/f4 155.9FOV fisheye lens</figcaption>
+                    <figcaption align="middle">Figure 31: Muller 16mm/f4 155.9FOV fisheye lens</figcaption></td>
                 </tr>
             </table>
         </div>
-</div>
+</section>
+<section class="bg" id="resume">
+        <div class="container text-center">
+            <div class="row">
+                     <p>
+                        <a href="mailto:vincent.escueta22@gmail.com" target="_blank"><i class="fa fa-envelope-o wow bounceIn" data-wow-delay=".2s"></i></a>
+                        <a href="https://www.linkedin.com/in/vincentescueta/" target="_blank"><i class="fa fa-linkedin wow bounceIn"></i></a>
+                        <a href="https://github.com/vincent-escueta22" target="_blank"><i class="fa fa-github-alt wow bounceIn" data-wow-delay=".3s"></i>
+                        <a href="https://www.facebook.com/vincent.escueta22" target="_blank"<i class="fa fa-facebook wow bounceIn" data-wow-delay=".1s"></i></a>
+                    </p>
+                    <p class="update">Last Updated: December 7, 2018</p>    
+            </div>
+        </div>
+    </section>
+    <script src=../"js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/jquery.fittext.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/scrolling-nav.js"></script>
+    <script src="../js/faded.js"></script>
+
 </body>
 </html>
 

@@ -9,13 +9,62 @@
       padding-left: 100px;  
     }  
   </style> 
-<title>Vincent Escueta  |  CS 184</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <title>Vincent Escueta  |  CS 184</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Vincent Escueta">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../main.css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css" type="text/css">
 </head>
 <body>
+ <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="../index.html">Vincent Escueta</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="../index.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../about.html">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../index.html#resume">Resume</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="bg"> </header>
+<section class="bg">
 <br />
-<h1 align="middle">Assignment 3: PathTracer</h1>
+<h1 align="middle">PathTracer</h1>
     <h2 align="middle">Vincent Escueta</h2>
 
     <div class="padded">
@@ -113,7 +162,7 @@ isect->bsdf = get_bsdf();
 
      <h2 align="middle">Part 2: Bounding Volume Hierarchy</h2>
         <p>Given a scene with many primitives, it is best to split the primitives into smaller sub groups so it'll make it easier to check the sections that a ray intersects in the scene rather than check each primitive in the scene and see if a ray hits. To do this a BVH construction algorithm, construct_bvh() in bvh.cpp, is used. The algorithm starts by creating a bounding box for all the primitives given as an input. A new node is created with the new bounding box then if the amount of primitives in the input is less than or equal to a given input of max_leaf_size, the new node's prims is equal to the input primitives and the node is returned. Otherwise, the node needs to be split into left and right nodes. The bounding box is 3D so the dimension of the largest size is the dimension that will be split. The midpoint of that dimension becomes the split point and every primitive given is put either to the group left of the split point and equal to the split point, or to the group right of the split point. If both the left and right both have primitives in them, the algorithm is recursively called onto nodes containing the left and right groups.  On the other hand, if the left or the right group is empty, the next largest dimension is chosen to split the primitives. If that fails, last dimension splits the primitives. And if all 3 dimensions fail to split the primitives, the node's prims is then set equal to the input primitives. After the recursion of left and right nodes or failure to split, the node is returned.</p>
-        <p>After the sub groups are created, the groups can be used to check where and if a ray intersects a scene using a BVH intersection algorithm, intersect() in bvh.cpp. First, the algorithm checks if the ray intersects a node's bounding box using an intersect function in bbox.cpp. If the ray doesnt intersect the node's bounding box, false is returned. Otherwise, the points the ray intersects the bounding box are checked to ensure that the bounding box intersection times intersect with the ray's min_t and max_t. If it doesn't, falsre is returned. Afterwords, if the node is not a leaf node, intersect is recursively called on the node's left and right childs. If either of them have an intersection, true is returned. If a node is a leaf node, we check all the primitives in the node to see if there is an intersection. If there is an intersection, true is returned, false otherwise. However, there are  two types of intersect() functions. One has a parameter of an intersection i, the other doesnt. The one that doesn't have an input of i returns true as soon as a hit occurs. The other one has to check each primitive to a node and make sure the ray intersects with the primitive closest to min_t but still between min_t and max_t. All the pictures below, Figure 5 to Figure 11, all contain scene's with thousands of primitives compared to the small amount of primitives in Figure 1 to Figure 4.  
+        <p>After the sub groups are created, the groups can be used to check where and if a ray intersects a scene using a BVH intersection algorithm, intersect() in bvh.cpp. First, the algorithm checks if the ray intersects a node's bounding box using an intersect function in bbox.cpp. If the ray doesnt intersect the node's bounding box, false is returned. Otherwise, the points the ray intersects the bounding box are checked to ensure that the bounding box intersection times intersect with the ray's min_t and max_t. If it doesn't, falsre is returned. Afterwords, if the node is not a leaf node, intersect is recursively called on the node's left and right childs. If either of them have an intersection, true is returned. If a node is a leaf node, we check all the primitives in the node to see if there is an intersection. If there is an intersection, true is returned, false otherwise. However, there are  two types of intersect() functions. One has a parameter of an intersection i, the other doesnt. The one that doesn't have an input of i returns true as soon as a hit occurs. The other one has to check each primitive to a node and make sure the ray intersects with the primitive closest to min_t but still between min_t and max_t. All the pictures below, Figure 5 to Figure 11, all contain scene's with thousands of primitives compared to the small amount of primitives in Figure 1 to Figure 4.</p>  
         <div align="center">
             <table style="width=100%">
                 <tr>
@@ -135,7 +184,7 @@ isect->bsdf = get_bsdf();
                     <img src="images/part2_maxplanck.png" width="480px" />
                     <figcaption align="middle">Figure 8: Head of Max Planck containing 50801 primitives.</figcaption>
                     </td>
-                <!-- </tr> -->
+                </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part2_walle1.png" width="480px" />
@@ -401,7 +450,7 @@ X = camera rays per pixel(must be power of 2)
                 <tr>
                     <td align="middle">
                     <img src="images/part5_mirror.png" width="480px" />
-                    <figcaption align="middle">Figure 49: A Cornell box with spheres after mirror surfaces were implemented, but glass surfaces weren't implemented</figcaption>
+                    <figcaption align="middle">Figure 49: A Cornell box with spheres after mirror surfaces were implemented, but glass surfaces weren't implemented</figcaption> </td>
                 </tr>
             </table>
         </div>
@@ -425,7 +474,7 @@ p = r0 + ((1 - r0) * (1 - abs_cos_theta(wi))^5)
                 <tr>
                     <td align="middle">
                     <img src="images/part5_spheres_glass.png" width="480px" />
-                    <figcaption align="middle">Figure 50: A Cornell box with a mirror sphere and a glass sphere</figcaption>
+                    <figcaption align="middle">Figure 50: A Cornell box with a mirror sphere and a glass sphere</figcaption></td>
                 </tr>
             </table>
         </div>
@@ -552,6 +601,32 @@ X = camera rays per pixel(must be power of 2)
         As seen in the results of the Figures above more samples per pixel, the less noise. Initially with the first few Figures, there is a lot of white and black noise. However, by 16 samples per pixels, the black noise spots are much less apparent while the white noise is still very noticeable. Yet, by increasing the sample rate all the way to 1024, the result is Figure 69. The noise is barely noticeable and the picture is clear and shows a lot of the detail in shading and lighting.
         </p>
 </div>
+</section>
+<section class="bg" id="resume">
+        <div class="container text-center">
+            <div class="row">
+                     <p>
+                        <a href="mailto:vincent.escueta22@gmail.com" target="_blank"><i class="fa fa-envelope-o wow bounceIn" data-wow-delay=".2s"></i></a>
+                        <a href="https://www.linkedin.com/in/vincentescueta/" target="_blank"><i class="fa fa-linkedin wow bounceIn"></i></a>
+                        <a href="https://github.com/vincent-escueta22" target="_blank"><i class="fa fa-github-alt wow bounceIn" data-wow-delay=".3s"></i>
+                        <a href="https://www.facebook.com/vincent.escueta22" target="_blank"<i class="fa fa-facebook wow bounceIn" data-wow-delay=".1s"></i></a>
+                    </p>
+                    <p class="update">Last Updated: December 7, 2018</p>    
+            </div>
+        </div>
+    </section>
+    <script src=../"js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/jquery.fittext.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/scrolling-nav.js"></script>
+    <script src="../js/faded.js"></script>
+
 </body>
 </html>
 

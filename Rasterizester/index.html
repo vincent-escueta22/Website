@@ -9,17 +9,67 @@
       padding-left: 100px;  
     }  
   </style> 
-<title>Vincent Escueta  |  CS 184</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <title>Vincent Escueta  |  CS 194-26</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Vincent Escueta">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../main.css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css" type="text/css">
 </head>
 <body>
+ <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="../index.html">Vincent Escueta</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="../index.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../about.html">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../index.html#resume">Resume</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="bg"> </header>
+<section class="bg">
 <br />
 <h1 align="middle">Assignment 1: Rasterizester</h1>
     <h2 align="middle">Vincent Escueta</h2>
 
     <div class="padded">
-        The assignment went over rasterizing points, lines, and triangles. After being able to creates shapes using points, lines and triangles, we then learned how to antialias triangles using supersampling so we could take away jaggies to create smoother images. Then we learned to transform those images so we can translate and rotate images, use that to our advantage when creating images, and manipulate already created picures by moving them around the screen or being able to zoom in and out of an image. Afterwords, we were to use barycentric coordinates to create shapes with multiple colros such as a color wheel, then used the barycentric coordinates to apply textures then apply filters. I then learned how to apply different sampling methods such as nearest pixel, bilinear, and trilinear.
+        <p>The assignment went over rasterizing points, lines, and triangles. After being able to creates shapes using points, lines and triangles, we then learned how to antialias triangles using supersampling so we could take away jaggies to create smoother images. Then we learned to transform those images so we can translate and rotate images, use that to our advantage when creating images, and manipulate already created picures by moving them around the screen or being able to zoom in and out of an image. Afterwords, we were to use barycentric coordinates to create shapes with multiple colros such as a color wheel, then used the barycentric coordinates to apply textures then apply filters. I then learned how to apply different sampling methods such as nearest pixel, bilinear, and trilinear.</p>
+
 <!--         <p>Use this section to write an overview of the assignment. All of the text in your write-up should be <em>in your own words</em>. If you need to add additional HTML features to this document, you can search the <a href="http://www.w3schools.com/">http://www.w3schools.com/</a> website for instructions. To edit the HTML, you can just copy and paste existing chunks and fill in the text and image file names appropriately.</p>
         <o>The website writeup is intended to be a self-contained walkthrough of the assignment: we want this to be a piece of work which showcases your understanding of relevant concepts through both rendered images as well as written explanations about what you did to complete each part of the assignment. Try to be as clear and organized as possible when writing about your own output files or extensions to the assignment. We want to understand what you've achieved and how you've done it!</p> 
         <p>If you are well-versed in web development, feel free to ditch this template and make a better looking page. Just make sure that you include all the components as we've laid them out here. </p>
@@ -49,11 +99,11 @@
 
     <h2 align="middle">Part 2: Rasterizing single-color triangles</h2>
 <!--         <p>Describe what you did in Part 2. Show your result here. Explain any bugs you had to work through, with pictures if possible. Explain any special optimizations you did beyond simple bounding box triangle rasterization, with a timing comparison table (we suggest using the c++ clock() function around the svg.draw() command in DrawRend::redraw() to compare millisecond timings with your various optimizations off and on).</p>
- -->        <p> In part 2, I was able to create triangles given the 3 vertices of a triangle. I was able to do this by first calculating the minimum and maximum x and y coordinates to create a bounding box that I would iterate through. I also calculated the dy and dx between each set of two points. Then, I went into a double for loop that iterated through all the y values for each x starting from the min + .5 and ending at the max + .5. I then ran 3 line equations for each iteration of x and y and if all 3 equations were greater than and equal to 0 or less than and equal to 0, then I would rasterize that pixel. I tried to optimize by using the top-left edge rules but unfortunately, even though I feel like I did account for top and left edges, according to the clock function, my top-left edge cases made rasterizing triangles slower. I'm assuming it was because my cases gave too much overhead. So I stuck with the bounding box. While working through this part, I realized a lot of bugs overtime. One of the bugs that really gave me problems was when I thought I was finished with part 2 and did part 3 and 4, so I was showing off the hard I did to a friend. I went from the normal 960x640 resolution that pops up when I run rasterizester to full screen on my macbook pro which is at a 1440x900 resolution. Then I moved to the picture of the eventual color wheel which looked fine at a lower resolution as shown in Figure 4, but it had a weird line in Figure 5. I spent a couple days trying to figure this out then I realized the problem was my line equations. Initially my line equations looked like
+ -->        <p> In part 2, I was able to create triangles given the 3 vertices of a triangle. I was able to do this by first calculating the minimum and maximum x and y coordinates to create a bounding box that I would iterate through. I also calculated the dy and dx between each set of two points. Then, I went into a double for loop that iterated through all the y values for each x starting from the min + .5 and ending at the max + .5. I then ran 3 line equations for each iteration of x and y and if all 3 equations were greater than and equal to 0 or less than and equal to 0, then I would rasterize that pixel. I tried to optimize by using the top-left edge rules but unfortunately, even though I feel like I did account for top and left edges, according to the clock function, my top-left edge cases made rasterizing triangles slower. I'm assuming it was because my cases gave too much overhead. So I stuck with the bounding box. While working through this part, I realized a lot of bugs overtime. One of the bugs that really gave me problems was when I thought I was finished with part 2 and did part 3 and 4, so I was showing off the hard I did to a friend. I went from the normal 960x640 resolution that pops up when I run rasterizester to full screen on my macbook pro which is at a 1440x900 resolution. Then I moved to the picture of the eventual color wheel which looked fine at a lower resolution as shown in Figure 4, but it had a weird line in Figure 5. I spent a couple days trying to figure this out then I realized the problem was my line equations. Initially my line equations looked like</p>
  <p align="middle"><pre align="middle">l0 = (x - x0) * (y1 - y0) - (y - y1) * (x1 - x0)</pre></p>
  After looking at the lecture slides again, I realized it should've been
  <p align="middle"><pre align="middle">l0 = (y - y1) * (x1 - x0) - (x - x0) * (y1 - y0)</pre></p>
- Even though it was just the negative of what they gave in lecture, it gave me that line that just wouldnt fill itself at higher resolutions. I'm still confused on why that occured because in my conditions I checked if all my line equations were greater than and equal to 0 or if all my line equations were less than and equal to 0.
+ <p>Even though it was just the negative of what they gave in lecture, it gave me that line that just wouldnt fill itself at higher resolutions. I'm still confused on why that occured because in my conditions I checked if all my line equations were greater than and equal to 0 or if all my line equations were less than and equal to 0.</p>
  <div align="middle">
             <table style="width=100%">
                 <tr>
@@ -92,9 +142,9 @@
 
     <h2 align="middle">Part 3: Antialiasing triangles</h2>
         <!-- <p>Describe what you did in Part 3. Show your result here. Explain any bugs you had to work through, with pictures if possible. Explain the basic structure of the modifications you made to the DrawRend rasterization pipeline in order to implement supersampling. If you implement alternative antialiasing methods, describe them and include comparison pictures demonstrating the difference between your method and grid-based supersampling.</p> -->
-        <p> In part 3, we implemented antialiasing into our triangle function to get rid of jaggies by adding less opaque pixels around the edges to make them smoother. The way I approached this was by adding a super sampling buffer that was the sample rate times bigger than the framebuffer. I kept track of that super sampling buffer size by storing a total_sample_pts integer that constantly updated with a new sample rate by doing
+        <p> In part 3, we implemented antialiasing into our triangle function to get rid of jaggies by adding less opaque pixels around the edges to make them smoother. The way I approached this was by adding a super sampling buffer that was the sample rate times bigger than the framebuffer. I kept track of that super sampling buffer size by storing a total_sample_pts integer that constantly updated with a new sample rate by doing</p>
         <p align="middle"><pre align="middle">total_sample_pts = width * height * sample_rate</pre></p>
-        Along with adding a super sampling buffer and a integer that keeps track of the size the buffer should be, I also added the square root of the sample rate as well because later when we use the rasterize triangle function on sample rates greater than 1, we need to multiply each x and y point from the input by the square root of the sample rate and multiply the square root of the sample rate by the height and the width to get a updated height and width. After using rasterize triangle and getting the shapes and lines into the supersampling buffer, in a resolve function, I incremented through the super sampling buffer and stored each pixel from the super sampling buffer into the frame buffer. Each pixel from the frame buffer will get a sample rate's worth of pixels put into it. Only 1 sample rates worth of each super sampling pixel's color will be put into the corresponding pixel of the framebuffer. For example, if the sample rate was 4, 4 pixels of the super sampling buffer will be put into 1 pixel of the frame buffer and each super sampling pixel wil only have 1/4th of it's r,g,b,a colors put into the corresponding frame buffer pixel. The figures below show the difference between different sample rates. The last figure, Figure 9, shows the background as gray. The problem there was that I was adding all the elements from the supersampling buffer divided by the sample rate straight into into the framebuffer. That would make my screen grayer. So what I did to change that was I began to add all the elements from the supersampling buffer into a integer variable before dividing by the sampling rate and storing it into the framebuffer and that fixed my problem. Fixing this caused Figure 9 to become Figure 8.
+        <p>Along with adding a super sampling buffer and a integer that keeps track of the size the buffer should be, I also added the square root of the sample rate as well because later when we use the rasterize triangle function on sample rates greater than 1, we need to multiply each x and y point from the input by the square root of the sample rate and multiply the square root of the sample rate by the height and the width to get a updated height and width. After using rasterize triangle and getting the shapes and lines into the supersampling buffer, in a resolve function, I incremented through the super sampling buffer and stored each pixel from the super sampling buffer into the frame buffer. Each pixel from the frame buffer will get a sample rate's worth of pixels put into it. Only 1 sample rates worth of each super sampling pixel's color will be put into the corresponding pixel of the framebuffer. For example, if the sample rate was 4, 4 pixels of the super sampling buffer will be put into 1 pixel of the frame buffer and each super sampling pixel wil only have 1/4th of it's r,g,b,a colors put into the corresponding frame buffer pixel. The figures below show the difference between different sample rates. The last figure, Figure 9, shows the background as gray. The problem there was that I was adding all the elements from the supersampling buffer divided by the sample rate straight into into the framebuffer. That would make my screen grayer. So what I did to change that was I began to add all the elements from the supersampling buffer into a integer variable before dividing by the sampling rate and storing it into the framebuffer and that fixed my problem. Fixing this caused Figure 9 to become Figure 8.</p>
         <div align="middle">
             <table style="width=100%">
                 <tr>
@@ -131,19 +181,20 @@
                     <figcaption align="middle">Figure 13: Original size and translation of right leg up. </figcaption>
                     <img src="./images/part4_5.png" />
                     <figcaption align="middle">Figure 14: Original robot. Series of pictures looks like he's stepping towards you. </figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
 
     <h2 align="middle">Part 5: Barycentric coordinates</h2>
         <!-- <p>Describe what you did in Part 5. Introduce and explain barycentric coordinates, perhaps with an svg file that plots a single triangle with one red, one green, and one blue vertex. Show your result here. Explain any bugs you had to work through, with pictures if possible. Include at least one png of svg/basic/test7.svg. If you make any additional images with color gradients, include them.</p> -->
-        <p>In part 5 we implemented barycentric coordinates in order to create shapes that gradually change colors throughout the shape. So these shapes are one consistent color as shown in Figure 15 and 16. Barycentric coordiantes is a coordinate system created by 3 points a, b, and c. One point, a, is marked as the origin and the vectors from a to b and from a to c act as basis vectors so a nonorthognal coordinate system will be formed. Since barycentric coordinates are made up of the 3 points, the three points will always make a triangle such as the triangle in Figure 15 where one vertex is a, one is b, and the other is c. We can represent a point of barycentric coordinates in terms of &#945, &#946, and &#947. The sum of &#945, &#946, and &#947 will always be one. So if we find 2 of those points we can always find the other 1 by subtracting the other two by 1. For example we can get &#947 by doing
+        <p>In part 5 we implemented barycentric coordinates in order to create shapes that gradually change colors throughout the shape. So these shapes are one consistent color as shown in Figure 15 and 16. Barycentric coordiantes is a coordinate system created by 3 points a, b, and c. One point, a, is marked as the origin and the vectors from a to b and from a to c act as basis vectors so a nonorthognal coordinate system will be formed. Since barycentric coordinates are made up of the 3 points, the three points will always make a triangle such as the triangle in Figure 15 where one vertex is a, one is b, and the other is c. We can represent a point of barycentric coordinates in terms of &#945, &#946, and &#947. The sum of &#945, &#946, and &#947 will always be one. So if we find 2 of those points we can always find the other 1 by subtracting the other two by 1. For example we can get &#947 by doing</p>
         <p align="middle"><pre align="middle">&#947 = 1 - &#945 - &#946</pre></p>
-        To get each coordinate we just get 1 minus the distance from a vertex. For example, if our point is p, to get the &#945 coordinates with an origin of a. We just find the distance, d, between a and p and subtract 1 from that to get a distance &#945.
+        <p>To get each coordinate we just get 1 minus the distance from a vertex. For example, if our point is p, to get the &#945 coordinates with an origin of a. We just find the distance, d, between a and p and subtract 1 from that to get a distance &#945.</p>
         <p align="middle"><pre align="middle"> &#945 = 1 - d</pre></p>
-        The same applies for &#946 and &#947, but with b and c. That means the closer a point is to a vertex, the closer the corresponding coordinate is to 1. That also applies to finding a point's color. We take a weighted average between it's distance from each vertex. So we interpolate between the 3 vertices using barycentric coordinates to calculate the color. In my code I did
+        <p>The same applies for &#946 and &#947, but with b and c. That means the closer a point is to a vertex, the closer the corresponding coordinate is to 1. That also applies to finding a point's color. We take a weighted average between it's distance from each vertex. So we interpolate between the 3 vertices using barycentric coordinates to calculate the color. In my code I did</p>
         <p align="middle"><pre align="middle">p =  (a * &#945) + (b * &#946) + (c * [1 - &#945 - &#946])</pre></p>
-        where p ends up being the color. That's why points closer to the red vertex are more red, the points closer to the blue vertex are more blue, the points closer to the green vertex are more green, and the colors inbetween as the mix of red, blue, and green. After using the math, I created a color wheel that has reds, blues, greens, and all the colors in between as shown in Figure 16. Once understanding the concept, the application was easy. In my drawrend.cpp file, I created &#945 and &#946 by doing
+        <p>where p ends up being the color. That's why points closer to the red vertex are more red, the points closer to the blue vertex are more blue, the points closer to the green vertex are more green, and the colors inbetween as the mix of red, blue, and green. After using the math, I created a color wheel that has reds, blues, greens, and all the colors in between as shown in Figure 16. Once understanding the concept, the application was easy. In my drawrend.cpp file, I created &#945 and &#946 by doing</p>
         <p align="middle"><pre align="middle"> &#945_numerator = (y - y1) * (x2 - x1) - (x - x1) * (y2 - y1)</pre>
         <pre align="middle"> &#945_denominator = (y0 - y1) * (x2 - x1) - (x0 - x1) * (y2 - y1)</pre>
         <pre align="middle"> &#945 = &#945_numerator / &#945_denominator </pre>
@@ -151,7 +202,7 @@
         <pre align="middle"> &#946_denominator = (y1 - y2) * (x0 - x2) - (x1 - x2) * (y0 - y2)</pre>
         <pre align="middle"> &#946 = &#946_numerator / &#946_denominator </pre>
         </p>
-        Then I get &#947 and p in svg.cpp as I did in the equations shown above then used p to get a color which was placed on the corresponding (x, y) point I was originally given.
+        <p>Then I get &#947 and p in svg.cpp as I did in the equations shown above then used p to get a color which was placed on the corresponding (x, y) point I was originally given.
          </p>
         <div align="middle">
             <table style="width=100%">
@@ -162,6 +213,7 @@
                     <figcaption align="middle"> Figure 15: A triangle made using barycentric coordinates</figcaption>
                     <img src="./images/part5.png" />
                     <figcaption align="middle"> Figure 16: A color wheel made using barycentric coordinates</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -180,6 +232,7 @@
                     <figcaption align="middle"> Figure 17: Nearest pixel sampling of a map zoomed into the Philippines exposes individual pixels</figcaption>
                     <img src="./images/part6_b.png" />
                     <figcaption align="middle"> Figure 18: Same map, but since it is with the bilienar sampling method, it is noticeably blurry, but the pixels blend well to create a better picture</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -188,11 +241,11 @@
     <h2 align="middle">Part 7: Level sampling with mipmaps for texture mapping</h2>
         <!-- <p>Describe what you did in Part 7. Pull some png images from the internet and create your own svg files to demonstrate the strengths and weaknesses of various techniques at different zoom levels. You can take existing files in svg/texmap/ and replace the texture filename to try out new images. Show at least one example (using a png file you find yourself) comparing all four combinations of one of L_ZERO and L_NEAREST with one of P_NEAREST and P_BILINEAR at a zoomed out viewpoint. If you implement any extra filtering methods, describe them and show comparisons.</p> -->
         <p>
-        In part 7, I used what I did in part 6, but added more to it. In drawrend.cpp, I also get the barycentric coordinates for a point greater in the x direction by 1 and get the barycentric coordinates for a point greater in the y direction by 1 as well. I use svg.cpp to convert those in uv coordinates like I did in part 6. In part 6, we assumed that the MIP map level was at zero. But now, we have a setting to determine if we are sampling at level 0 or a different level. A MIP map is a series of textures that are based on resolution. The higher the level, the lower the resolution. The resolution of a specific level is usually half of it's previous one. So lets say level 7 mip map will be a resolution of 128x128, a level 6 mip map will have a resolution of 256x256. To determine what level we are working at, we first find L.
-        <p align="middle"><pre align="middle"> L = max(&#8730((du/dx)^2 + (dv/dx)^2), &#8730((du/dy)^2 + (dv/dy)^2)</pre>
-        We then calculate D, the log base 2 of L 
-        <p align="middle"><pre align="middle"> D = log(L)</pre>
-        where D is our MIP mapping level. So after finding the level, we can now apply that to the bilinear and nearest sample functions. Figure 19, 20, 21, and 22 compare the different filters. Figure 19 and 21 show 0 level MIP mapping and the images are good. However, when changing the MIP mapping level in Figures 20 and 22, the images look much cleaner, but a little blurrier as well. I also created a case for bilinear interpolation of the level. We get the sampling at the current integer level and the level higher. We then add the weighted values of each of the results depending on how far the float value of the level is compared to the current and higher level. It creates trilinear sampling when doing bilinear sampling with bilinear interpolation. An example of that can be seen at Figure 23. I also zoomed into one of the Starcraft units in Figure 24 and 25 to see the difference between sampling up close and the bilinear sampling made the pixelated nearest sampling image much cleaner.
+        In part 7, I used what I did in part 6, but added more to it. In drawrend.cpp, I also get the barycentric coordinates for a point greater in the x direction by 1 and get the barycentric coordinates for a point greater in the y direction by 1 as well. I use svg.cpp to convert those in uv coordinates like I did in part 6. In part 6, we assumed that the MIP map level was at zero. But now, we have a setting to determine if we are sampling at level 0 or a different level. A MIP map is a series of textures that are based on resolution. The higher the level, the lower the resolution. The resolution of a specific level is usually half of it's previous one. So lets say level 7 mip map will be a resolution of 128x128, a level 6 mip map will have a resolution of 256x256. To determine what level we are working at, we first find L.</p>
+        <p align="middle"><pre align="middle"> L = max(&#8730((du/dx)^2 + (dv/dx)^2), &#8730((du/dy)^2 + (dv/dy)^2)</pre></p>
+        <p>We then calculate D, the log base 2 of L</p>
+        <p align="middle"><pre align="middle"> D = log(L)</pre></p>
+        <p>where D is our MIP mapping level. So after finding the level, we can now apply that to the bilinear and nearest sample functions. Figure 19, 20, 21, and 22 compare the different filters. Figure 19 and 21 show 0 level MIP mapping and the images are good. However, when changing the MIP mapping level in Figures 20 and 22, the images look much cleaner, but a little blurrier as well. I also created a case for bilinear interpolation of the level. We get the sampling at the current integer level and the level higher. We then add the weighted values of each of the results depending on how far the float value of the level is compared to the current and higher level. It creates trilinear sampling when doing bilinear sampling with bilinear interpolation. An example of that can be seen at Figure 23. I also zoomed into one of the Starcraft units in Figure 24 and 25 to see the difference between sampling up close and the bilinear sampling made the pixelated nearest sampling image much cleaner.
         </p>
         <div align="middle">
             <table style="width=100%">
@@ -213,6 +266,7 @@
                     <figcaption align="middle"> Figure 24: Zoomed nearest pixel sampling</figcaption>
                     <img src="./images/part7_b_zoom.png" />
                     <figcaption align="middle"> Figure 25: Zoomed bilinear filtering</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -229,11 +283,39 @@
                     <figcaption align="middle"> Figure 26: The inspiration for my competition creation</figcaption>
                     <img src="./images/part8_competition.png" />
                     <figcaption align="middle"> Figure 27: Stormtrooper made out of triangles</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
 
 </div>
+</p></p></div>
+</section>
+<section class="bg" id="resume">
+        <div class="container text-center">
+            <div class="row">
+                     <p>
+                        <a href="mailto:vincent.escueta22@gmail.com" target="_blank"><i class="fa fa-envelope-o wow bounceIn" data-wow-delay=".2s"></i></a>
+                        <a href="https://www.linkedin.com/in/vincentescueta/" target="_blank"><i class="fa fa-linkedin wow bounceIn"></i></a>
+                        <a href="https://github.com/vincent-escueta22" target="_blank"><i class="fa fa-github-alt wow bounceIn" data-wow-delay=".3s"></i>
+                        <a href="https://www.facebook.com/vincent.escueta22" target="_blank"<i class="fa fa-facebook wow bounceIn" data-wow-delay=".1s"></i></a>
+                    </p>
+                    <p class="update">Last Updated: December 7, 2018</p>    
+            </div>
+        </div>
+    </section>
+    <script src=../"js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/jquery.fittext.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/scrolling-nav.js"></script>
+    <script src="../js/faded.js"></script>
+
 </body>
 </html>
 
