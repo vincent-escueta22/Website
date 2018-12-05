@@ -34,5 +34,5 @@ $(document).scroll(function() {
     $('.navbar').css('background-color', 'transparent');
     $('.navbar').css('box-shadow', '0 0 0 0 transparent');
   }
-  $('.navbar-static').css('background-color', '#fff');
+  $('.navbar-static').css('background-color', 'transparent');
 });
