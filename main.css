@@ -53,12 +53,12 @@ p {
 
 .bg-primary {
     color: #eee;
-    background-color: #111;
+    background-color: #222;
 }
 
 .bg-dark {
     color: #eee;
-    background-color: #222;
+    background-color: #111;
 }
 
 .text-faded {
