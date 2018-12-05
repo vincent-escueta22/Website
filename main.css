@@ -178,6 +178,7 @@ header {
     color: #fff;
     background-image: url(../img/ocean.JPG);
     background-position: center;
+    background-color: rgba(0,0,0,0.5);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -185,7 +186,6 @@ header {
 }
 
 header .header-content {
-    background-color: rgba(0,0,0,0.5);
     position: relative;
     width: 100%;
     padding: 100px 15px;
