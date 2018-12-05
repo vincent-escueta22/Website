@@ -178,7 +178,6 @@ header {
     color: #fff;
     background-image: url(../img/ocean.JPG);
     background-position: center;
-    background-color: rgba(0,0,0,0.5);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -209,6 +208,9 @@ header .header-content .header-content-inner p {
     font-weight: 300;
     color: rgba(255,255,255,0.8);
 }
+
+.boxed {
+      background-color: rgba(0,0,0,0.5);
 
 @media(min-width:768px) {
     header {
