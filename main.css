@@ -52,12 +52,12 @@ p {
 }
 
 .bg-primary {
-    color: #111;
+    color: #444;
     background-color: #fff;
 }
 
 .bg-dark {
-    color: #111;
+    color: #444;
     background-color: #fff;
 }
 
@@ -90,23 +90,23 @@ aside {
     text-transform: uppercase;
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
     font-weight: 700;
-    color:  #111;
+    color:  #444;
 }
 
 .navbar-default .navbar-header .navbar-brand:hover,
 .navbar-default .navbar-header .navbar-brand:focus {
-    color:  #222;
+    color:  #333;
 }
 
 .navbar-default .nav > li>a,
 .navbar-default .nav>li>a:focus {
     font-weight: 700;
-    color: #111;
+    color: #444;
 }
 
 .navbar-default .nav > li>a:hover,
 .navbar-default .nav>li>a:focus:hover {
-  color: #222
+  color: #333
 }
 
 .navbar-default .nav > li.active>a,
@@ -126,22 +126,22 @@ aside {
     }
 
     .navbar-default .navbar-header .navbar-brand {
-        color: color: rgba(0,0,0,.9);
+        color: color: #444;
     }
 
     .navbar-default .navbar-header .navbar-brand:hover,
     .navbar-default .navbar-header .navbar-brand:focus {
-        color: #222;
+        color: #333;
     }
 
     .navbar-default .nav > li>a,
     .navbar-default .nav>li>a:focus {
-        color: rgba(0,0,0,.9);
+        color: #444;
     }
 
     .navbar-default .nav > li>a:hover,
     .navbar-default .nav>li>a:focus:hover {
-        color: #222;
+        color: #333;
     }
 
     .navbar-default.affix {
@@ -151,22 +151,22 @@ aside {
 
     .navbar-default.affix .navbar-header .navbar-brand {
         font-size: 14px;
-        color: #111;
+        color: #444;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand:hover,
     .navbar-default.affix .navbar-header .navbar-brand:focus {
-        color: #222;
+        color: #333;
     }
 
     .navbar-default.affix .nav > li>a,
     .navbar-default.affix .nav>li>a:focus {
-        color: #111;
+        color: #444;
     }
 
     .navbar-default.affix .nav > li>a:hover,
     .navbar-default.affix .nav>li>a:focus:hover {
-        color: #222;
+        color: #333;
     }
 }
 
@@ -175,7 +175,7 @@ header {
     width: 100%;
     min-height: auto;
     text-align: center;
-    color: #111;
+    color: #fff;
     background-image: url(../img/ocean.JPG);
     background-position: center;
     -webkit-background-size: cover;
@@ -185,6 +185,7 @@ header {
 }
 
 header .header-content {
+    background-color: rgba(0,0,0,0.5);
     position: relative;
     width: 100%;
     padding: 100px 15px;
@@ -206,7 +207,7 @@ header .header-content .header-content-inner p {
     margin-bottom: 50px;
     font-size: 16px;
     font-weight: 300;
-    color: rgba(0,0,0,1);
+    color: rgba(255,255,255,0.8);
 }
 
 @media(min-width:768px) {
@@ -332,7 +333,7 @@ header .header-content .header-content-inner p {
 .btn-default {
     border-color: #fff;
     color: #222;
-    background-color: #fff;
+    background-color: #444;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -374,7 +375,7 @@ fieldset[disabled] .btn-default:active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
     border-color: #fff;
-    background-color: #fff;
+    background-color: #444;
 }
 
 .btn-default .badge {
