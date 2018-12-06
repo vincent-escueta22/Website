@@ -53,12 +53,12 @@ p {
 
 .bg-primary {
     color: #444;
-    background-color: #fff;
+    background-color: #84827D;
 }
 
 .bg-dark {
     color: #444;
-    background-color: #fff;
+    background-color:#84827D;
 }
 
 .text-faded {
@@ -80,11 +80,10 @@ aside {
 .navbar-default {
     border-color: rgba(34,34,34,0);
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
-    background-color: #fff;
+    background-color: #84827D;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
-    text-shadow: 1px 1px 1px #fff;
 }
 
 .navbar-default .navbar-header .navbar-brand {
@@ -123,7 +122,7 @@ aside {
 @media(min-width:768px) {
     .navbar-default {
         border-color: transparent;
-        background-color: transparent;;
+        background-color: #84827D;
     }
 
     .navbar-default .navbar-header .navbar-brand {
@@ -183,7 +182,6 @@ header {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    text-shadow: 1px 1px 1px #fff;
 }
 
 header .header-content {
