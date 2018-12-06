@@ -16,11 +16,11 @@ body {
 
 body {
     opacity: 1;
-    transition: 3s opacity;
+    transition: 2s opacity;
 }
 body.fade-out {
     opacity: 0;
-    transition: 3s opacity;
+    transition: none;
 }
 
 hr {
