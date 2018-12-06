@@ -499,3 +499,7 @@ body {
 .update {
   font-size: 8px;
 }
+
+.extra-padding {
+  padding-top: 50px;
+}
