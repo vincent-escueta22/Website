@@ -42,7 +42,7 @@ a {
 
 a:hover,
 a:focus {
-    color: #444;
+    color: #313d4b;
 }
 
 h1,
@@ -62,7 +62,7 @@ p {
 
 
 .bg {
-    color: #444;
+    color: #313d4b;
 /*     background-color:#84827D; */
     background-color: #f9f8fd;
 }
@@ -104,7 +104,7 @@ aside {
 
 .navbar-default .navbar-header .navbar-brand:hover,
 .navbar-default .navbar-header .navbar-brand:focus {
-    color:  #444;
+    color:  #313d4b;
 }
 
 .navbar-default .nav > li>a,
@@ -116,7 +116,7 @@ aside {
 
 .navbar-default .nav > li>a:hover,
 .navbar-default .nav>li>a:focus:hover {
-  color: #444
+  color: #313d4b
 }
 
 .navbar-default .nav > li.active>a,
@@ -145,7 +145,7 @@ aside {
 
     .navbar-default .navbar-header .navbar-brand:hover,
     .navbar-default .navbar-header .navbar-brand:focus {
-        color: #444;
+        color: #313d4b;
     }
 
     .navbar-default .nav > li>a,
@@ -155,7 +155,7 @@ aside {
 
     .navbar-default .nav > li>a:hover,
     .navbar-default .nav>li>a:focus:hover {
-        color: #444;
+        color: #313d4b;
     }
 
     .navbar-default.affix {
@@ -170,7 +170,7 @@ aside {
 
     .navbar-default.affix .navbar-header .navbar-brand:hover,
     .navbar-default.affix .navbar-header .navbar-brand:focus {
-        color: #444;
+        color: #313d4b;
     }
 
     .navbar-default.affix .nav > li>a,
@@ -350,7 +350,7 @@ header .header-content .header-content-inner p {
 .btn-default {
     border-color: #f9f8fd;
     color: #f9f8fd;
-    background-color: #444;
+    background-color: #313d4b;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -363,7 +363,7 @@ header .header-content .header-content-inner p {
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
     border-color: #ededed;
-    color: #222;
+    color: #313d4b;
     background-color: #f2f2f2;
 }
 
@@ -392,12 +392,12 @@ fieldset[disabled] .btn-default:active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
     border-color: #f9f8fd;
-    background-color: #444;
+    background-color: #313d4b;
 }
 
 .btn-default .badge {
     color: #f9f8fd;
-    background-color: #222;
+    background-color: #313d4b;
 }
 
 .btn-primary {
@@ -468,13 +468,13 @@ fieldset[disabled] .btn-primary.active {
 ::-moz-selection {
     text-shadow: none;
     color: #f9f8fd;
-    background: #222;
+    background: #313d4b;
 }
 
 ::selection {
     text-shadow: none;
     color: #f9f8fd;
-    background: #222;
+    background: #313d4b;
 }
 
 img::selection {
@@ -488,7 +488,7 @@ img::-moz-selection {
 }
 
 body {
-    webkit-tap-highlight-color: #222;
+    webkit-tap-highlight-color: #313d4b;
 }
 
 .update {
