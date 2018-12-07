@@ -120,12 +120,14 @@ aside {
 
 .navbar-default .nav > li.active>a,
 .navbar-default .nav>li.active>a:focus {
-    background-color: transparent;
+/*     background-color: transparent; */
+    background-color: #fff;
 }
 
 .navbar-default .nav > li.active>a:hover,
 .navbar-default .nav>li.active>a:focus:hover {
-    background-color: transparent;
+/*     background-color: transparent; */
+    background-color: #fff;
 }
 
 @media(min-width:768px) {
@@ -157,7 +159,7 @@ aside {
 
     .navbar-default.affix {
         border-color: transparent;
-        background-color: white;
+        background-color: #fff;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand {
