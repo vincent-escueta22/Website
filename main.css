@@ -11,7 +11,7 @@ body {
 }
 
 body {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins';
 }
 
 body {
@@ -51,7 +51,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins';
 }
 
 p {
@@ -85,7 +85,7 @@ aside {
 
 .navbar-default {
     border-color: rgba(34,34,34,0);
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins';
 /*     background-color: #84827D; */
 /*     background-color: transparent; */
     background-color: #fff;
@@ -96,7 +96,7 @@ aside {
 
 .navbar-default .navbar-header .navbar-brand {
 /*     text-transform: uppercase; */
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins';
     font-weight: 700;
     color:  #444;
     font-size: 32px;
@@ -207,38 +207,31 @@ header {
     background-size: cover;
     -o-background-size: cover;
 }
-
 header .header-content {
     position: relative;
     width: 100%;
     padding: 100px 15px;
     text-align: center;
 }
-
 header .header-content .header-content-inner h1 {
     margin-top: 0;
     margin-bottom: 0;
     text-transform: uppercase;
     font-weight: 700;
 }
-
 header .header-content .header-content-inner hr {
     margin: 30px auto;
 }
-
 header .header-content .header-content-inner p {
     margin-bottom: 50px;
     font-size: 16px;
     font-weight: 300;
     color: #000;
 }
-
-
 @media(min-width:768px) {
     header {
         min-height: 100%;
     }
-
     header .header-content {
         position: absolute;
         top: 50%;
@@ -247,13 +240,11 @@ header .header-content .header-content-inner p {
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
     }
-
     header .header-content .header-content-inner {
         margin-right: auto;
         margin-left: auto;
         max-width: 1000px;
     }
-
     header .header-content .header-content-inner p {
         margin-right: auto;
         margin-left: auto;
@@ -314,8 +305,8 @@ header .header-content .header-content-inner p {
 
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category,
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
-    padding: 0 18px;
-    font-family: 'Oswald', sans-serif;
+    padding: 0 15px;
+    font-family: 'Poppins';
 }
 
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
@@ -465,7 +456,7 @@ fieldset[disabled] .btn-primary.active {
     border: 0;
     border-radius: 300px;
     text-transform: uppercase;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Poppins';
     font-weight: 700;
 }
 
