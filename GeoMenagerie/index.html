@@ -9,11 +9,60 @@
       padding-left: 100px;  
     }  
   </style> 
-<title>Vincent Escueta  |  CS 184</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <title>Vincent Escueta  |  CS 184</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Vincent Escueta">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../main.css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="../css/animate.min.css" type="text/css">
 </head>
-<body>
+<body class="fade-out">
+ <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Vincent Escueta</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="../index.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../about.html">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../index.html#resume">Resume</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <header class="bg"> </header>
+<section class="bg">
 <br />
 <h1 align="middle">Assignment 2: GeoMenagerie</h1>
     <h2 align="middle">Vincent Escueta</h2>
@@ -33,11 +82,13 @@
                     <td align="middle">
                     <img src="images/part1_with_edges.png" width="800px" />
                     <figcaption align="middle">Figure 1: The result showing the edges and faces</figcaption>
+                    </td>
                 </tr>
                  <tr>
                     <td align="middle">
                     <img src="images/part1_without_edges.png" width="800px" />
                     <figcaption align="middle">Figure 2: Result without showing where the edges and faces are </figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -55,11 +106,13 @@
                     <td align="middle">
                     <img src="images/part2_front.png" width="800px" />
                     <figcaption align="middle">Figure 3: Front of the teapot with averaged normals</figcaption>
+                    </td>
                 </tr>
                  <tr>
                     <td align="middle">
                     <img src="images/part2_back.png" width="800px" />
                     <figcaption align="middle">Figure 4: Back of the teapot with averaged normals</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -73,16 +126,19 @@
                     <td align="middle">
                     <img src="images/part3_original.png" width="800px" />
                     <figcaption align="middle">Figure 5: Original teapot mesh</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part3_face_messup.png" width="800px" />
                     <figcaption align="middle">Figure 6: Flip edge mess up due to not accounting for face halfedges</figcaption>
+                    </td>
                 </tr>
                  <tr>
                     <td align="middle">
                     <img src="images/part3_flipped_edges.png" width="800px" />
                     <figcaption align="middle">Figure 7: Teapot with flipped edges</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -96,11 +152,13 @@
                     <td align="middle">
                     <img src="images/part4.png" width="800px" />
                     <figcaption align="middle">Figure 8: After flipping and splitting edges</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part4_drawing.jpg" width="800px" />
                     <figcaption align="middle">Figure 9: Drawing to help me figure out my problems</figcaption>
+                    </td>
                 </tr>
 
             </table>
@@ -159,49 +217,59 @@
                     <td align="middle">
                     <img src="images/part5_square_middle_edges_split.png" width="400px" />
                     <figcaption align="middle">Figure 19: Square mesh after splitting middle edge of each face</figcaption>
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_middle_edges_split1.png" width="400px" />
                     <figcaption align="middle">Figure 20: Middle edge split after 1 subdivision</figcaption>
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_middle_edges_split2.png" width="400px" />
                     <figcaption align="middle">Figure 21: Middle edge split after 2 subdivision</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part5_square_outside_edges_also_split.png" width="400px" />
                     <figcaption align="middle">Figure 22: splitting cube edges of Figure 19</figcaption>
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_outside_edges_also_split1.png" width="400px" />
                     <figcaption align="middle">Figure 23: 1 subdivision of Figure 22</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part5_square_outside_edges_also_split2.png" width="400px" />
                     <figcaption align="middle">Figure 24: 2 subdivision of Figure 22</figcaption>
-
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_outside_edges_also_split3.png" width="400px" />
                     <figcaption align="middle">Figure 25: Center of Figure 24 to show symmetry</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part5_square_repeat_both.png" width="400px" />
                     <figcaption align="middle">Figure 26: Splitting all middle edges and cube edges again</figcaption>
-
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_repeat_both1.png" width="400px" />
                     <figcaption align="middle">Figure 27: 1 subdivision of Figure 26 </figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part5_square_repeat_both2.png" width="400px" />
                     <figcaption align="middle">Figure 28: 2 subdivision of Figure 26</figcaption>
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_repeat_both3.png" width="400px" />
                     <figcaption align="middle">Figure 29: Center of Figure 26 to show symmetry</figcaption>
+                    </td>
                     <td align="middle">
                     <img src="images/part5_square_repeat_both_no_edges.png" width="400px" />
                     <figcaption align="middle">Figure 30: Figure 29 without showing edges and vertices</figcaption>
+                    </td>
                 </tr>
 
             </table>
@@ -225,11 +293,13 @@
                     <td align="middle">
                     <img src="images/part6_phong.png" width="800px" />
                     <figcaption align="middle">Figure 31: Phong shading</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part6_environment.png" width="800px" />
                     <figcaption align="middle">Figure 32: Environment map reflection shading</figcaption>
+                    </td>
                 </tr>
 
             </table>
@@ -244,86 +314,127 @@
                     <td align="middle">
                     <img src="images/part7_inspiration.jpg" width="500px" />
                     <figcaption align="middle">Figure 33: The inspiration for the mesh, my dog. Her name is Rey.</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_final.png" width="500px" />
                     <figcaption align="middle">Figure 34: The final submission without any subdivision, I think it looks best this way. It's white cause my dog is white</figcaption>
+                    </td>
                 </tr>
-                                <tr>
+                <tr>
                     <td align="middle">
                     <img src="images/part7_no_upsample_smooth.png" width="500px" />
                     <figcaption align="middle">Figure 35: smoothened before subdivision</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_original.png" width="800px" />
                     <figcaption align="middle">Figure 36: The dog mesh without any edits</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_front.png" width="800px" />
                     <figcaption align="middle">Figure 37: front of dog</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_side.png" width="800px" />
                     <figcaption align="middle">Figure 38: side of dog</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_butt.png" width="800px" />
                     <figcaption align="middle">Figure 39: back of dog</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_original_no_edges.png" width="800px" />
                     <figcaption align="middle">Figure 40: The dog mesh without showing the edges and faces</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_upsample.png" width="800px" />
                     <figcaption align="middle">Figure 41: 1 round of subdivision</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_upsample_no_edges.png" width="800px" />
                     <figcaption align="middle">Figure 42: 1 round of subdivision without edges or faces</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_upsample2.png" width="800px" />
                     <figcaption align="middle">Figure 43: 2 rounds of subdivision</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_upsample2_no_edges.png" width="800px" />
                     <figcaption align="middle">Figure 44: 2 rounds of subdivision without edges or faces</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_upsample2_smooth.png" width="800px" />
                     <figcaption align="middle">Figure 45: 2 rounds of subdivision smooth</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_phong1.png" width="800px" />
                     <figcaption align="middle">Figure 46: blue phong shading</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_phong2.png" width="800px" />
                     <figcaption align="middle">Figure 47: white phong shading</figcaption>
+                    </td>
                 </tr>
                 <tr>
                     <td align="middle">
                     <img src="images/part7_environment.png" width="800px" />
                     <figcaption align="middle">Figure 48: environment shading</figcaption>
+                    </td>
                 </tr>
             </table>
         </div>
 
 </div>
+</section>
+<section class="bg" id="resume">
+        <div class="container text-center">
+            <div class="row">
+                     <p>
+                        <a href="mailto:vincent.escueta22@gmail.com" target="_blank"><i class="fa fa-envelope-o wow bounceIn" data-wow-delay=".2s"></i></a>
+                        <a href="https://www.linkedin.com/in/vincentescueta/" target="_blank"><i class="fa fa-linkedin wow bounceIn"></i></a>
+                        <a href="https://github.com/vincent-escueta22" target="_blank"><i class="fa fa-github-alt wow bounceIn" data-wow-delay=".3s"></i>
+                        <a href="https://www.facebook.com/vincent.escueta22" target="_blank"<i class="fa fa-facebook wow bounceIn" data-wow-delay=".1s"></i></a>
+                    </p>
+                    <p class="update">Last Updated: December 7, 2018</p>    
+            </div>
+        </div>
+    </section>
+    <script src=../"js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/jquery.fittext.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/scrolling-nav.js"></script>
+    <script src="../js/faded.js"></script>
 </body>
 </html>
 
