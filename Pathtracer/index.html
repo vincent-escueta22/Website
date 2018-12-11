@@ -65,7 +65,6 @@
 <section class="bg">
 <br />
 <h1 align="middle">PathTracer</h1>
-    <h2 align="middle">Vincent Escueta</h2>
 
     <div class="padded">
         <p>The goal of this project is to create a path tracer that produces images from meshes that are lit up through global(direct and indirect) illumination given a light source. Along with that, besides diffuse objects, glass and mirror objects could be rendered as well. However, to achieve this final result, rays first had to be created from the camera that point to the mesh. To calculate where the rays hit the mesh, BVH(Bounding Volume Hierarchy) algorithms were needed to be able to split a mesh into groups so a ray can easily find where an intersection takes place instead of searching through every primitive on a mesh. For each point where a ray's closest intersection occurs, the amount of light directly from a light source that reaches the point of intersection has to be calculated, direct illumination. Along with that, the amount of light that reaches a a point of intersection from other light rays not directly from a light source, but from extra light reflecting or refracting from other objects have to be calculated as well, indirect illumination. The sum of those two lights produce the final images. Some materials such as mirrors have special properties to reflect light and materials such as glass have special properties to reflect some light and refract other light rays. So these were materials and properties that were implemented as well.</p>
