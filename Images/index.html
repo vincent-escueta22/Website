@@ -25,6 +25,7 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="slideshow.css">
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="../css/animate.min.css" type="text/css">
@@ -71,6 +72,7 @@
         <p>Sergei Mikhailovich Prokudin-Gorskii took 3 cameras. He put a blue filter on one, a green filter on another, and a red filter over the last. He put the green camera on top the red camera and the blue camera on top of the green one. He then took these cameras and photographs of scenes with all three cameras. Sergei took thousands of pictures, but never got to see them in color. By aligning his photographs using normalized cross correlation, the colored photographs that Sergei wanted have now come to life.</p></div>
 
     <h2 align="middle"> Results for all images </h2>
+        <div class="slideshow-container">
          <div class="slide fade">
             <table style="width=100%">
                 <tr>
@@ -80,7 +82,8 @@
                 </tr>
             </table>
          </div>
-c            <table style="width=100%">
+         <div class="slide fade">
+            <table style="width=100%">
                 <tr>
                     <td align="middle">
                     <img src="img/harvestersEdgeColored.jpg" width="720px" />
@@ -232,6 +235,9 @@ c            <table style="width=100%">
                 </tr>
             </table>
          </div>
+         <a class="prev hvr-grow" onclick="plusSlides(-1)">&#10094;</a>
+         <a class="next hvr-grow" onclick="plusSlides(1)">&#10095;</a>
+        </div>
 
     <h2 align="middle">Normalized Cross Correlation (NCC)</h2>
         <p>To produce colored images, the blue, green, and red images must be well aligned. To do this, we move the red and green photographs over the blue until they almost perfectly align. To find the best alignment, we took the red and green images and displaceed them horizonally and vertically ([-15, 15] pixels each direction) and found the normalized cross correlation between the green image and the blue image then with the red image and the blue image at each displacement based on gray intensities. The displaced green and red photos that give the best correlation with the blue photos are then used to create the colored rgb image. The equation for the normalized cross correlation is</p>
