@@ -503,3 +503,7 @@ body {
   font-size: 18px;
 }
 
+.photos img {
+    max-height: 100%;
+    max-width: 100%;
+}
