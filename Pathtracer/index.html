@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 
-    <title>Vincent Escueta  |  Rasterizester</title>
+    <title>Vincent Escueta  |  Pathtracer</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,266 +57,529 @@
     <header class="bg"> </header>
 <section class="bg">
 <br />
-<h1 align="middle">Rasterizester</h1>
-        <p>The assignment went over rasterizing points, lines, and triangles. After being able to creates shapes using points, lines and triangles, we then learned how to antialias triangles using supersampling so we could take away jaggies to create smoother images. Then we learned to transform those images so we can translate and rotate images, use that to our advantage when creating images, and manipulate already created picures by moving them around the screen or being able to zoom in and out of an image. Afterwords, we were to use barycentric coordinates to create shapes with multiple colros such as a color wheel, then used the barycentric coordinates to apply textures then apply filters. I then learned how to apply different sampling methods such as nearest pixel, bilinear, and trilinear.</p>
-<!--         <p>Use this section to write an overview of the assignment. All of the text in your write-up should be <em>in your own words</em>. If you need to add additional HTML features to this document, you can search the <a href="http://www.w3schools.com/">http://www.w3schools.com/</a> website for instructions. To edit the HTML, you can just copy and paste existing chunks and fill in the text and image file names appropriately.</p>
-        <o>The website writeup is intended to be a self-contained walkthrough of the assignment: we want this to be a piece of work which showcases your understanding of relevant concepts through both rendered images as well as written explanations about what you did to complete each part of the assignment. Try to be as clear and organized as possible when writing about your own output files or extensions to the assignment. We want to understand what you've achieved and how you've done it!</p> 
-        <p>If you are well-versed in web development, feel free to ditch this template and make a better looking page. Just make sure that you include all the components as we've laid them out here. </p>
-        <p>For required images, keep the image size fixed at the native width of the file to avoid artifacts. You might want to adjust your rasterizester window size down to be less than 1000 pixels wide if you are working on a retina display screen, since the 1920 by 1280 images will be enormous on normal monitors.</p> -->
+<h1 align="middle">PathTracer</h1>
 
-    <h2 align="middle">Part 1: Rasterizing Lines</h2>
-      <!--   <p>Describe what you did in Part 1. Show your result here. You could talk about which line rasterizing algorithm you used, any issues you ran into and had to debug (with example images), and any clever modifications you made to the algorithm to reduce the number of special cases. For part 1, we had to</p> -->
-        <p> In part 1, I created my lines using the Bresenham's algorithm. The algorithm itself wasn't too complicated. Basically,the algorithm keeps tracks of an error value which is used to keep track if we need to add 1 to the current y index we are at while indexing through all x from x0 to x1. If two times the error is greater than dx, then we increment y by 1, if not, y does not change. This algorithm only works for slopes from 0 to 1 and the result is shown in Figure 2. Figure 2 shows that my explanation only works for one of eight octants. If dy/dx was greater than 1 or less than -1 then we would switch y and x, if x0 was less than x1 then I swapped them. Then I manipulated the algorithm depending on if slope was positive or negative and if x and y were swapped. After applying this, I was able to work with all eight octants on a graph as shown in Figure 1.</p>
+        <p>The goal of this project is to create a path tracer that produces images from meshes that are lit up through global(direct and indirect) illumination given a light source. Along with that, besides diffuse objects, glass and mirror objects could be rendered as well. However, to achieve this final result, rays first had to be created from the camera that point to the mesh. To calculate where the rays hit the mesh, BVH(Bounding Volume Hierarchy) algorithms were needed to be able to split a mesh into groups so a ray can easily find where an intersection takes place instead of searching through every primitive on a mesh. For each point where a ray's closest intersection occurs, the amount of light directly from a light source that reaches the point of intersection has to be calculated, direct illumination. Along with that, the amount of light that reaches a a point of intersection from other light rays not directly from a light source, but from extra light reflecting or refracting from other objects have to be calculated as well, indirect illumination. The sum of those two lights produce the final images. Some materials such as mirrors have special properties to reflect light and materials such as glass have special properties to reflect some light and refract other light rays. So these were materials and properties that were implemented as well.</p>
+
+    <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
+        <p>To generate light rays that find its ways to the pixels of the camera, we don't start from the light to find the rays that hit the camera because we would generate more rays that needed. So we start from the camera and create rays that would hit the light because radiance entering a pixel on the camera from a point, p, is equal to the radiance leaving that pixel towards the point p. So we generate a ray starting from a point from the camera using a function generate_ray() in camera.cpp. That ray takes in coordinates x and y where both coordinates range from 0 to 1. We use the (x, y) coordinate to find its coordinate on a 3D plane where the bottom left of the plane is (-tan(radians(hFov) * .5), -tan(radians(vFov) * .5), -1), and the top right of the plane is at  ( tan(radians(hFov) * .5), tan(radians(vFov)*.5), -1). hFov is the horizontal field of view angle and vFov is the vertical Field of view angle given as camera parameters. We interpolated where the point (x ,y) is also on the plane where 
+        <pre align="middle">
+x = -tan(radians(hFov) * .5) * (1 - x) + tan(radians(hFov)*.5) * x
+y = -tan(radians(vFov) * .5) * (1 - y) + tan(radians(vFov)*.5) * y
+        z = -1 </pre>
+        The new vector is converted to world space then normalized, then a ray is generated with an origin at a camera parameter pos, a direction towards the new vector, a min_t is nClip and max_t is fClip where nClip and fClip are camera parameters. That means the ray vector goes from pos, towards, to the pixel on the camera. This new ray is returned.</p> 
+        <p>Next in the function raytrace_pixel() in pathtracer.cpp. given a 2D point, (x, y) within a plane with a width and height of a sampleBuffer, which is a pathtracer parameter. Depending on a pathtracer parameter, ns_aa, we generate ns_aa random rays that have a 2D coordinate between (x, y) and (x + 1, y + 1). If ns_aa is only 1, the ray generated is (x + .5, y + .5). For each ray we call a function trace_ray() which takes in a ray, our generated rays, and a boolean which is marked as true since it is a ray from the camera and returns the radiance that reaches a camera pixel from each generated ray, add the radiance from each ray, then average by dividing by ns_aa. This averaged radiance is returned and displayed in Figure 1 to Figure 4. </p>
+        <p>Lastly, since all the scenes are made of primitives, triangles and spheres, intersect functions for triangles and spheres were tested to see if a ray hits a primitive. To see if a ray hits a triangle, the Möller-Trumbore algorithm was used. Given the ray, r, and the 3 points of a triangle, p1, p2, and p3. We calculated some vectors
+        <pre align="middle">
+e1 = p2 - p1
+e2 = p3 - p1
+s = r.origin - p1;
+s1 = r.direction x e2
+s2 = s x e1
+        </pre>
+        First a time, t, was calculated to see if t lies between the r's min_t and max_t. If it doesnt, then the hit is not a true hit, the function returns false.
+        <pre align="middle">
+t = dot(s2, e2) / dot(s1, e1);
+        </pre>
+        Then using the calculations above the barycentric coordinates, of the ray compared to the points of the triangle, (b1, b2, b3), can be calculated.
+        <pre align="middle">
+b1 = dot(s1, s) / dot(s1, e1);
+b2 = dot(s2, r.direction) / dot(s1, e1);
+        </pre>
+        First b1 is calculated and if b1 is less than zero or greater than 1, the ray does not hit the triangle, returning false. b2 is then calculated and if b2 is less than 0, the ray also does not hit the triangle. In barycentric coordinates, b1 + b2, + b3 = 1, so if b1 + b2 is greater than 1 already, false is returned. 
+        <pre align="middle">r.max_t = t</pre>
+        r.max_t is updated to make sure nothing behind the triangle also cause a hit. If the intersect function also takes in a Intersection isect
+        <pre align="middle">
+isect->t = t;
+isect->n = (1 - b1 - b2) * n1 + b1 * n2 + b2 * n3;
+isect->primitive = this;
+isect->bsdf = get_bsdf();
+        </pre>
+        After that, true is returned. Figure 1 and Figure 2 show the results of completing everything talked about up to this point.
+        </p>
         <div class="container">
-            <div class="row">
-                
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part1.png" />
-                    <p align="middle"> Figure 1: A series of lines with many different slopes using Bresenham's algorithm that form a sigure</p>
-                </div>
-                    <!-- </td>
-                    <td align="middle" -->
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                     <img src="./images/part1_error.png" />
-                    <p align="middle"> Figure 2: The same as Figure 1, but before considering the 7 other octants besides the first one when applying Bresenham's algorithm </p>
-                </div>
-            </div>
-        </div>
-<!--         <p>Here is an example of how to include a simple formula:</p>
-        <p align="middle"><pre align="middle">a^2 + b^2 = c^2</pre></p>
-        <p>or, alternatively, you can include an image of a LaTex formula.</p> -->
-
-    <h2 align="middle">Part 2: Rasterizing single-color triangles</h2>
-<!--         <p>Describe what you did in Part 2. Show your result here. Explain any bugs you had to work through, with pictures if possible. Explain any special optimizations you did beyond simple bounding box triangle rasterization, with a timing comparison table (we suggest using the c++ clock() function around the svg.draw() command in DrawRend::redraw() to compare millisecond timings with your various optimizations off and on).</p>
- -->        <p> In part 2, I was able to create triangles given the 3 vertices of a triangle. I was able to do this by first calculating the minimum and maximum x and y coordinates to create a bounding box that I would iterate through. I also calculated the dy and dx between each set of two points. Then, I went into a double for loop that iterated through all the y values for each x starting from the min + .5 and ending at the max + .5. I then ran 3 line equations for each iteration of x and y and if all 3 equations were greater than and equal to 0 or less than and equal to 0, then I would rasterize that pixel. I tried to optimize by using the top-left edge rules but unfortunately, even though I feel like I did account for top and left edges, according to the clock function, my top-left edge cases made rasterizing triangles slower. I'm assuming it was because my cases gave too much overhead. So I stuck with the bounding box. While working through this part, I realized a lot of bugs overtime. One of the bugs that really gave me problems was when I thought I was finished with part 2 and did part 3 and 4, so I was showing off the hard I did to a friend. I went from the normal 960x640 resolution that pops up when I run rasterizester to full screen on my macbook pro which is at a 1440x900 resolution. Then I moved to the picture of the eventual color wheel which looked fine at a lower resolution as shown in Figure 4, but it had a weird line in Figure 5. I spent a couple days trying to figure this out then I realized the problem was my line equations. Initially my line equations looked like</p>
- <p align="middle"><pre align="middle">l0 = (x - x0) * (y1 - y0) - (y - y1) * (x1 - x0)</pre></p>
- After looking at the lecture slides again, I realized it should've been
- <p align="middle"><pre align="middle">l0 = (y - y1) * (x1 - x0) - (x - x0) * (y1 - y0)</pre></p>
- <p>Even though it was just the negative of what they gave in lecture, it gave me that line that just wouldnt fill itself at higher resolutions. I'm still confused on why that occured because in my conditions I checked if all my line equations were greater than and equal to 0 or if all my line equations were less than and equal to 0.</p>
- <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part2.png" />
-                    <p align="middle">Figure 3: Rasterized triangles, top right is zoomed to show jaggies</p>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center photos">
-                    <img src="./images/part2_circle.png" />
-                    <p align="middle">Figure 4: Circle at 960x640 resolution</p>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center photos">
-                    <img src="./images/part2_circle_error.png" hr width="90%"/>
-                    <p align="middle">Figure 5: Circle at 1440x900</p>
-                </div>
-            </div>
-        </div>
-        <!-- <p>Here is an example table. You could put timing comparisons here, for example.</p>
-        <div class="container"> -->
-            <!-- <table style="width=100%" border="1px" cellpadding="10px">
-                
-                    <td>
-                    <p>Row 1, Col 1</p>
-                    <td>
-                    <p>Row 1, Col 2</p>
-                    <td>
-                    <p>Row 1, Col 3</p>
-                
-                    <td>
-                    <p>Row 2, Col 1</p>
-                    <td>
-                    <p>Row 2, Col 2</p>
-                    <td>
-                    <p>Row 2, Col 3</p>
-                </tr>
+            <table style="width=100%">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 text-center photos">
+                        <img src="images/part1_no_spheres.png" width="480px" />
+                        <p align="middle">Figure 1: Cornell box without anything in it.</p>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 text-center photos">
+                        <img src="images/part1_gems.png" width="480px" />
+                        <p align="middle">Figure 2: Gems made out of triangles in a Cornell box.</p>
+                        </div>
+                    </div>
             </table>
-        </div> -->
-
-    <h2 align="middle">Part 3: Antialiasing triangles</h2>
-        <!-- <p>Describe what you did in Part 3. Show your result here. Explain any bugs you had to work through, with pictures if possible. Explain the basic structure of the modifications you made to the DrawRend rasterization pipeline in order to implement supersampling. If you implement alternative antialiasing methods, describe them and include comparison pictures demonstrating the difference between your method and grid-based supersampling.</p> -->
-        <p> In part 3, we implemented antialiasing into our triangle function to get rid of jaggies by adding less opaque pixels around the edges to make them smoother. The way I approached this was by adding a super sampling buffer that was the sample rate times bigger than the framebuffer. I kept track of that super sampling buffer size by storing a total_sample_pts integer that constantly updated with a new sample rate by doing</p>
-        <p align="middle"><pre align="middle">total_sample_pts = width * height * sample_rate</pre></p>
-        <p>Along with adding a super sampling buffer and a integer that keeps track of the size the buffer should be, I also added the square root of the sample rate as well because later when we use the rasterize triangle function on sample rates greater than 1, we need to multiply each x and y point from the input by the square root of the sample rate and multiply the square root of the sample rate by the height and the width to get a updated height and width. After using rasterize triangle and getting the shapes and lines into the supersampling buffer, in a resolve function, I incremented through the super sampling buffer and stored each pixel from the super sampling buffer into the frame buffer. Each pixel from the frame buffer will get a sample rate's worth of pixels put into it. Only 1 sample rates worth of each super sampling pixel's color will be put into the corresponding pixel of the framebuffer. For example, if the sample rate was 4, 4 pixels of the super sampling buffer will be put into 1 pixel of the frame buffer and each super sampling pixel wil only have 1/4th of it's r,g,b,a colors put into the corresponding frame buffer pixel. The figures below show the difference between different sample rates. The last figure, Figure 9, shows the background as gray. The problem there was that I was adding all the elements from the supersampling buffer divided by the sample rate straight into into the framebuffer. That would make my screen grayer. So what I did to change that was I began to add all the elements from the supersampling buffer into a integer variable before dividing by the sampling rate and storing it into the framebuffer and that fixed my problem. Fixing this caused Figure 9 to become Figure 8.</p>
-        <div class="container">
-            <div class="row">
-                
-                <div class="col-lg-3 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part3_1px.png" />
-                    <p align="middle">Figure 6: Triangles at sample rate at 1 pixel </p>
-                </div>
-                <div class="col-lg-3 col-sm-6 text-center photos">
-                    <img src="./images/part3_4px.png" />
-                    <p align="middle">Figure 7: Triangles at sample rate at 4 pixel</p>
-                </div>
-                <div class="col-lg-3 col-sm-6 text-center photos">
-                    <img src="./images/part3_16px.png" />
-                    <p align="middle">Figure 8: Triangles at sample rate at 16 pixel</p>
-                </div>
-                <div class="col-lg-3 col-sm-6 text-center photos">
-                    <img src="./images/part3_error.png" />
-                    <p align="middle">Figure 9: Same as Figure 8, but with a gray background due to problem in code</p>
-                </div>
-            </div>
         </div>
-
-    <h2 align="middle">Part 4: Transforms</h2>
-       <!--  <p>Describe what you did in Part 4. Show your result here. Explain any bugs you had to work through, with pictures if possible. Describe the new svg file you created, and show the rasterized result. Explain the reasoning behind your use of the transform stack in your new file. If you added any extra features to the GUI, describe them, and depict the result if it is visualizable (e.g. if you add rotation controls).</p> -->
-       <p>In part 4, I was able to move the images in the UI around the screen through translation and zoom in and zoom out by scaling. I also implemented translate, scale, and rotation functions using matrices. Since I was working with 2D coordinate spaces, I needed 3x3 matrices to account for homogeneous coordinates. In my examples I created a robot using rectangles. The order I made the robot move actually goes backwards from Figure 14 to Figure 10. For entertainment, I put them in reverse order to make it look like the robot waves then walks towards the screen. From Figure 14 to Figure 13, I translated the right leg up. From 13 to 12 the right leg went back down and the left leg went up then I scaled the whole image down to make him seem farther away. From 12 to 11, I moved the left leg down I grouped up the left arm so that they all move together. I translated that arm to the origin then rotated it 180 degrees so his arm goes up as if he is waving, then I translated it back. However, since the pivot went from the bottom left to the bottom right of the shape, I didnt translate it back to the exact same spot or else it would be too far right. Lastly, 11 to 10, I do the opposite of what I did from 12 to 11, I just took out the translation and rotation from of the arm from 11 and moved the left leg back down. I did these operations to simulate movement, but also to move the whole heirarchy around while moving a group within the heirarchy around.</p>
-        <div class="container">
-            <div class="row">
-                
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                <div class="col-lg-4 col-sm-6 text-center photos">
-                    <img src="./images/part4_1.png" />
-                    <p align="middle">Figure 10: Scaled smaller robot. </p>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center photos">
-                    <img src="./images/part4_2.png" />
-                    <p align="middle">Figure 11: Robot's left arm rotated around the origin then moved back over. He says "hi!" </p>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center photos">
-                    <img src="./images/part4_3.png" />
-                    <p align="middle">Figure 12: Translation of the left leg up. </p>
-                    
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part4_4.png" />
-                    <p align="middle">Figure 13: Original size and translation of right leg up. </p>
-                </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part4_5.png" />
-                    <p align="middle">Figure 14: Original robot. Series of pictures looks like he's stepping towards you. </p>
-                </div>
-            </div>      
-        </div>
-
-    <h2 align="middle">Part 5: Barycentric coordinates</h2>
-        <!-- <p>Describe what you did in Part 5. Introduce and explain barycentric coordinates, perhaps with an svg file that plots a single triangle with one red, one green, and one blue vertex. Show your result here. Explain any bugs you had to work through, with pictures if possible. Include at least one png of svg/basic/test7.svg. If you make any additional images with color gradients, include them.</p> -->
-        <p>In part 5 we implemented barycentric coordinates in order to create shapes that gradually change colors throughout the shape. So these shapes are one consistent color as shown in Figure 15 and 16. Barycentric coordiantes is a coordinate system created by 3 points a, b, and c. One point, a, is marked as the origin and the vectors from a to b and from a to c act as basis vectors so a nonorthognal coordinate system will be formed. Since barycentric coordinates are made up of the 3 points, the three points will always make a triangle such as the triangle in Figure 15 where one vertex is a, one is b, and the other is c. We can represent a point of barycentric coordinates in terms of &#945, &#946, and &#947. The sum of &#945, &#946, and &#947 will always be one. So if we find 2 of those points we can always find the other 1 by subtracting the other two by 1. For example we can get &#947 by doing</p>
-        <p align="middle"><pre align="middle">&#947 = 1 - &#945 - &#946</pre></p>
-        <p>To get each coordinate we just get 1 minus the distance from a vertex. For example, if our point is p, to get the &#945 coordinates with an origin of a. We just find the distance, d, between a and p and subtract 1 from that to get a distance &#945.</p>
-        <p align="middle"><pre align="middle"> &#945 = 1 - d</pre></p>
-        <p>The same applies for &#946 and &#947, but with b and c. That means the closer a point is to a vertex, the closer the corresponding coordinate is to 1. That also applies to finding a point's color. We take a weighted average between it's distance from each vertex. So we interpolate between the 3 vertices using barycentric coordinates to calculate the color. In my code I did</p>
-        <p align="middle"><pre align="middle">p =  (a * &#945) + (b * &#946) + (c * [1 - &#945 - &#946])</pre></p>
-        <p>where p ends up being the color. That's why points closer to the red vertex are more red, the points closer to the blue vertex are more blue, the points closer to the green vertex are more green, and the colors inbetween as the mix of red, blue, and green. After using the math, I created a color wheel that has reds, blues, greens, and all the colors in between as shown in Figure 16. Once understanding the concept, the application was easy. In my drawrend.cpp file, I created &#945 and &#946 by doing</p>
-        <p align="middle">
-            <pre align="middle">
-&#945_numerator = (y - y1) * (x2 - x1) - (x - x1) * (y2 - y1)
-&#945_denominator = (y0 - y1) * (x2 - x1) - (x0 - x1) * (y2 - y1)
-&#945 = &#945_numerator / &#945_denominator
-&#946_numerator = (y - y2) * (x0 - x2) - (x - x2) * (y0 - y2)
-&#946_denominator = (y1 - y2) * (x0 - x2) - (x1 - x2) * (y0 - y2)
-&#946 = &#946_numerator / &#946_denominator 
-            </pre>
-        </p>
-        <p>Then I get &#947 and p in svg.cpp as I did in the equations shown above then used p to get a color which was placed on the corresponding (x, y) point I was originally given.
-         </p>
-        <div class="container">
-            <div class="row">
-                
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part5_tri.png" />
-                    <p align="middle"> Figure 15: A triangle made using barycentric coordinates</p>
-                </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part5.png" />
-                    <p align="middle"> Figure 16: A color wheel made using barycentric coordinates</p>
-                </div>
-            </div>
-        </div>
-
-
-    <h2 align="middle">Part 6: Pixel sampling for texture mapping</h2>
-        <!-- <p>Describe what you did in Part 6. Discuss the two different pixel sampling methods. Show a good example from svg/texmap/ of a case where bilinear looks much better than nearest sampling. Talk about when there will be a large difference between the two methods and when the difference will not matter.</p> -->
-        <p>In part 6 I applied the nearest pixel and bilinear sampling methods. In the nearest pixel sampling method, I found the nearest pixel by multiplying my u coordinate by the width of the mipmap at a specific level, then added point .5, then got the floor of that number. I added .5 because if the number was closer to the lower number, adding .5 then flooring it would cause it to become the lower number. If it was closer to the higher number, adding .5 would bring a whole number higher, then flooring it would give it the higher number. I then applied that to the v coordinate by multiplying v by the height, adding .5, then flooring it. The reason I multiplied u and v by the width and height is because u and v are both between 0 and 1 because we got them the same way as we got the barycentric coordinates. After that. I found the index in a specific MIP map level and took the color from that index. For bilinear it was a little more complicated. Since I am getting a weighted combination of the four pixels surrounding my uv coordinate, I had to find the distance for each of the pixel in the u and v direction from the point given, multiply 1 minus distance between a pixel in the u direction by 1 minus a pixel in the v direction. Then I multiply 1 minus that number by the color of that given pixel. I do that for each of the 4 pixels surrounding a point, add those together, then I get a color which I return. Drawrend.cpp supplies which sampling method I would be using and svg.cpp uses the &#945, &#946, and &#947 from drawrend.cpp to calculate the uv cooridnates. Those uv coordinates are used in the nearest pixel and bilinear sampling methods. Figure 17 and Figure 18 show the difference between a portion of a map when zoomed into a specific portion. It is obvious that Figure 18 and bilinear sampling provides a much better picture up close. So bilinear sampling should be used in comparison to nearest pixel sampling when given a pixelated photo. The results will turn out like Figure 17 and Figure 18. In photos without many varying colors, where the picture has few changes in color, or has a high sampling rate the nearest versus bilinear sampling won't be relevant because it is more likely that all of a point's surrounding pixels might be the same. So the results would be the same from either version of sampling.
-        </p>
-        <div class="container">
-            <div class="row">
-                
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part6_n.png" />
-                    <p align="middle"> Figure 17: Nearest pixel sampling of a map zoomed into the Philippines exposes individual pixels</p>
-                </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part6_b.png" />
-                    <p align="middle"> Figure 18: Same map, but since it is with the bilienar sampling method, it is noticeably blurry, but the pixels blend well to create a better picture</p>
-                </div>
-            </div>
-        </div>
-
-
-    <h2 align="middle">Part 7: Level sampling with mipmaps for texture mapping</h2>
-        <!-- <p>Describe what you did in Part 7. Pull some png images from the internet and create your own svg files to demonstrate the strengths and weaknesses of various techniques at different zoom levels. You can take existing files in svg/texmap/ and replace the texture filename to try out new images. Show at least one example (using a png file you find yourself) comparing all four combinations of one of L_ZERO and L_NEAREST with one of P_NEAREST and P_BILINEAR at a zoomed out viewpoint. If you implement any extra filtering methods, describe them and show comparisons.</p> -->
         <p>
-        In part 7, I used what I did in part 6, but added more to it. In drawrend.cpp, I also get the barycentric coordinates for a point greater in the x direction by 1 and get the barycentric coordinates for a point greater in the y direction by 1 as well. I use svg.cpp to convert those in uv coordinates like I did in part 6. In part 6, we assumed that the MIP map level was at zero. But now, we have a setting to determine if we are sampling at level 0 or a different level. A MIP map is a series of textures that are based on resolution. The higher the level, the lower the resolution. The resolution of a specific level is usually half of it's previous one. So lets say level 7 mip map will be a resolution of 128x128, a level 6 mip map will have a resolution of 256x256. To determine what level we are working at, we first find L.</p>
-        <p align="middle"><pre align="middle"> L = max(&#8730((du/dx)^2 + (dv/dx)^2), &#8730((du/dy)^2 + (dv/dy)^2)</pre></p>
-        <p>We then calculate D, the log base 2 of L</p>
-        <p align="middle"><pre align="middle"> D = log(L)</pre></p>
-        <p>where D is our MIP mapping level. So after finding the level, we can now apply that to the bilinear and nearest sample functions. Figure 19, 20, 21, and 22 compare the different filters. Figure 19 and 21 show 0 level MIP mapping and the images are good. However, when changing the MIP mapping level in Figures 20 and 22, the images look much cleaner, but a little blurrier as well. I also created a case for bilinear interpolation of the level. We get the sampling at the current integer level and the level higher. We then add the weighted values of each of the results depending on how far the float value of the level is compared to the current and higher level. It creates trilinear sampling when doing bilinear sampling with bilinear interpolation. An example of that can be seen at Figure 23. I also zoomed into one of the Starcraft units in Figure 24 and 25 to see the difference between sampling up close and the bilinear sampling made the pixelated nearest sampling image much cleaner.
+        For sphere intersect that takes in a ray, r, the discriminant is calculated by first finding a, b, and c.
+        <pre align="middle">
+oMinusc = r.origin - sphere's center
+a = dot(r.d, r.d)
+b = dot(2 * oMinusc, r.d)
+c = dot(oMinusc, oMinusc) - r2;
+discriminant = b^2 - 4 * a * c
+        </pre>
+        If the discriminant is less than 0, there is no intersection, false is returned because the ray doesn't intersect the sphere. Otherwise, t1 and t2 are calculated, the times of intersection.
+        <pre align="middle">
+t1 = (-b + sqrt(discriminant)) / (2 * a)
+t2 = (-b - sqrt(discriminant)) / (2 * a)
+        </pre>
+        If t1 is greater than t2, they are swap, then if t1 is less than zero, the ray is inside the sphere or doesn't hit the sphere, so t1 is set to equal t2. Then if t1 is still negative, that means the ray didn't hit the sphere at all so false is returned. Then there is a check to see if t1 and t2 intersect the r's min_t and max_t. If not, false is returned. Otherwise, 
+        <pre align="middle">r.max_t = t</pre>
+        Just like with triangle r.max_t is updated to make sure nothing behind the triangle also cause a hit and isect is updated if it is a parameter.
+        <pre align="middle">
+isect->t = t1;
+isect->n = (r.o + i->t * r.d - o).unit();
+isect->primitive = this primitive;
+isect->bsdf = get_bsdf();
+        </pre>
+        isect->n is set to the unit vector pointing from the origin towards the point of intersection, isect-primitive is the sphere we're checking if the ray, r, intersects it. And each each primitive has a material that get_bsdf() returns. (I noticed in Figure 3, my normal shading was weird because I forgot to turn isect->n into a unit vector.) The final result is in Figure 4 Afterwords, true is returned and the ray, r, and the sphere have a true intersection. All the Figures up to now contain only a few primitives. Besides the gem scene, Figure 2, which has about 200 primitives, the other scenes have less than 15 primitives each. 
         </p>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part7_0_n.png" />
-                    <p align="middle"> Figure 19: Scene from Starcraft II with level 0 MIP mapping and using nearest pixel sampling </p>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part1_spheres_not_normalized_normals.png" width="480px" />
+                    <p align="middle">Figure 3: Spheres with bad normals.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part1_spheres_normalized_normals.png" width="480px" />
+                    <p align="middle">Figure 4: Fixed spheres in a Cornell box.</p>
+                    </div>
                 </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part7_l_n.png" />
-                    <p align="middle"> Figure 20: Calculated level MIP mapping using nearest pixel sampling</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part7_0_b.png" />
-                    <p align="middle"> Figure 21 Level 0 MIP mapping using a bilinear filtering</p>
-                </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part7_l_b.png" />
-                    <p align="middle"> Figure 22: Calculated level MIP mapping using a bilinear filtering</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center photos">
-                    <img src="./images/part7_tri.png" />
-                    <p align="middle"> Figure 23: Calculated level MIP mapping using a trilinear filtering</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part7_n_zoom.png" />
-                    <p align="middle"> Figure 24: Zoomed nearest pixel sampling</p>
-                </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part7_b_zoom.png" />
-                    <p align="middle"> Figure 25: Zoomed bilinear filtering</p>
-               </div>
-            </div>
+            </table>
         </div>
 
-    <h2 align="middle">Part 8: My drawing</h2>
-       <!--  <p>Describe your original drawing and include a picture of it. This part is extremely open ended, and if you decide to devote a lot of time to making an awesome picture, it's worth explaining how you did it!</p> -->
-       <p> I created a Stormtrooper from the original Star Wars trilogy based off of a drawing I made of one before which is in Figure 26. However, my Stormtrooper drawing doesnt have symmetry while I wanted my computer creation to have it. The symmetry made it easier because I could just have the left side reflect over the midpoint, 400 pixels, and create a mirror image as you can see in Figure 27. I didn't think of symmetry until after I completed the top of the helmet. That is why I have triangles that cross over the midpoint. Furthermore, the only shape I used was triangles. The overall process took me about 20 hours or so just because I changed my idea about 2 or 3 times and the stormtrooper itself took about 7 or 8 hours. I made sure all the triangles were conencted and there were no holes inside the Stormtrooper.After finishing the stromtrooper, a mainly white and black color looked REALLY BORING. So I made the background black to make the Stormtrooper pop and I made half its face shaded to add a nice lighting effect. If I wasn't way out of time, I would've made the shading much more of a gradient and much more beautiful. BUT OH WELL! I'm pretty happy with the results. It's very gratifying to be able to create art using my self created programs. </p>  
-       <div class="container">
+     <h2 align="middle">Part 2: Bounding Volume Hierarchy</h2>
+        <p>Given a scene with many primitives, it is best to split the primitives into smaller sub groups so it'll make it easier to check the sections that a ray intersects in the scene rather than check each primitive in the scene and see if a ray hits. To do this a BVH construction algorithm, construct_bvh() in bvh.cpp, is used. The algorithm starts by creating a bounding box for all the primitives given as an input. A new node is created with the new bounding box then if the amount of primitives in the input is less than or equal to a given input of max_leaf_size, the new node's prims is equal to the input primitives and the node is returned. Otherwise, the node needs to be split into left and right nodes. The bounding box is 3D so the dimension of the largest size is the dimension that will be split. The midpoint of that dimension becomes the split point and every primitive given is put either to the group left of the split point and equal to the split point, or to the group right of the split point. If both the left and right both have primitives in them, the algorithm is recursively called onto nodes containing the left and right groups.  On the other hand, if the left or the right group is empty, the next largest dimension is chosen to split the primitives. If that fails, last dimension splits the primitives. And if all 3 dimensions fail to split the primitives, the node's prims is then set equal to the input primitives. After the recursion of left and right nodes or failure to split, the node is returned.</p>
+        <p>After the sub groups are created, the groups can be used to check where and if a ray intersects a scene using a BVH intersection algorithm, intersect() in bvh.cpp. First, the algorithm checks if the ray intersects a node's bounding box using an intersect function in bbox.cpp. If the ray doesnt intersect the node's bounding box, false is returned. Otherwise, the points the ray intersects the bounding box are checked to ensure that the bounding box intersection times intersect with the ray's min_t and max_t. If it doesn't, falsre is returned. Afterwords, if the node is not a leaf node, intersect is recursively called on the node's left and right childs. If either of them have an intersection, true is returned. If a node is a leaf node, we check all the primitives in the node to see if there is an intersection. If there is an intersection, true is returned, false otherwise. However, there are  two types of intersect() functions. One has a parameter of an intersection i, the other doesnt. The one that doesn't have an input of i returns true as soon as a hit occurs. The other one has to check each primitive to a node and make sure the ray intersects with the primitive closest to min_t but still between min_t and max_t. All the pictures below, Figure 5 to Figure 11, all contain scene's with thousands of primitives compared to the small amount of primitives in Figure 1 to Figure 4.</p>  
+        <div class="container">
             <div class="row">
-                
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <!-- <img src="images/example_image.jpg" width="800px" /> -->
-                    <img src="./images/part8_drawing.png" />
-                    <p align="middle"> Figure 26: The inspiration for my competition creation</p>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part2_bench.png" width="480px" />
+                    <p align="middle">Figure 5: A bench scene containing 67808 primitives.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part2_blob.png" width="480px" />
+                    <p align="middle">Figure 6: A blob containing 196608 primitives..</p>
+                    </div>
                 </div>
-                <div class="col-lg-6 col-sm-6 text-center photos">
-                    <img src="./images/part8_competition.png" />
-                    <p align="middle"> Figure 27: Stormtrooper made out of triangles</p>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part2_CBlucy.png" width="480px" />
+                    <p align="middle">Figure 7: Lucy statue in Cornell box containing 133796 primitives.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part2_maxplanck.png" width="480px" />
+                    <p align="middle">Figure 8: Head of Max Planck containing 50801 primitives.</p>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part2_walle1.png" width="480px" />
+                    <p align="middle">Figure 9: Scene of Pixar's Wall-E containing 240326 primitives.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part2_walle2.png" width="480px" />
+                    <p align="middle">Figure 10: Secondary view of Pixar's Wall-E.</p>
+                    </div>
+                </div>
+            </table>
         </div>
 
+     <h2 align="middle">Part 3: Direct Illumination</h2>
+        <p>When implementing the direct lighting function, estimate_direct_lighting() in pathtracer.cpp, the function first creates two matrices, one that transform a vector from object space to world space, o2w, and one that does the opposite, w2o. The point a given ray, r, hits a point at Intersection, isect, is hit_p and is found where
+        <pre align="center"> hit_p = r.origin + r.direction * isect.t </pre> The outgoing radiance direction towards the camera in object space, w_out, is given by
+        <pre align="center"> w_out = w2o * -r.d; </pre>
+        For each light in a given scene, there is a check to see if a light is a delta light. If it is, only one sample is needed to be added to the outgoing radiance, L_out. Otherwise, ns_area_light samples of outgoing radiance are needed per light for a given ray and the average will be added to L_out. To get the outgoing radiance of a sample, hit_p is inputted as an argument for the current light's function sample_L(). This function returns the radiance coming from the light onto hit_p, L_in, direction of the incoming radiance in world space, the distance between hit_p and the light, and the probability that a ray can reach the camera from a ray that hits goes from the light to hit_p, pdf. The incoming radiance direction in world space is converted to the direction of the incoming radiance in object space, w_in. If the cos_theta of w_in compared to the normal vector (0, 0, 1) is positive and the ray from the light towards hit_p doesn't hit anything as it travels to hit_p, the radiance that goes out to the camera, radiance_out, is
+        <pre align="center"> radiance_out = L_in * isect->bsdf->f() * cos(wi's theta) / pdf </pre>
+        isect->bsdf(bidirectional scatterring distribution function) determines how much radiance goes towards the camera from hit_p due to the material of the surface hit_p is at. After getting ns_area_light samples of radiance_out, we add all the radiance_outs and average the sum.
+        <pre align="center"> L_out += sum(radiance_outs) / ns_area_light </pre>
+        L_out is the sum of all the radiance going towards w_out that is calculated from different light sources. Because the radiance is linear, all outgoing radiance can be added together. The Figure 11 to Figure 18 show some bugs faced along the way and final results as well. 
+        </p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_dragon_64_32_first.png" width="480px" />
+                    <p align="middle">Figure 11: Dragon when Triangle's intersect from part 1 wasn't completely working.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_dragon_64_32_second.png" width="480px" />
+                    <p align="middle">Figure 12: Dragon with no shadows.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_dragon_64_32.png" width="480px" />
+                    <p align="middle">Figure 13: Fixed Dragon with direct lighting.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_building.png" width="480px" />
+                    <p align="middle">Figure 14: Building mesh with direct lighting.</p>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_64_32_first.png" width="480px" />
+                    <p align="middle">Figure 15: Bunny in Cornell box with conditions to cast shadow mixed up.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_64_32_second.png" width="480px" />
+                    <p align="middle">Figure 16: Bunny before Triangle's intersect function from part 1    was fixed.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_64_32_third.png" width="480px" />
+                    <p align="middle">Figure 17: Bunny with no condition to cast shadows.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_64_32.png" width="480px" />
+                    <p align="middle">Figure 18: Fixed Bunny in Cornell Box.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <p> This section focuses on one particular scene to show the change in noise with varying amount of camera rays per pixel. Figure 19 to Figure 26 show 1, 2, 4, 8, 16, 32, 64, and 128 rays per pixel. These figures show that less noise appears as there are more rays per pixel. The input into the terminal that is used was
+        <pre align="center"> ./pathtracer -t 8 -s X -l 32 -m 6 -r 480 360 ../dae/sky/CBbunny.dae
+X = camera rays per pixel(must be power of 2)
+        </pre>
+        </p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_1.png" width="480px" />
+                    <p align="middle">Figure 19: Bunny in Cornell box with 1 camera ray per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_2.png" width="480px" />
+                    <p align="middle">Figure 20: Bunny in Cornell box with 2 camera rays per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_4.png" width="480px" />
+                    <p align="middle">Figure 21: Bunny in Cornell box with 4 camera rays per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_8.png" width="480px" />
+                    <p align="middle">Figure 22: Bunny in Cornell box with 8 camera rays per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_16.png" width="480px" />
+                    <p align="middle">Figure 23: Bunny in Cornell box with 16 camera rays per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_32.png" width="480px" />
+                    <p align="middle">Figure 24: Bunny in Cornell box with 32 camera rays per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_64.png" width="480px" />
+                    <p align="middle">Figure 25: Bunny in Cornell box with 64 camera rays per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part3_bunny_soft_shadow_128.png" width="480px" />
+                    <p align="middle">Figure 26:  Bunny in Cornell box with 128 camera rays per pixel.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <p> It is easy to see the difference between Figure 19 and Figure 26, 1 versus 128 camera rays per pixel. As the number of rays increase, the picture begins to have less black speckles spread out throughout the image. The soft shadows start as a scattered amount of black pixels that become smooth soft shadows that noticeably lighten at the points that have a lower chance of intersecting the bunny.</p>
+
+     <h2 align="middle">Part 4: Indirect Illumination</h2>
+        <p>Next, besides direct lighting from a light source, light bouncing around a scene that find its way to the camera has to be accounted for as well. The light not directly from the light source creates indirect illumination. With both direct and indirect illumination, global illumination is obtained. To calculate this indirect lighting that reaches a pixel using estimate_indirect_lighting() in pathtracer.cpp, the function begins the same as the direct lighting function by getting the point the input ray, r, hits a point in the scene, hit_p, and the outgoing radiance in object space, w_out. We can find the bsdf using isect.bsdf->sample_f(). This function not only calculates the bsdf onto hit_p, but finds the direction the incoming radiance comes from in object space, w_in, and the probability that the incoming radiance will bounce from hit_p and follow w_out. The probability to calculate that this indirect light will bounce to w_out is calculated, prob_term. If the probability is low, the light will probably terminate. Otherwise, w_in is changed to world space from object space, wi, a new ray is created that goes from hit_p to the new wi. Then the incoming radiance is calculated using the function trace_ray(), L_in. The outgoing radiance that hits the pixel using the inputted ray, L_out, is 
+        <pre align="center"> L_out = L_in * bsdf * cos(w_in's theta) / (pdf * prob_term) </pre>
+        L_out is added to all the radiance already calculated from the direct light function to create all the light hitting that point in the scene. Figure 27 to Figure 30 show global illumination. Figure 26 from the last part is the bunny with only direct lighting, but in Figure 27, you can see the shadows become much lighter because rays can reach those areas through indirect lighting. The dragon in Figure 28 is much brighter than the dragon in Figure 13 due to having more light able to hit areas of the dragon. Figure 31 shows Labmertian spheres in a Cornell box with only direct illumination while Figure 32 is that same scene with only indirect illumination. If you add the lighting from the two scenes together, you get Figure 30, the Lambertian spheres in a Cornell box with global illumination. 
+        </p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_bunny.png" width="480px" />
+                    <p align="middle">Figure 27: Bunny with global illumination.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon.png" width="480px" />
+                    <p align="middle">Figure 28: Dragon with global illumination.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_wall-e.png" width="480px" />
+                    <p align="middle">Figure 29: Pixar's Wall-E with global illumination.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres7.png" width="480px" />
+                    <p align="middle">Figure 30: Lambertian spheres with global illumination.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres_global.png" width="480px" />
+                    <p align="middle">Figure 31: Lambertian spheres with only direct illumination.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres_indirect.png" width="480px" />
+                    <p align="middle">Figure 32: Lambertian spheres with only indirect illumination.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <p> This section focuses on one particular scene to show the change in noise with varying values for max_ray_depth. Figure 33 to Figure 40 show 1, 2, 3, 4, 5, 15, 30, and 100 as the values for max_ray_depth. The higher the value for max_ray_depth, the more bounces the rays in indirect illumination have. The input in the terminal was 
+        <pre align="center"> ./pathtracer -t 8 -s 64 -l 32 -m X -r 480 360 ../dae/sky/CBdragon.dae
+X = max_ray_depth
+        </pre>
+        </p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon1.png" width="480px" />
+                    <p align="middle">Figure 33: Dragon in a Cornell box with max_ray_depth = 1.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon2.png" width="480px" />
+                    <p align="middle">Figure 34: Dragon in a Cornell box with max_ray_depth = 2.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon3.png" width="480px" />
+                    <p align="middle">Figure 35: Dragon in a Cornell box with max_ray_depth = 3.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon4.png" width="480px" />
+                    <p align="middle">Figure 36: Dragon in a Cornell box with max_ray_depth = 4.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon5.png" width="480px" />
+                    <p align="middle">Figure 37: Dragon in a Cornell box with max_ray_depth = 5.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon6.png" width="480px" />
+                    <p align="middle">Figure 38: Dragon in a Cornell box with max_ray_depth = 6.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon50.png" width="480px" />
+                    <p align="middle">Figure 39: Dragon in a Cornell box with max_ray_depth = 50.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_dragon100.png" width="480px" />
+                    <p align="middle">Figure 40: Dragon in a Cornell boxwith max_ray_depth = 100.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <p> The results show that the scene gets noticeably brighter from a max_ray_depth of 1 to 6, Figure 33 to Figure 38, but there is more noise. However, the max_ray_depth of 50 and 100, Figure 39 and Figure 40, both look very similar to the max_ray_depth of 6, Figure 38. There is a little more brightness such as in the mouth of the dragon, but it is still very small amount of change. The small amount of change is because the rays for indirect lighting are less likely to exist as the ray bounces more and more. So the possibility that a ray will bounce 50 or 100 times is really small. The ray will most probably cease to exist by that point.</p>
+        <p> Using a scene of lambertian spheres in a Cornell box, Figure 41 to Figure 48, like with direct lighting and the bunny in Figure 19 to Figure 26, there is a difference a large difference in the scenes when increasing the sample-per-pixel rate. In this case, 1, 2, 4, 8, 16, 64, 256, and 1024 camera rays per pixel are being used with input into the terminal as
+        <pre align="center"> ./pathtracer -t 8 -s X -l 32 -m 6 -r 480 360 ../dae/sky/CBspheres_lambertian.dae
+X = camera rays per pixel(must be power of 2)
+        </pre></p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres1.png" width="480px" />
+                    <p align="middle">Figure 41: Lambertian spheres in a Cornell box with 1 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres2.png" width="480px" />
+                    <p align="middle">Figure 42: Lambertian spheres in a Cornell box with 2 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres4.png" width="480px" />
+                    <p align="middle">Figure 43: Lambertian spheres in a Cornell box with 4 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres8.png" width="480px" />
+                    <p align="middle">Figure 44: Lambertian spheres in a Cornell box with 8 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres16.png" width="480px" />
+                    <p align="middle">Figure 45: Lambertian spheres in a Cornell box with 16 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres64.png" width="480px" />
+                    <p align="middle">Figure 46: Lambertian spheres in a Cornell box with 64 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres256.png" width="480px" />
+                    <p align="middle">Figure 47: Lambertian spheres in a Cornell box with 2 samples per pixel 256.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part4_spheres1024.png" width="480px" />
+                    <p align="middle">Figure 48: Lambertian spheres in a Cornell box with 1024 samples per pixel.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <p> Unlike just the direct lighting, the noise contribution also comes from the indirect lighting creating white speckles on the rendered image as easily seen in Figure 41 to Figure 45. However, with the increasing samples per pixel rate, the noise starts disappearing as seen in Figure 48 which has 1024 samples per pixel. </p>
+     <h2 align="middle">Part 5: Materials</h2>
+        <p>Mirror and glass surfaces were implemented as already seen in the Dragon in a Cornell box in the Figure 33 to Figure 40 in Part 4. The materials were implemented by giving mirrors and glass bsdf functions in bsdf.cpp. For a mirror, given vector from the camera onto a hit point, wo, the mirror reflection vector, wi, is first calculated using the normal vector (0, 0, 1).
+        <pre align="center"> wi = 2 * dot(n, wo) * n - wo; </pre>
+        Since the normal is (0, 0, 1), wi is essentially (-wo.x, -wo.y, wo.z) when using the equation above. However, if the normal vector would be changed, this specific equation would be more important. The mirror bsdf then returns a Spectrum of the mirror's reflectance, given as a parameter for MirrorBSDF objects, divided by the absolute value of the cosine value of new ray, wi, with respect to the normal vector. This bsdf function applies to indirect lights. This function returns the reflectance divided by thr absolute cosine value because it should cancel out the absolute cosine value in pathtracer.cpp's estimate_indirect_lighting() function that was implemented in part 4 of the project. The cosine value needs to be cancelled out because the angle a light hits a point doesn't affect the amount of light leaving a point of a mirror's surface. It just depends on a mirror's ability to reflect light. For direct lights, no light is returned cause direct light can't reflect since it is just 1 ray. Figure 49 shows a mirror sphere in a Cornell box before the glass sphere was implemented.</p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
+                    <img src="images/part5_mirror.png" width="480px" />
+                    <p align="middle">Figure 49: A Cornell box with spheres after mirror surfaces were implemented, but glass surfaces weren't implemented</p> </div>
+                </div>
+            </table>
+        </div>
+        <p> Glass surfaces were much harder to implement because light rays that pass through a glass object are slightly reflected off the surface while others are refracted. Rays that are refracted enter an object at one angle, go through the object different angle, this angle changes depending on the material of an object, then leaves the object at the same angle it initially came in at. To implement this, there is a check to see if a ray is leaving or entering an object. If wo, the outgoing radiance direction, is entering the outside, the index of refraction, no, is 1, otherwise it is ior, a parameter in a bsdf. The inside index of refraction, ni, is the opposite of no. The ray created due to refraction, wi, is calculated by using Snell's Law where
+        <pre align="center">r = no / ni
+l = -wo
+c = -dot(n, l)
+wi = r * l + (r * c - sqrt(1 - r^2 * (1 - c^2))) * n</pre>
+        r is the ratio of the no and ni. l is negative wo because wo initially points to the hit point from wherever its origin is, the negative sign makes the ray, l, point to the origin and its new origin is its old hit point. c is the dot product of l and the normal vector, n, which is (0, 0, -1) if no is ior, (0, 0, 1) otherwise. since the normal vector lies on the z axis, the x and y values for wi are wo's x and y just scaled by r. The z value of wi is wo's z scaled by r plus a term that adjusts for the change in direction due to refraction. However, if 
+        <pre align="center"> ni * sin_theta(wi) >= no </pre>
+        then the glass material actually doesn't refract light, it reflects it since total internal reflection occurs. If that happens, the glass is treated as a mirror. Otherwise, Schlick's approximation is used where
+        <pre align="center"> 
+r0 = (no - ni) / (no + ni)
+p = r0 + ((1 - r0) * (1 - abs_cos_theta(wi))^5)
+        </pre>
+        This p value is used to determine if this ray will be reflected off the glass or refract through the glass. This p value is multiplied by a constant, usually 10 or 20 to make sure at high max_ray_depths, the rays can reach it's max number of bounces before termination. If the p value causes a reflection, the glass sphere is treated like the mirror is before, but the pdf used in pathtracer.cpp's estimate_indirect_lighting() is changed to p and the return value is the same as the mirror, but multiplied by pdf. However, if refraction occurs, pdf is changed to (1 - p) and what is returned is the transmittance, a bsdf parameter, multiplied by r^2, where r is the r when using Snell's law / divided by the absolute value of the cosine value of new ray wi with respect to the normal vector. All of this is multiplied by the pdf.
+        <pre align="center"> bsdf = pdf * transmittance * r^2 / abs_cos_theta(wi) </pre>
+         The reason for the division of the absolute cosine value is the same as the mirror, but the multiplication by the pdf is because the light ray isn't losing any energy, it is just reflecting or refracting through an object so what is returned is multiplied by pdf to cancel out the pdf pathtracer.cpp's estimate_indirect_lighting(). Figure 50 shows the result of implementing mirror and glass materials, it is the finished version of Figure 49</p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_glass.png" width="480px" />
+                    <p align="middle">Figure 50: A Cornell box with a mirror sphere and a glass sphere</p></div>
+                </div>
+            </table>
+        </div>
+        <p> When rendering the same scene as Figure 50 at muliple max_ray_depth values to see how more bounces of the ray due to an input of the following can affect the renderings. 
+        <pre align="center"> ./pathtracer -t 8 -s 1024 -l 32 -m X -r 480 360 ../dae/sky/CBspheres_.dae
+X = max_ray_depth
+        </pre>
+        Figure 51 to Figure 61 show the results of the renderings at different max_ray_depth values.
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd1.png" width="480px" />
+                    <p align="middle">Figure 51: Mirror and glass spheres in a Cornell box with max_ray_depth = 1.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd2.png" width="480px" />
+                    <p align="middle">Figure 52: Mirror and glass spheres in a Cornell box with max_ray_depth = 2.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd3.png" width="480px" />
+                    <p align="middle">Figure 53: Mirror and glass spheres in a Cornell box with max_ray_depth = 3.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd4.png" width="480px" />
+                    <p align="middle">Figure 54: Mirror and glass spheres in a Cornell box with max_ray_depth = 4.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd5.png" width="480px" />
+                    <p align="middle">Figure 55: Mirror and glass spheresin a Cornell box with max_ray_depth = 5.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd6.png" width="480px" />
+                    <p align="middle">Figure 56: Mirror and glass spheres in a Cornell box with max_ray_depth = 6.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd7.png" width="480px" />
+                    <p align="middle">Figure 57: Mirror and glass spheres in a Cornell box with max_ray_depth = 7.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd10.png" width="480px" />
+                    <p align="middle">Figure 58: Mirror and glass spheres in a Cornell box with max_ray_depth = 10.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd25.png" width="480px" />
+                    <p align="middle">Figure 59: Mirror and glass spheres in a Cornell box with max_ray_depth = 25.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd75.png" width="480px" />
+                    <p align="middle">Figure 60: Mirror and glass spheres in a Cornell box with max_ray_depth = 75.</p>
+                    </div>
+                </div>
+            </table>
+            <table>
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres_mrd100.png" width="480px" />
+                    <p align="middle">Figure 61: Mirror and glass spheres in a Cornell box with max_ray_depth = 100.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        At a max_ray_depth of 1, Figure 51, all the refractive rays are trapped within the glass sphere so the resulting glass sphere is all reflection with a black tint. The mirror sphere already creates the desired output as it reflects all the light coming into it, but both sphere's shadows are really dark due to a lack of indirect lighting. However, at a max_ray_depth of 2, Figure 52, the rays in the sphere all come out showing the results of refraction on the glass sphere. Since the glass sphere contains the light of the area light, at a max_ray_depth of 3, Figure 53, that light is shot from the sphere to the ground forming a caustic at the floor of the sphere. Some of the light formed there bounces to the wall on the left at a max_ray_depth of 4, Figure 54. Those lights hitting right wall cause a caustic to be formed in Figure 54. Along with that, the light created on the floor due to the refraction also have some rays going back into the glass sphere. With a max_ray_depth of 5, Figure 55, You can see at the bottom right of the sphere the light entering from the caustic of the floor is reflected while some rays are now trapped inside the ray. In max_ray_depth of 6, Figure 56, the refracted rays now exit the surface and the refracted light from the caustic on the floor of the glass sphere now appears at the top left of the glass sphere. From there, as the max_ray_depth increases to 7, 10, 25, 75, and 100, in Figure 57 to Figure 61, the images don't change to much, you see a little more light keeps being reflected off of the bottom right of the glass sphere and the caustic causing a brighter light in that section, the caustic on the right wall get's a little brighter, but the change isn't too much.
+        </p>
+        <p>
+        Lastly, since the all the parts of the project are complete, the following shows results with various sample-per-pixel rates, Figure 62 to 69. The various sample rates are 1, 2, 4, 8, 16, 64, 256, and 1024 samples per pixel with arguments into the terminal as
+        <pre align="center"> ./pathtracer -t 8 -s X -l 1 -m 100 -r 480 360 ../dae/sky/CBspheres.dae
+X = camera rays per pixel(must be power of 2)
+        </pre>
+        </p>
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres1.png" width="480px" />
+                    <p align="middle">Figure 62: Mirror and glass spheres in a Cornell box with 1 sample per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres2.png" width="480px" />
+                    <p align="middle">Figure 63: Mirror and glass spheres in a Cornell box with 2 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres4.png" width="480px" />
+                    <p align="middle">Figure 64: Mirror and glass spheres in a Cornell box with 4 samples per pixel</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres8.png" width="480px" />
+                    <p align="middle">Figure 65: Mirror and glass spheres in a Cornell box with 8 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres16.png" width="480px" />
+                    <p align="middle">Figure 66: Mirror and glass spheres in a Cornell box with 16 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres64.png" width="480px" />
+                    <p align="middle">Figure 67: Mirror and glass spheres in a Cornell box with 64 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres256.png" width="480px" />
+                    <p align="middle">Figure 68: Mirror and glass spheres in a Cornell box with 256 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
+                    <img src="images/part5_spheres1024.png" width="480px" />
+                    <p align="middle">Figure 69: Mirror and glass spheres in a Cornell box with 1024 samples per pixel.</p>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <p>
+        As seen in the results of the Figures above more samples per pixel, the less noise. Initially with the first few Figures, there is a lot of white and black noise. However, by 16 samples per pixels, the black noise spots are much less apparent while the white noise is still very noticeable. Yet, by increasing the sample rate all the way to 1024, the result is Figure 69. The noise is barely noticeable and the picture is clear and shows a lot of the detail in shading and lighting.
+        </p>
 </section>
 <section class="bg" id="resume">
         <div class="container text-center">
