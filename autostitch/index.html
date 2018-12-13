@@ -9,7 +9,7 @@
       padding-left: 100px;  
     }  
   </style> 
-    <title>Vincent Escueta  |  CS 194-26</title>
+    <title>Vincent Escueta  |  Image Warping and Mosaicing</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,17 +71,17 @@
     <h2 align="middle">Homographies</h2>
     <p> To warp images, we must first create the homography matrix, H, by recovering 8 unknown entries of the 3x3 matrix. We can find the 8 unknowns, h, by having 4 points to sample from the source image and 4 corresponding points from the warped image. These 4 sets of points are plugged into a matrix A and a set of points, b, to use least-squares to get h. Then having h, we can form H.</p>
     </div>
-    <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/homography.PNG" height="150px" />
-                    <figcaption align="middle">Homography Matrix</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Homography Matrix</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/homography_h.png" height="150px" />
-                    <figcaption align="middle">Ah = b</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Ah = b</p>
+            </div>
+        </div>
     </div>
     <h2 align="middle">Warp the Images</h2>
         <p>To warp the image into a desired warp we do the following:</p>
@@ -92,34 +92,38 @@
         </ol>
         <h3 align="middle">Image Rectification</h3>
         <p>All the following are pictures with planar surfaces warped so the plane is front-parallel.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container ">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/guadalupe.jpg" height="500px"/>
-                    <figcaption align="middle">Our Lady of Guadalupe</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Our Lady of Guadalupe</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/warped_g2.jpg" height="500px"/>
-                    <figcaption align="middle">Warped Guadalupe</figcaption></td>
-                </tr>
-                 <tr>
-                    <td align="middle">
+                    <p align="middle">Warped Guadalupe</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/jtgt.jpg" height="700px"/>
-                    <figcaption align="middle">SF Japanese Tea Garden</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">SF Japanese Tea Garden</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/warped_jtgt.jpg" height="700px"/>
-                    <figcaption align="middle">Warped Tea Garden</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Warped Tea Garden</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/ms.jpg" height="300px"/>
-                    <figcaption align="middle">Memorial Stadium</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Memorial Stadium</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/warped_ms3.jpg" height="300px"/>
-                    <figcaption align="middle">California</figcaption></td>
-                </tr>
-            </table>
-    </div>
+                    <p align="middle">California</p>
+                </div>
+            </div>
+        </div>
     <h2 align="middle">Blend the images into a mosaic</h2>
         <p>For the next part, I combined 2 similar images to create a mosaic panorama. We accomplished this by doing the following:</p>
          <ol>
@@ -129,83 +133,85 @@
          <li> Blend (I used both weights and multiresolution blending)</li>
         </ol>
         <p> The following are results as I used Yosemite as a clear example of plotting points, warping and overlaying, then blending:</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container ">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="img/27.png" height="500px"/>
-                    <figcaption align="middle">Yosemite points</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Yosemite points</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="img/tp.png" height="300px"/>
-                    <figcaption align="middle">Lake Tahoe points</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Lake Tahoe points</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="img/tahoepoints.jpg" height="300px"/>
-                    <figcaption align="middle"> More Lake Tahoe points</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle"> More Lake Tahoe points</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/y1.jpg" height="800px"/>
-                    <figcaption align="middle">Yosemite Left</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Yosemite Left</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/y0.jpg" height="800px"/>
-                    <figcaption align="middle">Yosemite Right</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Yosemite Right</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="img/y2_warp3.jpg" height="500px"/>
-                    <figcaption align="middle">Half Dome overlay</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Half Dome overlay</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="img/y2_warp7.jpg" height="500px"/>
-                    <figcaption align="middle">Half Dome weights</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Half Dome weights</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="img/y2_warp_mb.jpg" height="500px"/>
-                    <figcaption align="middle">Half Dome multiresolution blending</figcaption></td>
-                </tr>
-            </table>
-             <table style="width=100%">
-                 <tr>
-                    <td align="middle">
+                    <p align="middle">Half Dome multiresolution blending</p>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tl.jpg" height="300px"/>
-                    <figcaption align="middle">Lake Tahoe Left</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Lake Tahoe Left</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tr.jpg" height="300px"/>
-                    <figcaption align="middle">Lake Tahoe Right</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Lake Tahoe Right</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tw.jpg" height="350px"/>
-                    <figcaption align="middle">Lake Tahoe weights</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Lake Tahoe weights</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tahoe.jpg" height="350px"/>
-                    <figcaption align="middle">Lake Tahoe multiresolution blending</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                 <tr>
-                    <td align="middle">
+                    <p align="middle">Lake Tahoe multiresolution blending</p>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/lefttahoe.jpg" height="300px"/>
-                    <figcaption align="middle">More Lake Tahoe Left</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">More Lake Tahoe Left</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tahoeright.jpg" height="300px"/>
-                    <figcaption align="middle">More Lake Tahoe Right</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">More Lake Tahoe Right</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tahoewarp.jpg" height="350px"/>
-                    <figcaption align="middle">More Lake Tahoe weights</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">More Lake Tahoe weights</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/tahoewarp3.jpg" height="350px"/>
-                    <figcaption align="middle">More Lake Tahoe multiresolution blending</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">More Lake Tahoe multiresolution blending</p>
+                </div>
+            </div>
     </div>
     <h2 align="middle">Adaptive Non-Maximal Suppression</h2>
     <p>By getting the Harris Corners as given to us, we have to many points that are too close to each other. Using Adaptive Non-Maximal Suppression, we can lower the amount of points and space the chosen Harris Corners. We do this by getting the minimum r_i for each corner where r_i = min|xi-xj| for all j such that f(xi) < 0.9f(xj). f in this case is the corner intensity. We then take the points based on r_i such that we find all the points greater than or equal to r_i where the number of points greater than or equal to r_i is 500. We then use thoe 500 well spaced points, p, moving forward</p>
@@ -217,51 +223,46 @@
     <p>Lastly, we create a homography matrix by running 15000 iterations of picking 4 random points, getting the homography matrix, and picking the homography that includes the most inliers using points from feature matching. Then we use the inliers of the homography matrix to form a least squares homography matrix.</p>
 
     <p> The following image has yellow points to represent the results of Adaptive Non-Maximal Suppression, the blue points represent the results of Feature Matching, and the red points represent the results of the points used in RANSAC.</p>
-    <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
-                    <img src="img/samples.png" width="1400px" />
-                    <figcaption align="middle">Points as results of RANSAC</figcaption></td>
-                </tr>
-            </table>
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center photos">
+                <img src="img/samples.png" width="1400px" />
+                <p align="middle">Points as results of RANSAC</p>
+            </div>
+        </div>
     </div>
     <p> The following is the manual points compared to RANSAC points:</p>
-    <div align="center">
-    <table style="width=100%">
-                <tr>
-                    <td align="middle">
-                    <img src="img/tahoewarp.jpg" height="350px"/>
-                    <figcaption align="middle">Tahoe Sunset Manual weights</figcaption></td>
-                    <td align="middle">
-                    <img src="img/tahoe_sunset.jpg" height="350px"/>
-                    <figcaption align="middle">Tahoe Sunset RANSAC weights</figcaption></td>
-                </tr>
-    </table>
-    </div>
-    <div align="center">
-    <table style="width=100%">
-                <tr>
-                    <td align="middle">
-                    <img src="img/tw.jpg" height="350px"/>
-                    <figcaption align="middle">Lake Tahoe Manual weights</figcaption></td>
-                    <td align="middle">
-                    <img src="img/tahoe11.jpg" height="350px"/>
-                    <figcaption align="middle">Lake Tahoe RANSAC weights</figcaption></td>
-                </tr>
-    </table>
-    </div>
-    <div align="center">
-    <table style="width=100%">
-                <tr>
-                    <td align="middle">
-                    <img src="img/y2_warp7.jpg" height="500px"/>
-                    <figcaption align="middle">Half Dome Manual weights</figcaption></td>
-                    <td align="middle">
-                    <img src="img/ransac_yosemite15.jpg" height="500px"/>
-                    <figcaption align="middle">Half Dome RANSAC weights</figcaption></td>
-                </tr>
-    </table>
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/tahoewarp.jpg" height="350px"/>
+                <p align="middle">Tahoe Sunset Manual weights</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/tahoe_sunset.jpg" height="350px"/>
+                <p align="middle">Tahoe Sunset RANSAC weights</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/tw.jpg" height="350px"/>
+                <p align="middle">Lake Tahoe Manual weights</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/tahoe11.jpg" height="350px"/>
+                <p align="middle">Lake Tahoe RANSAC weights</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/y2_warp7.jpg" height="500px"/>
+                <p align="middle">Half Dome Manual weights</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/ransac_yosemite15.jpg" height="500px"/>
+                <p align="middle">Half Dome RANSAC weights</p>
+            </div>
+        </div>
     </div>
 </section>
 <section class="bg" id="resume">
