@@ -1,15 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<style>  
-    div.padded {  
-      padding-top: 0px;  
-      padding-right: 100px;  
-      padding-bottom: 0.25in;  
-      padding-left: 100px;  
-    }  
-  </style> 
-    <title>Vincent Escueta  |  CS 194-26</title>
+
+    <title>Vincent Escueta  |  Frequencies and Gradients</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,7 +57,7 @@
     <header class="bg"> </header>
 <section class="bg">
 <br />
-<h1 align="middle">Frequencies and Gradients! </h1>
+<h1 align="middle">Frequencies and Gradients </h1>
 
     <div class="padded">
 <!--         <p>Sergei Mikhailovich Prokudin-Gorskii took 3 cameras. He put a blue filter on one, a green filter on another, and a red filter over the last. He put the green camera on top the red camera and the blue camera on top of the green one. He then took these cameras and photographs of scenes with all three cameras. Sergei took thousands of pictures, but never got to see them in color. By aligning his photographs using normalized cross correlation, the colored photographs that Sergei wanted have now come to life.</p> -->
@@ -72,399 +65,493 @@
     <h2 align="middle">Part 1: Frequency Domain</h2>
     <h2 align="middle">Part 1.1: Sharpening an Image</h2>
         <p>For the first part we sharpened an image using the <b>unsharp masking technique.</b> This involves taking a an originally blurry picture, <i>im</i>, getting the low pass, gaussian blurred version of the original, <i>img</i>, and subtracting the gaussian blurred image from the original to get the edges of the original image, <i>im - img = imh</i>, also known as the high pass. Then by adding the high pass filter to the original image, we get the sharpened image, <i>ims</i>.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/BlurryPicture.jpg" width="400px" />
-                    <figcaption align="middle">Vincent and Natasha (Original)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Vincent and Natasha (Original)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/BlurryPictureGaussian3.jpg" width="400px" />
-                    <figcaption align="middle">Guassian Blur | Low Pass Filter</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Guassian Blur | Low Pass Filter</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/BlurryPictureHighPass3.jpg" width="400px" />
-                    <figcaption align="middle">Edges | High Pass Filter</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Edges | High Pass Filter</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/BlurryPictureSharp3.jpg" width="400px" />
-                    <figcaption align="middle">Sharpened | sigma = 3 | alpha = 1 </figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Sharpened | sigma = 3 | alpha = 1 </p>
+                </div>
+            </div>
+            
         </div>
     <h2 align="middle">Part 1.2: Hybrid Images</h2>
         <p> As demonstrated from <i>Part 1.1</i>, we can can create low pass filters and high pass filters to sharpen an image. If we take the high pass filter of one image and overlay it with the low pass filter of another image. We get some interesting results. I added one colored one for the <i>Bells & Whistles</i> to demonstrate that colored hybrid images are harder to look good, but with the right pair of images, it can still produce something nice.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/HybridGray.jpg" width="400px" height="350px"/>
-                    <figcaption align="middle">Catman</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Catman</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1Inverse.jpg" width="400px" height="350px"/>
-                    <figcaption align="middle">Mr. Yoda Miyagi</figcaption></td>
-                     <td align="middle">
+                    <p align="middle">Mr. Yoda Miyagi</p>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid2GrayInverse.jpg" width="400px" height="350px"/>
-                    <figcaption align="middle">Naruto Escueta</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Naruto Escueta</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGray.jpg" width="400px" height="350px"/>
-                    <figcaption align="middle">Belle and Natasha (failure)</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Belle and Natasha (failure)</p>
+                </div>
+            </div>
+            
         </div>
         <h3 align="middle">Fourier Transforms</h3>
-            <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+            <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/yoda1.jpg" width="300px"/>
-                    <figcaption align="middle">Yoda</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Yoda</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1yoda1highpass.jpg" width="300px"/>
-                    <figcaption align="middle">Yoda High Pass</figcaption></td>
-                     <td align="middle">
+                    <p align="middle">Yoda High Pass</p>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/miyagi.jpg" width="300px"/>
-                    <figcaption align="middle">Mr. Miyagi</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Mr. Miyagi</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1miyagilowpass.jpg" width="300px"/>
-                    <figcaption align="middle">Mr. Miyagi Low Pass</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Mr. Miyagi Low Pass</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="img/hybrid1GrayInverse.jpg" width="300px"/>
-                    <figcaption align="middle">Mr. Yoda Miyagi</figcaption></td>
-                </tr>
-                 <tr>
-                    <td align="middle">
+                    <p align="middle">Mr. Yoda Miyagi</p>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1yoda1Fourier.jpg" width="300px"/>
-                    <figcaption align="middle">Yoda Fourier</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Yoda Fourier</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1yoda1highpassFourier.jpg" width="300px"/>
-                    <figcaption align="middle">Yoda High Pass Fourier</figcaption></td>
-                     <td align="middle">
+                    <p align="middle">Yoda High Pass Fourier</p>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1miyagiFourier.jpg" width="300px"/>
-                    <figcaption align="middle">Mr. Miyagi Fourier</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Mr. Miyagi Fourier</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hybrid1miyagilowpassFourier.jpg" width="300px"/>
-                    <figcaption align="middle">Mr. Miyagi Low Pass Fourier</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Mr. Miyagi Low Pass Fourier</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="img/hybrid1FFourier.jpg" width="300px"/>
-                    <figcaption align="middle">Mr. Yoda Miyagi Fourier</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Mr. Yoda Miyagi Fourier</p>
+                </div>
+            </div>
+            
         </div>
 
         <h2 align="middle">1.3 Gaussian and Laplacian Stacks</h2>
         <p>Next we implemented Gaussian and Laplacian Stacks. A Gaussian Stack is a series of low pass images with increasing Gaussian blurs. My examples do sigma of 2, 4, 8, 16, 32. A Laplacian Stack is a series of high pass images that is a low pass image minus the gaussian with a sigma one power higher. Below are some examples of that. One is of Leonardo da Vinci's The Last Supper. I used this because of the depth and sharp lines offered. And I used the blurriest low pass filter and the laplacian stack to rebuilt the image. The other is one of my failure image, Belle and Natasha. The reason I used this is because Belle's lines are so sharp that it's interesting how the stacks slowly make Belle fade away and only Natasha is left by sigma = 16.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supper.jpg" width="600px" />
-                    <figcaption align="middle">Original The Last Supper</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Original The Last Supper</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supper_rebuilt.jpg" width="600px" />
-                    <figcaption align="middle">Rebuilt</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Rebuilt</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperGaussian2.jpg" width="600px" />
-                    <figcaption align="middle">Gaussian (sigma=2)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=2)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperLaplacian2.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma=2)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=2)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperGaussian4.jpg" width="600px" />
-                    <figcaption align="middle">Gaussian (sigma=4)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=4)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperLaplacian4.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma=4)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=4)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperGaussian8.jpg" width="600px" />
-                    <figcaption align="middle">Gaussian (sigma=8)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=8)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperLaplacian8.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma=8)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=8)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperGaussian16.jpg" width="600px" />
-                    <figcaption align="middle">Gaussian (sigma=16)</figcaption></td>
-                     <td align="middle">
+                    <p align="middle">Gaussian (sigma=16)</p>
+                </div>
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperLaplacian16.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma=16)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=16)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperGaussian32.jpg" width="600px"/>
-                    <figcaption align="middle">Gaussian (sigma=32)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=32)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/last_supperLaplacian32.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma=32)</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Laplacian (sigma=32)</p>
+                </div>
+            </div>
+            
         </div>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center photos">
                     <img src="img/hunkleandbelleGray.jpg" width="400px" />
-                    <figcaption align="middle">Original</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Original</p>
+                </div>
+            </div>
+            
         </div>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayGaussian2.jpg" width="400px" />
-                    <figcaption align="middle">Gaussian (sigma=2)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=2)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayLaplacian2.jpg" width="400px" />
-                    <figcaption align="middle">Laplacian s(igma=2)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian s(igma=2)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayGaussian4.jpg" width="400px" />
-                    <figcaption align="middle">Gaussian (sigma=4)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=4)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayLaplacian4.jpg" width="400px" />
-                    <figcaption align="middle">Laplacian (sigma=4)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=4)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayGaussian8.jpg" width="400px" />
-                    <figcaption align="middle">Gaussian (sigma=8)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=8)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayLaplacian8.jpg" width="400px" />
-                    <figcaption align="middle">Laplacian (sigma=8)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=8)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayGaussian16.jpg" width="400px" />
-                    <figcaption align="middle">Gaussian (sigma=16)</figcaption></td>
-                     <td align="middle">
+                    <p align="middle">Gaussian (sigma=16)</p>
+                </div>
+                 <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayLaplacian16.jpg" width="400px" />
-                    <figcaption align="middle">Laplacian (sigma=16)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma=16)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayGaussian32.jpg" width="400px"/>
-                    <figcaption align="middle">Gaussian (sigma=32)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma=32)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/hunkleandbelleGrayLaplacian32.jpg" width="400px" />
-                    <figcaption align="middle">Laplacian (sigma=32)</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Laplacian (sigma=32)</p>
+                </div>
+            </div>
+            
         </div>
     <h2 align="middle">Part 1.4: Multiresolution Blending</h2>
     <p> Successfully implemented multiresolution blending by doing something very similar to rebuilting The Last Supper from stacks. Given 2 images, <i>im1</i> and <i>im2</i>, and given a mask filter <i>mask</i>. First we made a negative version of our mask, giving us <i>mask</i> and <i>neg_mask</i> We made Laplacian and Gaussian stacks for each image and each mask.</p>
     <p>We made the first portion of our final photo by taking each high pass filter in the Laplacian stack of <i>im1</i> and multiplying it by the Gaussian of <i>mask</i> with similar sigmas. Afterward, we add all those results together and add it to the our blurriest gaussian in the stack of <i>im1</i> which is multiplied by the blurriest <i>mask</i> Gaussian. Then repeat this with <i>im2</i> and <i>neg_mask</i> and we end up with the photos we see below.</p>
-     <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+     <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/mixed_fruit10.jpg" width="800px" />
-                    <figcaption align="middle">Oraple (Apple and Orange</figcaption></td>
+                    <p align="middle">Oraple (Apple and Orange</p>
+                </div>
 
-                    <td align="middle">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/mountains.jpg" width="800px" />
-                    <figcaption align="middle">Half Everest (Half Dome and Mt. Everest)</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Half Everest (Half Dome and Mt. Everest)</p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/freeman2.jpg" width="800px" />
-                    <figcaption align="middle">Martin Freeman (Watson and Bilbo Baggins)</figcaption></td>
+                    <p align="middle">Martin Freeman (Watson and Bilbo Baggins)</p>
+                </div>
 
-                    <td align="middle">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/master.jpg" width="800px" />
-                    <figcaption align="middle">Masters (Yoda and Gandalf)</figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Masters (Yoda and Gandalf)</p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/sky.jpg" width="800px" />
-                    <figcaption align="middle">The Sky (Sunrise and Starry Night)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">The Sky (Sunrise and Starry Night)</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/legendaryfreqs.jpg" width="800px" />
-                    <figcaption align="middle">Legendary Art Vandalay (Jerry, George and Barney)</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Legendary Art Vandalay (Jerry, George and Barney)</p>
+                </div>
+            </div>
+            
      </div>
      <p> This is the deconstruction of the process stated above. The ssum of all the center images form the finall middle image shown below. The center images are the addition of the left and right adjacent to it.</p>
-     <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+     <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl1-1.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl3-1.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma = 32)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma = 32)</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl2-1.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Right </p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+               <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl1-2.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl3-2.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma = 16)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma = 16)</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl2-2.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Right </p>
+                </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl1-3.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl3-3.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma = 8)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma = 8)</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl2-3.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Right </p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl1-4.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl3-4.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma = 4)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma = 4)</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl2-4.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Right </p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl1-5.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl3-5.jpg" width="600px" />
-                    <figcaption align="middle">Laplacian (sigma = 2)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Laplacian (sigma = 2)</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multireslapl2-5.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Right </p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multiresgaus1.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multiresgaus3.jpg" width="600px" />
-                    <figcaption align="middle">Gaussian (sigma = 32)</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Gaussian (sigma = 32)</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multiresgaus2.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-                </tr>
-            </table>
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Right </p>
+                </div>
+            </div>
+            
+        
+            <div class="row">
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multiresfin1-5.jpg" width="600px" />
-                    <figcaption align="middle">Left </figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Left </p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multiresfin3-5.jpg" width="600px" />
-                    <figcaption align="middle">Finished</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Finished</p>
+                </div>
+                <div class="col-lg-4 col-sm-2 text-center photos">
                     <img src="img/multiresfin2-5.jpg" width="600px" />
-                    <figcaption align="middle">Right </figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Right </p>
+                </div>
+            </div>
+            
      </div>
     <h2 align="middle">Part 2: Gradient Domain Fushion</h2>
     <p>The goal of this section of the project was to blend one image on top of another without the image placed doesn't look out of place. We do this by playing with gradients to not change anything within the traget image, only change things with the source image. We no longer will look at intensities or Laplacian blending, but use the gradients of a source image and the original target image along with the least squares problem to do Poisson blending.</p>
     <h2 align="middle">Part 2.1: Toy Problem</h2>
     <p>The toy problem involved constructing an image, <i>im</i> given a matrix <i>A</i> and an image <i>b</i>. To get <i>A</i> we contruct a <i>(l * w) x (l * w)</i> sized array where each row corresponds to a final pixel value represented by all elements of the original image. If a pixel is at an edge, we just put 1 on the corresponding row and column index where the pixel would belong in a 2d image. Otherwise, we place a 4 on the corresponding row and column index where the pixel would belong in a 2d image and -1 on the row and column index that would be adjacent to the pixel that we placed a 4 on the 2d array. By deconstructing <i>im</i> into a 1d array, <i>1d_im</i> of size <i>l * w</i> from its 2d array we can do <i>A.dot(1d_im)</i> to get <i>b</i>. Then if we constructed the equation <i>(Ax - b)^2 = 0</i>, we would solve for x to get the 1d version of the reconstructed image. By reshaping it, we get the reconstruction as shown below.</p>
-    <div align="center">
-        <table style="width=100%">
-                <tr>
-                    <td align="middle">
+    <div class="container">
+    
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/toyproblem.jpg" width="400px" />
-                    <figcaption align="middle">Original</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Original</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/toyproblem1.jpg" width="400px" />
-                    <figcaption align="middle">Reconstructed</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Reconstructed</p>
+                </div>
+            </div>
+            
     </div>
     <h2 align="middle">Part 2.2: Poisson Blending</h2>
     <p>For this part of the project, we wanted to blend in a source picture, <i>sim</i>, to a target picture, <i>tim</i>, when given a mask that indicates where <i>sim</i> goes. The way we did that was very similar to the toy problem. By getting the portion of the source image we want through applying the mask, we apply the Laplacian filter over it to create a gradient. Next, we would surround the image with a portion of the target image. Afterward, we use a least squares solver with the current image we have with a matrix, <i>A</i> to get a manipulated image where <i>sim</i> is meant to blend into <i>tim</i> naturally. Our matrix <i>A</i> is an invertible matrix with 1 on the diagnoal if the pixel at that index is meant for a pixel of the target image and a flattened Laplacian pyramid where the corresponding pixel to that row is part of the source image. Below is the house from UP, <i>sim</i>, being applied to a scene in Finding Dory <i>tim</i>. Below that are other results including one failure.</p>
-    <div align="center">
-        <table style="width=100%">
-                <tr>
-                    <td align="middle">
-                    <img src="img/up_house.jpg" width="365px" />
-                    <figcaption align="middle">Source</figcaption></td>
-                    <td align="middle">
-                    <img src="img/finding_dory.jpg" width="400px" />
-                    <figcaption align="middle">Target</figcaption></td>
-                    <td align="middle">
-                    <img src="img/finding_up15.jpg" width="400px" />
-                    <figcaption align="middle">Overlayed</figcaption></td>
-                    <td align="middle">
-                    <img src="img/finding_up13.jpg" width="400px" />
-                    <figcaption align="middle">Blended</figcaption></td>
-                </tr>
-            </table>
+    <div class="container">
+    
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/up_house.jpg" width="365px" />
+                <p align="middle">Source</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/finding_dory.jpg" width="400px" />
+                <p align="middle">Target</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/finding_up15.jpg" width="400px" />
+                <p align="middle">Overlayed</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
+                <img src="img/finding_up13.jpg" width="400px" />
+                <p align="middle">Blended</p>
+            </div>
+        </div>
+            
     </div>
-    <div align="center">
-        <table style="width=100%">
-            <tr>
-                <td align="middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/lakeshark14.jpg" width="800px" />
-                <figcaption align="middle">Failure (because background of source very different than source)</figcaption></td>
-                <td align="middle">
+                <p align="middle">Failure (because background of source very different than source)</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/danceswithwolves.jpg" width="800px" />
-                <figcaption align="middle">Footballers dances with wolves</figcaption></td>
-            </tr>
-            <tr>
-                <td align="middle">
+                <p align="middle">Footballers dances with wolves</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/finding_up13.jpg" width="800px" />
-                <figcaption align="middle">Pixarception</figcaption></td>
-                <td align="middle">
+                <p align="middle">Pixarception</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/under_the_sea_crush.jpg" width="800px" />
-                <figcaption align="middle">Real meets animated</figcaption></td>
-            </tr>
-        </table>
+                <p align="middle">Real meets animated</p>
+            </div>
+        </div>
+        
     </div> 
     <p> The pictures below show the difference between Laplacian blending and Poisson blending. The Seinfled shows pros and cons of both blends. The Laplacian blending allowed Barney to seem fully there, but George's hand started to fade into the suit. The Poisson blend didn't go well because the mask was small and made it so Barney faded into the environment. However, the small section that wasn't faded allows the suit to have a similar color to the image itself. </p>
     <p> The Yoda and Hobbit image shows how the Laplacian blending allowed Yoda to be fully in the sccene, but part of his robe began to blend a little to the background emitting white pixels. The Poisson blending didn't allow Yoda to blend so well. This is because Yoda is light while the background was dark. So Yoda blended into the background and beacame dark and hard to see.</p>
     <p> Overall, it seems that Poisson blending works when you want to blend two similar pictures int terms of the content of the iamge, but are slightly different colors. Laplacian blending works better when you want to blend two images that are similar in color.</p> 
-    <div align="center">
-        <table style="width=100%">
-            <tr>
-                <td align="middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/legendaryfreqs.jpg" width="800px" />
-                <figcaption align="middle">Laplacian blending</figcaption></td>
-                <td align="middle">
+                <p align="middle">Laplacian blending</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/legendaryfreqsss4.jpg" width="800px" />
-                <figcaption align="middle">Poisson blending</figcaption></td>
-            </tr>
-             <tr>
-                <td align="middle">
+                <p align="middle">Poisson blending</p>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/master.jpg" width="800px" />
-                <figcaption align="middle">Laplacian blending</figcaption></td>
-                <td align="middle">
+                <p align="middle">Laplacian blending</p>
+            </div>
+            <div class="col-lg-6 col-sm-6 text-center photos">
                 <img src="img/masterpoisson2.jpg" width="800px" />
-                <figcaption align="middle">Poisson blending</figcaption></td>
-            </tr>
-        </table>
+                <p align="middle">Poisson blending</p>
+            </div>
+        </div>
+        
     </div> 
 
 </section>
