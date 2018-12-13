@@ -202,12 +202,15 @@
         <p>The same applies for &#946 and &#947, but with b and c. That means the closer a point is to a vertex, the closer the corresponding coordinate is to 1. That also applies to finding a point's color. We take a weighted average between it's distance from each vertex. So we interpolate between the 3 vertices using barycentric coordinates to calculate the color. In my code I did</p>
         <p align="middle"><pre align="middle">p =  (a * &#945) + (b * &#946) + (c * [1 - &#945 - &#946])</pre></p>
         <p>where p ends up being the color. That's why points closer to the red vertex are more red, the points closer to the blue vertex are more blue, the points closer to the green vertex are more green, and the colors inbetween as the mix of red, blue, and green. After using the math, I created a color wheel that has reds, blues, greens, and all the colors in between as shown in Figure 16. Once understanding the concept, the application was easy. In my drawrend.cpp file, I created &#945 and &#946 by doing</p>
-        <p align="middle"><pre align="middle"> &#945_numerator = (y - y1) * (x2 - x1) - (x - x1) * (y2 - y1)</pre>
-        <pre align="middle"> &#945_denominator = (y0 - y1) * (x2 - x1) - (x0 - x1) * (y2 - y1)</pre>
-        <pre align="middle"> &#945 = &#945_numerator / &#945_denominator </pre>
-        <pre align="middle"> &#946_numerator = (y - y2) * (x0 - x2) - (x - x2) * (y0 - y2)</pre>
-        <pre align="middle"> &#946_denominator = (y1 - y2) * (x0 - x2) - (x1 - x2) * (y0 - y2)</pre>
-        <pre align="middle"> &#946 = &#946_numerator / &#946_denominator </pre>
+        <p align="middle">
+            <pre align="middle">
+&#945_numerator = (y - y1) * (x2 - x1) - (x - x1) * (y2 - y1)
+&#945_denominator = (y0 - y1) * (x2 - x1) - (x0 - x1) * (y2 - y1)
+&#945 = &#945_numerator / &#945_denominator
+&#946_numerator = (y - y2) * (x0 - x2) - (x - x2) * (y0 - y2)
+&#946_denominator = (y1 - y2) * (x0 - x2) - (x1 - x2) * (y0 - y2)
+&#946 = &#946_numerator / &#946_denominator 
+            </pre>
         </p>
         <p>Then I get &#947 and p in svg.cpp as I did in the equations shown above then used p to get a color which was placed on the corresponding (x, y) point I was originally given.
          </p>
