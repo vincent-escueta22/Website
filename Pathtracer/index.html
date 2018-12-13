@@ -1,15 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<style>  
-    div.padded {  
-      padding-top: 0px;  
-      padding-right: 100px;  
-      padding-bottom: 0.25in;  
-      padding-left: 100px;  
-    }  
-  </style> 
-    <title>Vincent Escueta  |  CS 184</title>
+
+    <title>Vincent Escueta  |  Pathtracer</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,7 +59,6 @@
 <br />
 <h1 align="middle">PathTracer</h1>
 
-    <div class="padded">
         <p>The goal of this project is to create a path tracer that produces images from meshes that are lit up through global(direct and indirect) illumination given a light source. Along with that, besides diffuse objects, glass and mirror objects could be rendered as well. However, to achieve this final result, rays first had to be created from the camera that point to the mesh. To calculate where the rays hit the mesh, BVH(Bounding Volume Hierarchy) algorithms were needed to be able to split a mesh into groups so a ray can easily find where an intersection takes place instead of searching through every primitive on a mesh. For each point where a ray's closest intersection occurs, the amount of light directly from a light source that reaches the point of intersection has to be calculated, direct illumination. Along with that, the amount of light that reaches a a point of intersection from other light rays not directly from a light source, but from extra light reflecting or refracting from other objects have to be calculated as well, indirect illumination. The sum of those two lights produce the final images. Some materials such as mirrors have special properties to reflect light and materials such as glass have special properties to reflect some light and refract other light rays. So these were materials and properties that were implemented as well.</p>
 
     <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
@@ -105,18 +97,18 @@ isect->bsdf = get_bsdf();
         </pre>
         After that, true is returned. Figure 1 and Figure 2 show the results of completing everything talked about up to this point.
         </p>
-        <div align="center">
+        <div class="container">
             <table style="width=100%">
-                    <tr>
-                        <td align="middle">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 text-center photos">
                         <img src="images/part1_no_spheres.png" width="480px" />
-                        <figcaption align="middle">Figure 1: Cornell box without anything in it.</figcaption>
-                        </td>
-                        <td align="middle">
+                        <p align="middle">Figure 1: Cornell box without anything in it.</p>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 text-center photos">
                         <img src="images/part1_gems.png" width="480px" />
-                        <figcaption align="middle">Figure 2: Gems made out of triangles in a Cornell box.</figcaption>
-                        </td>
-                    </tr>
+                        <p align="middle">Figure 2: Gems made out of triangles in a Cornell box.</p>
+                        </div>
+                    </div>
             </table>
         </div>
         <p>
@@ -144,56 +136,54 @@ isect->bsdf = get_bsdf();
         </pre>
         isect->n is set to the unit vector pointing from the origin towards the point of intersection, isect-primitive is the sphere we're checking if the ray, r, intersects it. And each each primitive has a material that get_bsdf() returns. (I noticed in Figure 3, my normal shading was weird because I forgot to turn isect->n into a unit vector.) The final result is in Figure 4 Afterwords, true is returned and the ray, r, and the sphere have a true intersection. All the Figures up to now contain only a few primitives. Besides the gem scene, Figure 2, which has about 200 primitives, the other scenes have less than 15 primitives each. 
         </p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_spheres_not_normalized_normals.png" width="480px" />
-                    <figcaption align="middle">Figure 3: Spheres with bad normals.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 3: Spheres with bad normals.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_spheres_normalized_normals.png" width="480px" />
-                    <figcaption align="middle">Figure 4: Fixed spheres in a Cornell box.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 4: Fixed spheres in a Cornell box.</p>
+                    </div>
+                </div>
             </table>
         </div>
 
      <h2 align="middle">Part 2: Bounding Volume Hierarchy</h2>
         <p>Given a scene with many primitives, it is best to split the primitives into smaller sub groups so it'll make it easier to check the sections that a ray intersects in the scene rather than check each primitive in the scene and see if a ray hits. To do this a BVH construction algorithm, construct_bvh() in bvh.cpp, is used. The algorithm starts by creating a bounding box for all the primitives given as an input. A new node is created with the new bounding box then if the amount of primitives in the input is less than or equal to a given input of max_leaf_size, the new node's prims is equal to the input primitives and the node is returned. Otherwise, the node needs to be split into left and right nodes. The bounding box is 3D so the dimension of the largest size is the dimension that will be split. The midpoint of that dimension becomes the split point and every primitive given is put either to the group left of the split point and equal to the split point, or to the group right of the split point. If both the left and right both have primitives in them, the algorithm is recursively called onto nodes containing the left and right groups.  On the other hand, if the left or the right group is empty, the next largest dimension is chosen to split the primitives. If that fails, last dimension splits the primitives. And if all 3 dimensions fail to split the primitives, the node's prims is then set equal to the input primitives. After the recursion of left and right nodes or failure to split, the node is returned.</p>
         <p>After the sub groups are created, the groups can be used to check where and if a ray intersects a scene using a BVH intersection algorithm, intersect() in bvh.cpp. First, the algorithm checks if the ray intersects a node's bounding box using an intersect function in bbox.cpp. If the ray doesnt intersect the node's bounding box, false is returned. Otherwise, the points the ray intersects the bounding box are checked to ensure that the bounding box intersection times intersect with the ray's min_t and max_t. If it doesn't, falsre is returned. Afterwords, if the node is not a leaf node, intersect is recursively called on the node's left and right childs. If either of them have an intersection, true is returned. If a node is a leaf node, we check all the primitives in the node to see if there is an intersection. If there is an intersection, true is returned, false otherwise. However, there are  two types of intersect() functions. One has a parameter of an intersection i, the other doesnt. The one that doesn't have an input of i returns true as soon as a hit occurs. The other one has to check each primitive to a node and make sure the ray intersects with the primitive closest to min_t but still between min_t and max_t. All the pictures below, Figure 5 to Figure 11, all contain scene's with thousands of primitives compared to the small amount of primitives in Figure 1 to Figure 4.</p>  
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_bench.png" width="480px" />
-                    <figcaption align="middle">Figure 5: A bench scene containing 67808 primitives.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 5: A bench scene containing 67808 primitives.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_blob.png" width="480px" />
-                    <figcaption align="middle">Figure 6: A blob containing 196608 primitives..</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 6: A blob containing 196608 primitives..</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_CBlucy.png" width="480px" />
-                    <figcaption align="middle">Figure 7: Lucy statue in Cornell box containing 133796 primitives.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 7: Lucy statue in Cornell box containing 133796 primitives.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_maxplanck.png" width="480px" />
-                    <figcaption align="middle">Figure 8: Head of Max Planck containing 50801 primitives.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 8: Head of Max Planck containing 50801 primitives.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_walle1.png" width="480px" />
-                    <figcaption align="middle">Figure 9: Scene of Pixar's Wall-E containing 240326 primitives.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 9: Scene of Pixar's Wall-E containing 240326 primitives.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_walle2.png" width="480px" />
-                    <figcaption align="middle">Figure 10: Secondary view of Pixar's Wall-E.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 10: Secondary view of Pixar's Wall-E.</p>
+                    </div>
+                </div>
             </table>
         </div>
 
@@ -207,48 +197,47 @@ isect->bsdf = get_bsdf();
         <pre align="center"> L_out += sum(radiance_outs) / ns_area_light </pre>
         L_out is the sum of all the radiance going towards w_out that is calculated from different light sources. Because the radiance is linear, all outgoing radiance can be added together. The Figure 11 to Figure 18 show some bugs faced along the way and final results as well. 
         </p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_dragon_64_32_first.png" width="480px" />
-                    <figcaption align="middle">Figure 11: Dragon when Triangle's intersect from part 1 wasn't completely working.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 11: Dragon when Triangle's intersect from part 1 wasn't completely working.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_dragon_64_32_second.png" width="480px" />
-                    <figcaption align="middle">Figure 12: Dragon with no shadows.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 12: Dragon with no shadows.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_dragon_64_32.png" width="480px" />
-                    <figcaption align="middle">Figure 13: Fixed Dragon with direct lighting.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 13: Fixed Dragon with direct lighting.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_building.png" width="480px" />
-                    <figcaption align="middle">Figure 14: Building mesh with direct lighting.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                <td align="middle">
+                    <p align="middle">Figure 14: Building mesh with direct lighting.</p>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_64_32_first.png" width="480px" />
-                    <figcaption align="middle">Figure 15: Bunny in Cornell box with conditions to cast shadow mixed up.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 15: Bunny in Cornell box with conditions to cast shadow mixed up.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_64_32_second.png" width="480px" />
-                    <figcaption align="middle">Figure 16: Bunny before Triangle's intersect function from part 1    was fixed.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 16: Bunny before Triangle's intersect function from part 1    was fixed.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_64_32_third.png" width="480px" />
-                    <figcaption align="middle">Figure 17: Bunny with no condition to cast shadows.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 17: Bunny with no condition to cast shadows.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_64_32.png" width="480px" />
-                    <figcaption align="middle">Figure 18: Fixed Bunny in Cornell Box.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 18: Fixed Bunny in Cornell Box.</p>
+                    </div>
+                </div>
             </table>
         </div>
         <p> This section focuses on one particular scene to show the change in noise with varying amount of camera rays per pixel. Figure 19 to Figure 26 show 1, 2, 4, 8, 16, 32, 64, and 128 rays per pixel. These figures show that less noise appears as there are more rays per pixel. The input into the terminal that is used was
@@ -256,48 +245,47 @@ isect->bsdf = get_bsdf();
 X = camera rays per pixel(must be power of 2)
         </pre>
         </p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_1.png" width="480px" />
-                    <figcaption align="middle">Figure 19: Bunny in Cornell box with 1 camera ray per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 19: Bunny in Cornell box with 1 camera ray per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_2.png" width="480px" />
-                    <figcaption align="middle">Figure 20: Bunny in Cornell box with 2 camera rays per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 20: Bunny in Cornell box with 2 camera rays per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_4.png" width="480px" />
-                    <figcaption align="middle">Figure 21: Bunny in Cornell box with 4 camera rays per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 21: Bunny in Cornell box with 4 camera rays per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_8.png" width="480px" />
-                    <figcaption align="middle">Figure 22: Bunny in Cornell box with 8 camera rays per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 22: Bunny in Cornell box with 8 camera rays per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_16.png" width="480px" />
-                    <figcaption align="middle">Figure 23: Bunny in Cornell box with 16 camera rays per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 23: Bunny in Cornell box with 16 camera rays per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_32.png" width="480px" />
-                    <figcaption align="middle">Figure 24: Bunny in Cornell box with 32 camera rays per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 24: Bunny in Cornell box with 32 camera rays per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_64.png" width="480px" />
-                    <figcaption align="middle">Figure 25: Bunny in Cornell box with 64 camera rays per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 25: Bunny in Cornell box with 64 camera rays per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part3_bunny_soft_shadow_128.png" width="480px" />
-                    <figcaption align="middle">Figure 26:  Bunny in Cornell box with 128 camera rays per pixel.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 26:  Bunny in Cornell box with 128 camera rays per pixel.</p>
+                    </div>
+                </div>
             </table>
         </div>
         <p> It is easy to see the difference between Figure 19 and Figure 26, 1 versus 128 camera rays per pixel. As the number of rays increase, the picture begins to have less black speckles spread out throughout the image. The soft shadows start as a scattered amount of black pixels that become smooth soft shadows that noticeably lighten at the points that have a lower chance of intersecting the bunny.</p>
@@ -307,38 +295,37 @@ X = camera rays per pixel(must be power of 2)
         <pre align="center"> L_out = L_in * bsdf * cos(w_in's theta) / (pdf * prob_term) </pre>
         L_out is added to all the radiance already calculated from the direct light function to create all the light hitting that point in the scene. Figure 27 to Figure 30 show global illumination. Figure 26 from the last part is the bunny with only direct lighting, but in Figure 27, you can see the shadows become much lighter because rays can reach those areas through indirect lighting. The dragon in Figure 28 is much brighter than the dragon in Figure 13 due to having more light able to hit areas of the dragon. Figure 31 shows Labmertian spheres in a Cornell box with only direct illumination while Figure 32 is that same scene with only indirect illumination. If you add the lighting from the two scenes together, you get Figure 30, the Lambertian spheres in a Cornell box with global illumination. 
         </p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_bunny.png" width="480px" />
-                    <figcaption align="middle">Figure 27: Bunny with global illumination.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 27: Bunny with global illumination.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon.png" width="480px" />
-                    <figcaption align="middle">Figure 28: Dragon with global illumination.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 28: Dragon with global illumination.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_wall-e.png" width="480px" />
-                    <figcaption align="middle">Figure 29: Pixar's Wall-E with global illumination.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 29: Pixar's Wall-E with global illumination.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres7.png" width="480px" />
-                    <figcaption align="middle">Figure 30: Lambertian spheres with global illumination.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 30: Lambertian spheres with global illumination.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres_global.png" width="480px" />
-                    <figcaption align="middle">Figure 31: Lambertian spheres with only direct illumination.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 31: Lambertian spheres with only direct illumination.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres_indirect.png" width="480px" />
-                    <figcaption align="middle">Figure 32: Lambertian spheres with only indirect illumination.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 32: Lambertian spheres with only indirect illumination.</p>
+                    </div>
+                </div>
             </table>
         </div>
         <p> This section focuses on one particular scene to show the change in noise with varying values for max_ray_depth. Figure 33 to Figure 40 show 1, 2, 3, 4, 5, 15, 30, and 100 as the values for max_ray_depth. The higher the value for max_ray_depth, the more bounces the rays in indirect illumination have. The input in the terminal was 
@@ -346,48 +333,47 @@ X = camera rays per pixel(must be power of 2)
 X = max_ray_depth
         </pre>
         </p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon1.png" width="480px" />
-                    <figcaption align="middle">Figure 33: Dragon in a Cornell box with max_ray_depth = 1.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 33: Dragon in a Cornell box with max_ray_depth = 1.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon2.png" width="480px" />
-                    <figcaption align="middle">Figure 34: Dragon in a Cornell box with max_ray_depth = 2.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 34: Dragon in a Cornell box with max_ray_depth = 2.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon3.png" width="480px" />
-                    <figcaption align="middle">Figure 35: Dragon in a Cornell box with max_ray_depth = 3.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 35: Dragon in a Cornell box with max_ray_depth = 3.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon4.png" width="480px" />
-                    <figcaption align="middle">Figure 36: Dragon in a Cornell box with max_ray_depth = 4.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 36: Dragon in a Cornell box with max_ray_depth = 4.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon5.png" width="480px" />
-                    <figcaption align="middle">Figure 37: Dragon in a Cornell box with max_ray_depth = 5.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 37: Dragon in a Cornell box with max_ray_depth = 5.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon6.png" width="480px" />
-                    <figcaption align="middle">Figure 38: Dragon in a Cornell box with max_ray_depth = 6.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 38: Dragon in a Cornell box with max_ray_depth = 6.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon50.png" width="480px" />
-                    <figcaption align="middle">Figure 39: Dragon in a Cornell box with max_ray_depth = 50.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 39: Dragon in a Cornell box with max_ray_depth = 50.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_dragon100.png" width="480px" />
-                    <figcaption align="middle">Figure 40: Dragon in a Cornell boxwith max_ray_depth = 100.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 40: Dragon in a Cornell boxwith max_ray_depth = 100.</p>
+                    </div>
+                </div>
             </table>
         </div>
         <p> The results show that the scene gets noticeably brighter from a max_ray_depth of 1 to 6, Figure 33 to Figure 38, but there is more noise. However, the max_ray_depth of 50 and 100, Figure 39 and Figure 40, both look very similar to the max_ray_depth of 6, Figure 38. There is a little more brightness such as in the mouth of the dragon, but it is still very small amount of change. The small amount of change is because the rays for indirect lighting are less likely to exist as the ray bounces more and more. So the possibility that a ray will bounce 50 or 100 times is really small. The ray will most probably cease to exist by that point.</p>
@@ -395,48 +381,47 @@ X = max_ray_depth
         <pre align="center"> ./pathtracer -t 8 -s X -l 32 -m 6 -r 480 360 ../dae/sky/CBspheres_lambertian.dae
 X = camera rays per pixel(must be power of 2)
         </pre></p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres1.png" width="480px" />
-                    <figcaption align="middle">Figure 41: Lambertian spheres in a Cornell box with 1 samples per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 41: Lambertian spheres in a Cornell box with 1 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres2.png" width="480px" />
-                    <figcaption align="middle">Figure 42: Lambertian spheres in a Cornell box with 2 samples per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 42: Lambertian spheres in a Cornell box with 2 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres4.png" width="480px" />
-                    <figcaption align="middle">Figure 43: Lambertian spheres in a Cornell box with 4 samples per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 43: Lambertian spheres in a Cornell box with 4 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres8.png" width="480px" />
-                    <figcaption align="middle">Figure 44: Lambertian spheres in a Cornell box with 8 samples per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 44: Lambertian spheres in a Cornell box with 8 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres16.png" width="480px" />
-                    <figcaption align="middle">Figure 45: Lambertian spheres in a Cornell box with 16 samples per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 45: Lambertian spheres in a Cornell box with 16 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres64.png" width="480px" />
-                    <figcaption align="middle">Figure 46: Lambertian spheres in a Cornell box with 64 samples per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 46: Lambertian spheres in a Cornell box with 64 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres256.png" width="480px" />
-                    <figcaption align="middle">Figure 47: Lambertian spheres in a Cornell box with 2 samples per pixel 256.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 47: Lambertian spheres in a Cornell box with 2 samples per pixel 256.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part4_spheres1024.png" width="480px" />
-                    <figcaption align="middle">Figure 48: Lambertian spheres in a Cornell box with 1024 samples per pixel.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 48: Lambertian spheres in a Cornell box with 1024 samples per pixel.</p>
+                    </div>
+                </div>
             </table>
         </div>
         <p> Unlike just the direct lighting, the noise contribution also comes from the indirect lighting creating white speckles on the rendered image as easily seen in Figure 41 to Figure 45. However, with the increasing samples per pixel rate, the noise starts disappearing as seen in Figure 48 which has 1024 samples per pixel. </p>
@@ -444,13 +429,12 @@ X = camera rays per pixel(must be power of 2)
         <p>Mirror and glass surfaces were implemented as already seen in the Dragon in a Cornell box in the Figure 33 to Figure 40 in Part 4. The materials were implemented by giving mirrors and glass bsdf functions in bsdf.cpp. For a mirror, given vector from the camera onto a hit point, wo, the mirror reflection vector, wi, is first calculated using the normal vector (0, 0, 1).
         <pre align="center"> wi = 2 * dot(n, wo) * n - wo; </pre>
         Since the normal is (0, 0, 1), wi is essentially (-wo.x, -wo.y, wo.z) when using the equation above. However, if the normal vector would be changed, this specific equation would be more important. The mirror bsdf then returns a Spectrum of the mirror's reflectance, given as a parameter for MirrorBSDF objects, divided by the absolute value of the cosine value of new ray, wi, with respect to the normal vector. This bsdf function applies to indirect lights. This function returns the reflectance divided by thr absolute cosine value because it should cancel out the absolute cosine value in pathtracer.cpp's estimate_indirect_lighting() function that was implemented in part 4 of the project. The cosine value needs to be cancelled out because the angle a light hits a point doesn't affect the amount of light leaving a point of a mirror's surface. It just depends on a mirror's ability to reflect light. For direct lights, no light is returned cause direct light can't reflect since it is just 1 ray. Figure 49 shows a mirror sphere in a Cornell box before the glass sphere was implemented.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part5_mirror.png" width="480px" />
-                    <figcaption align="middle">Figure 49: A Cornell box with spheres after mirror surfaces were implemented, but glass surfaces weren't implemented</figcaption> </td>
-                </tr>
+                    <p align="middle">Figure 49: A Cornell box with spheres after mirror surfaces were implemented, but glass surfaces weren't implemented</p> </div>
+                </div>
             </table>
         </div>
         <p> Glass surfaces were much harder to implement because light rays that pass through a glass object are slightly reflected off the surface while others are refracted. Rays that are refracted enter an object at one angle, go through the object different angle, this angle changes depending on the material of an object, then leaves the object at the same angle it initially came in at. To implement this, there is a check to see if a ray is leaving or entering an object. If wo, the outgoing radiance direction, is entering the outside, the index of refraction, no, is 1, otherwise it is ior, a parameter in a bsdf. The inside index of refraction, ni, is the opposite of no. The ray created due to refraction, wi, is calculated by using Snell's Law where
@@ -468,13 +452,12 @@ p = r0 + ((1 - r0) * (1 - abs_cos_theta(wi))^5)
         This p value is used to determine if this ray will be reflected off the glass or refract through the glass. This p value is multiplied by a constant, usually 10 or 20 to make sure at high max_ray_depths, the rays can reach it's max number of bounces before termination. If the p value causes a reflection, the glass sphere is treated like the mirror is before, but the pdf used in pathtracer.cpp's estimate_indirect_lighting() is changed to p and the return value is the same as the mirror, but multiplied by pdf. However, if refraction occurs, pdf is changed to (1 - p) and what is returned is the transmittance, a bsdf parameter, multiplied by r^2, where r is the r when using Snell's law / divided by the absolute value of the cosine value of new ray wi with respect to the normal vector. All of this is multiplied by the pdf.
         <pre align="center"> bsdf = pdf * transmittance * r^2 / abs_cos_theta(wi) </pre>
          The reason for the division of the absolute cosine value is the same as the mirror, but the multiplication by the pdf is because the light ray isn't losing any energy, it is just reflecting or refracting through an object so what is returned is multiplied by pdf to cancel out the pdf pathtracer.cpp's estimate_indirect_lighting(). Figure 50 shows the result of implementing mirror and glass materials, it is the finished version of Figure 49</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_glass.png" width="480px" />
-                    <figcaption align="middle">Figure 50: A Cornell box with a mirror sphere and a glass sphere</figcaption></td>
-                </tr>
+                    <p align="middle">Figure 50: A Cornell box with a mirror sphere and a glass sphere</p></div>
+                </div>
             </table>
         </div>
         <p> When rendering the same scene as Figure 50 at muliple max_ray_depth values to see how more bounces of the ray due to an input of the following can affect the renderings. 
@@ -482,66 +465,65 @@ p = r0 + ((1 - r0) * (1 - abs_cos_theta(wi))^5)
 X = max_ray_depth
         </pre>
         Figure 51 to Figure 61 show the results of the renderings at different max_ray_depth values.
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd1.png" width="480px" />
-                    <figcaption align="middle">Figure 51: Mirror and glass spheres in a Cornell box with max_ray_depth = 1.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 51: Mirror and glass spheres in a Cornell box with max_ray_depth = 1.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd2.png" width="480px" />
-                    <figcaption align="middle">Figure 52: Mirror and glass spheres in a Cornell box with max_ray_depth = 2.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 52: Mirror and glass spheres in a Cornell box with max_ray_depth = 2.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd3.png" width="480px" />
-                    <figcaption align="middle">Figure 53: Mirror and glass spheres in a Cornell box with max_ray_depth = 3.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 53: Mirror and glass spheres in a Cornell box with max_ray_depth = 3.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd4.png" width="480px" />
-                    <figcaption align="middle">Figure 54: Mirror and glass spheres in a Cornell box with max_ray_depth = 4.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 54: Mirror and glass spheres in a Cornell box with max_ray_depth = 4.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd5.png" width="480px" />
-                    <figcaption align="middle">Figure 55: Mirror and glass spheresin a Cornell box with max_ray_depth = 5.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 55: Mirror and glass spheresin a Cornell box with max_ray_depth = 5.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd6.png" width="480px" />
-                    <figcaption align="middle">Figure 56: Mirror and glass spheres in a Cornell box with max_ray_depth = 6.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 56: Mirror and glass spheres in a Cornell box with max_ray_depth = 6.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd7.png" width="480px" />
-                    <figcaption align="middle">Figure 57: Mirror and glass spheres in a Cornell box with max_ray_depth = 7.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 57: Mirror and glass spheres in a Cornell box with max_ray_depth = 7.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd10.png" width="480px" />
-                    <figcaption align="middle">Figure 58: Mirror and glass spheres in a Cornell box with max_ray_depth = 10.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 58: Mirror and glass spheres in a Cornell box with max_ray_depth = 10.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd25.png" width="480px" />
-                    <figcaption align="middle">Figure 59: Mirror and glass spheres in a Cornell box with max_ray_depth = 25.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 59: Mirror and glass spheres in a Cornell box with max_ray_depth = 25.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd75.png" width="480px" />
-                    <figcaption align="middle">Figure 60: Mirror and glass spheres in a Cornell box with max_ray_depth = 75.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 60: Mirror and glass spheres in a Cornell box with max_ray_depth = 75.</p>
+                    </div>
+                </div>
             </table>
             <table>
-                <tr>
-                    <td align="middle">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part5_spheres_mrd100.png" width="480px" />
-                    <figcaption align="middle">Figure 61: Mirror and glass spheres in a Cornell box with max_ray_depth = 100.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 61: Mirror and glass spheres in a Cornell box with max_ray_depth = 100.</p>
+                    </div>
+                </div>
             </table>
         </div>
         At a max_ray_depth of 1, Figure 51, all the refractive rays are trapped within the glass sphere so the resulting glass sphere is all reflection with a black tint. The mirror sphere already creates the desired output as it reflects all the light coming into it, but both sphere's shadows are really dark due to a lack of indirect lighting. However, at a max_ray_depth of 2, Figure 52, the rays in the sphere all come out showing the results of refraction on the glass sphere. Since the glass sphere contains the light of the area light, at a max_ray_depth of 3, Figure 53, that light is shot from the sphere to the ground forming a caustic at the floor of the sphere. Some of the light formed there bounces to the wall on the left at a max_ray_depth of 4, Figure 54. Those lights hitting right wall cause a caustic to be formed in Figure 54. Along with that, the light created on the floor due to the refraction also have some rays going back into the glass sphere. With a max_ray_depth of 5, Figure 55, You can see at the bottom right of the sphere the light entering from the caustic of the floor is reflected while some rays are now trapped inside the ray. In max_ray_depth of 6, Figure 56, the refracted rays now exit the surface and the refracted light from the caustic on the floor of the glass sphere now appears at the top left of the glass sphere. From there, as the max_ray_depth increases to 7, 10, 25, 75, and 100, in Figure 57 to Figure 61, the images don't change to much, you see a little more light keeps being reflected off of the bottom right of the glass sphere and the caustic causing a brighter light in that section, the caustic on the right wall get's a little brighter, but the change isn't too much.
@@ -552,54 +534,52 @@ X = max_ray_depth
 X = camera rays per pixel(must be power of 2)
         </pre>
         </p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres1.png" width="480px" />
-                    <figcaption align="middle">Figure 62: Mirror and glass spheres in a Cornell box with 1 sample per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 62: Mirror and glass spheres in a Cornell box with 1 sample per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres2.png" width="480px" />
-                    <figcaption align="middle">Figure 63: Mirror and glass spheres in a Cornell box with 2 samples per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 63: Mirror and glass spheres in a Cornell box with 2 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres4.png" width="480px" />
-                    <figcaption align="middle">Figure 64: Mirror and glass spheres in a Cornell box with 4 samples per pixel</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 64: Mirror and glass spheres in a Cornell box with 4 samples per pixel</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres8.png" width="480px" />
-                    <figcaption align="middle">Figure 65: Mirror and glass spheres in a Cornell box with 8 samples per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 65: Mirror and glass spheres in a Cornell box with 8 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres16.png" width="480px" />
-                    <figcaption align="middle">Figure 66: Mirror and glass spheres in a Cornell box with 16 samples per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 66: Mirror and glass spheres in a Cornell box with 16 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres64.png" width="480px" />
-                    <figcaption align="middle">Figure 67: Mirror and glass spheres in a Cornell box with 64 samples per pixel.</figcaption>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 67: Mirror and glass spheres in a Cornell box with 64 samples per pixel.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres256.png" width="480px" />
-                    <figcaption align="middle">Figure 68: Mirror and glass spheres in a Cornell box with 256 samples per pixel.</figcaption>
-                    </td>
-                    <td align="middle">
+                    <p align="middle">Figure 68: Mirror and glass spheres in a Cornell box with 256 samples per pixel.</p>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part5_spheres1024.png" width="480px" />
-                    <figcaption align="middle">Figure 69: Mirror and glass spheres in a Cornell box with 1024 samples per pixel.</figcaption>
-                    </td>
-                </tr>
+                    <p align="middle">Figure 69: Mirror and glass spheres in a Cornell box with 1024 samples per pixel.</p>
+                    </div>
+                </div>
             </table>
         </div>
         <p>
         As seen in the results of the Figures above more samples per pixel, the less noise. Initially with the first few Figures, there is a lot of white and black noise. However, by 16 samples per pixels, the black noise spots are much less apparent while the white noise is still very noticeable. Yet, by increasing the sample rate all the way to 1024, the result is Figure 69. The noise is barely noticeable and the picture is clear and shows a lot of the detail in shading and lighting.
         </p>
-</div>
 </section>
 <section class="bg" id="resume">
         <div class="container text-center">
