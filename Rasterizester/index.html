@@ -76,20 +76,21 @@
     <h2 align="middle">Part 1: Rasterizing Lines</h2>
       <!--   <p>Describe what you did in Part 1. Show your result here. You could talk about which line rasterizing algorithm you used, any issues you ran into and had to debug (with example images), and any clever modifications you made to the algorithm to reduce the number of special cases. For part 1, we had to</p> -->
         <p> In part 1, I created my lines using the Bresenham's algorithm. The algorithm itself wasn't too complicated. Basically,the algorithm keeps tracks of an error value which is used to keep track if we need to add 1 to the current y index we are at while indexing through all x from x0 to x1. If two times the error is greater than dx, then we increment y by 1, if not, y does not change. This algorithm only works for slopes from 0 to 1 and the result is shown in Figure 2. Figure 2 shows that my explanation only works for one of eight octants. If dy/dx was greater than 1 or less than -1 then we would switch y and x, if x0 was less than x1 then I swapped them. Then I manipulated the algorithm depending on if slope was positive or negative and if x and y were swapped. After applying this, I was able to work with all eight octants on a graph as shown in Figure 1.</p>
-        <div align="middle">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part1.png" />
-                    <figcaption align="middle"> Figure 1: A series of lines with many different slopes using Bresenham's algorithm that form a sigure</figcaption>
+                    <p align="middle"> Figure 1: A series of lines with many different slopes using Bresenham's algorithm that form a sigure</p>
+                </div>
                     <!-- </td>
                     <td align="middle" -->
+                <div class="col-lg-6 col-sm-6 text-center photos">
                      <img src="./images/part1_error.png" />
-                    <figcaption align="middle"> Figure 2: The same as Figure 1, but before considering the 7 other octants besides the first one when applying Bresenham's algorithm </figcaption>
-                    </td>
-                </tr>
-            </table>
+                    <p align="middle"> Figure 2: The same as Figure 1, but before considering the 7 other octants besides the first one when applying Bresenham's algorithm </p>
+                </div>
+            </div>
         </div>
 <!--         <p>Here is an example of how to include a simple formula:</p>
         <p align="middle"><pre align="middle">a^2 + b^2 = c^2</pre></p>
@@ -102,32 +103,34 @@
  After looking at the lecture slides again, I realized it should've been
  <p align="middle"><pre align="middle">l0 = (y - y1) * (x1 - x0) - (x - x0) * (y1 - y0)</pre></p>
  <p>Even though it was just the negative of what they gave in lecture, it gave me that line that just wouldnt fill itself at higher resolutions. I'm still confused on why that occured because in my conditions I checked if all my line equations were greater than and equal to 0 or if all my line equations were less than and equal to 0.</p>
- <div align="middle">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+ <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part2.png" />
-                    <figcaption align="middle">Figure 3: Rasterized triangles, top right is zoomed to show jaggies</figcaption>
+                    <p align="middle">Figure 3: Rasterized triangles, top right is zoomed to show jaggies</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="./images/part2_circle.png" />
-                    <figcaption align="middle">Figure 4: Circle at 960x640 resolution</figcaption>
+                    <p align="middle">Figure 4: Circle at 960x640 resolution</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-center photos">
                     <img src="./images/part2_circle_error.png" hr width="90%"/>
-                    <figcaption align="middle">Figure 5: Circle at 1440x900</figcaption>
-                    </td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 5: Circle at 1440x900</p>
+                </div>
+            </div>
         </div>
         <!-- <p>Here is an example table. You could put timing comparisons here, for example.</p>
-        <div align="middle"> -->
+        <div class="container"> -->
             <!-- <table style="width=100%" border="1px" cellpadding="10px">
-                <tr>
+                
                     <td>
                     <p>Row 1, Col 1</p>
                     <td>
                     <p>Row 1, Col 2</p>
                     <td>
                     <p>Row 1, Col 3</p>
-                <tr>
+                
                     <td>
                     <p>Row 2, Col 1</p>
                     <td>
@@ -143,42 +146,47 @@
         <p> In part 3, we implemented antialiasing into our triangle function to get rid of jaggies by adding less opaque pixels around the edges to make them smoother. The way I approached this was by adding a super sampling buffer that was the sample rate times bigger than the framebuffer. I kept track of that super sampling buffer size by storing a total_sample_pts integer that constantly updated with a new sample rate by doing</p>
         <p align="middle"><pre align="middle">total_sample_pts = width * height * sample_rate</pre></p>
         <p>Along with adding a super sampling buffer and a integer that keeps track of the size the buffer should be, I also added the square root of the sample rate as well because later when we use the rasterize triangle function on sample rates greater than 1, we need to multiply each x and y point from the input by the square root of the sample rate and multiply the square root of the sample rate by the height and the width to get a updated height and width. After using rasterize triangle and getting the shapes and lines into the supersampling buffer, in a resolve function, I incremented through the super sampling buffer and stored each pixel from the super sampling buffer into the frame buffer. Each pixel from the frame buffer will get a sample rate's worth of pixels put into it. Only 1 sample rates worth of each super sampling pixel's color will be put into the corresponding pixel of the framebuffer. For example, if the sample rate was 4, 4 pixels of the super sampling buffer will be put into 1 pixel of the frame buffer and each super sampling pixel wil only have 1/4th of it's r,g,b,a colors put into the corresponding frame buffer pixel. The figures below show the difference between different sample rates. The last figure, Figure 9, shows the background as gray. The problem there was that I was adding all the elements from the supersampling buffer divided by the sample rate straight into into the framebuffer. That would make my screen grayer. So what I did to change that was I began to add all the elements from the supersampling buffer into a integer variable before dividing by the sampling rate and storing it into the framebuffer and that fixed my problem. Fixing this caused Figure 9 to become Figure 8.</p>
-        <div align="middle">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-3 col-sm-6 text-center photos">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part3_1px.png" />
-                    <figcaption align="middle">Figure 6: Triangles at sample rate at 1 pixel </figcaption>
+                    <p align="middle">Figure 6: Triangles at sample rate at 1 pixel </p>
+                </div>
+                <div class="col-lg-3 col-sm-6 text-center photos">
                     <img src="./images/part3_4px.png" />
-                    <figcaption align="middle">Figure 7: Triangles at sample rate at 4 pixel</figcaption>
+                    <p align="middle">Figure 7: Triangles at sample rate at 4 pixel</p>
+                </div>
+                <div class="col-lg-3 col-sm-6 text-center photos">
                     <img src="./images/part3_16px.png" />
-                    <figcaption align="middle">Figure 8: Triangles at sample rate at 16 pixel</figcaption>
+                    <p align="middle">Figure 8: Triangles at sample rate at 16 pixel</p>
+                </div>
+                <div class="col-lg-3 col-sm-6 text-center photos">
                     <img src="./images/part3_error.png" />
-                    <figcaption align="middle">Figure 9: Same as Figure 8, but with a gray background due to problem in code</figcaption>
-                    </td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 9: Same as Figure 8, but with a gray background due to problem in code</p>
+                </div>
+            </div>
         </div>
 
     <h2 align="middle">Part 4: Transforms</h2>
        <!--  <p>Describe what you did in Part 4. Show your result here. Explain any bugs you had to work through, with pictures if possible. Describe the new svg file you created, and show the rasterized result. Explain the reasoning behind your use of the transform stack in your new file. If you added any extra features to the GUI, describe them, and depict the result if it is visualizable (e.g. if you add rotation controls).</p> -->
        <p>In part 4, I was able to move the images in the UI around the screen through translation and zoom in and zoom out by scaling. I also implemented translate, scale, and rotation functions using matrices. Since I was working with 2D coordinate spaces, I needed 3x3 matrices to account for homogeneous coordinates. In my examples I created a robot using rectangles. The order I made the robot move actually goes backwards from Figure 14 to Figure 10. For entertainment, I put them in reverse order to make it look like the robot waves then walks towards the screen. From Figure 14 to Figure 13, I translated the right leg up. From 13 to 12 the right leg went back down and the left leg went up then I scaled the whole image down to make him seem farther away. From 12 to 11, I moved the left leg down I grouped up the left arm so that they all move together. I translated that arm to the origin then rotated it 180 degrees so his arm goes up as if he is waving, then I translated it back. However, since the pivot went from the bottom left to the bottom right of the shape, I didnt translate it back to the exact same spot or else it would be too far right. Lastly, 11 to 10, I do the opposite of what I did from 12 to 11, I just took out the translation and rotation from of the arm from 11 and moved the left leg back down. I did these operations to simulate movement, but also to move the whole heirarchy around while moving a group within the heirarchy around.</p>
-        <div align="middle">
-            <table style="width=100%">
-                <tr>
+        <div class="container">
+            <div class="row">
+                
                     <td align="middle">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part4_1.png" />
-                    <figcaption align="middle">Figure 10: Scaled smaller robot. </figcaption>
+                    <p align="middle">Figure 10: Scaled smaller robot. </p>
                     <img src="./images/part4_2.png" />
-                    <figcaption align="middle">Figure 11: Robot's left arm rotated around the origin then moved back over. He says "hi!" </figcaption>
+                    <p align="middle">Figure 11: Robot's left arm rotated around the origin then moved back over. He says "hi!" </p>
                     <img src="./images/part4_3.png" />
-                    <figcaption align="middle">Figure 12: Translation of the left leg up. </figcaption>
+                    <p align="middle">Figure 12: Translation of the left leg up. </p>
                     <img src="./images/part4_4.png" />
-                    <figcaption align="middle">Figure 13: Original size and translation of right leg up. </figcaption>
+                    <p align="middle">Figure 13: Original size and translation of right leg up. </p>
                     <img src="./images/part4_5.png" />
-                    <figcaption align="middle">Figure 14: Original robot. Series of pictures looks like he's stepping towards you. </figcaption>
+                    <p align="middle">Figure 14: Original robot. Series of pictures looks like he's stepping towards you. </p>
                     </td>
                 </tr>
             </table>
@@ -202,15 +210,15 @@
         </p>
         <p>Then I get &#947 and p in svg.cpp as I did in the equations shown above then used p to get a color which was placed on the corresponding (x, y) point I was originally given.
          </p>
-        <div align="middle">
-            <table style="width=100%">
-                <tr>
+        <div class="container">
+            <div class="row">
+                
                     <td align="middle">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part5_tri.png" />
-                    <figcaption align="middle"> Figure 15: A triangle made using barycentric coordinates</figcaption>
+                    <p align="middle"> Figure 15: A triangle made using barycentric coordinates</p>
                     <img src="./images/part5.png" />
-                    <figcaption align="middle"> Figure 16: A color wheel made using barycentric coordinates</figcaption>
+                    <p align="middle"> Figure 16: A color wheel made using barycentric coordinates</p>
                     </td>
                 </tr>
             </table>
@@ -221,15 +229,15 @@
         <!-- <p>Describe what you did in Part 6. Discuss the two different pixel sampling methods. Show a good example from svg/texmap/ of a case where bilinear looks much better than nearest sampling. Talk about when there will be a large difference between the two methods and when the difference will not matter.</p> -->
         <p>In part 6 I applied the nearest pixel and bilinear sampling methods. In the nearest pixel sampling method, I found the nearest pixel by multiplying my u coordinate by the width of the mipmap at a specific level, then added point .5, then got the floor of that number. I added .5 because if the number was closer to the lower number, adding .5 then flooring it would cause it to become the lower number. If it was closer to the higher number, adding .5 would bring a whole number higher, then flooring it would give it the higher number. I then applied that to the v coordinate by multiplying v by the height, adding .5, then flooring it. The reason I multiplied u and v by the width and height is because u and v are both between 0 and 1 because we got them the same way as we got the barycentric coordinates. After that. I found the index in a specific MIP map level and took the color from that index. For bilinear it was a little more complicated. Since I am getting a weighted combination of the four pixels surrounding my uv coordinate, I had to find the distance for each of the pixel in the u and v direction from the point given, multiply 1 minus distance between a pixel in the u direction by 1 minus a pixel in the v direction. Then I multiply 1 minus that number by the color of that given pixel. I do that for each of the 4 pixels surrounding a point, add those together, then I get a color which I return. Drawrend.cpp supplies which sampling method I would be using and svg.cpp uses the &#945, &#946, and &#947 from drawrend.cpp to calculate the uv cooridnates. Those uv coordinates are used in the nearest pixel and bilinear sampling methods. Figure 17 and Figure 18 show the difference between a portion of a map when zoomed into a specific portion. It is obvious that Figure 18 and bilinear sampling provides a much better picture up close. So bilinear sampling should be used in comparison to nearest pixel sampling when given a pixelated photo. The results will turn out like Figure 17 and Figure 18. In photos without many varying colors, where the picture has few changes in color, or has a high sampling rate the nearest versus bilinear sampling won't be relevant because it is more likely that all of a point's surrounding pixels might be the same. So the results would be the same from either version of sampling.
         </p>
-        <div align="middle">
-            <table style="width=100%">
-                <tr>
+        <div class="container">
+            <div class="row">
+                
                     <td align="middle">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part6_n.png" />
-                    <figcaption align="middle"> Figure 17: Nearest pixel sampling of a map zoomed into the Philippines exposes individual pixels</figcaption>
+                    <p align="middle"> Figure 17: Nearest pixel sampling of a map zoomed into the Philippines exposes individual pixels</p>
                     <img src="./images/part6_b.png" />
-                    <figcaption align="middle"> Figure 18: Same map, but since it is with the bilienar sampling method, it is noticeably blurry, but the pixels blend well to create a better picture</figcaption>
+                    <p align="middle"> Figure 18: Same map, but since it is with the bilienar sampling method, it is noticeably blurry, but the pixels blend well to create a better picture</p>
                     </td>
                 </tr>
             </table>
@@ -245,25 +253,25 @@
         <p align="middle"><pre align="middle"> D = log(L)</pre></p>
         <p>where D is our MIP mapping level. So after finding the level, we can now apply that to the bilinear and nearest sample functions. Figure 19, 20, 21, and 22 compare the different filters. Figure 19 and 21 show 0 level MIP mapping and the images are good. However, when changing the MIP mapping level in Figures 20 and 22, the images look much cleaner, but a little blurrier as well. I also created a case for bilinear interpolation of the level. We get the sampling at the current integer level and the level higher. We then add the weighted values of each of the results depending on how far the float value of the level is compared to the current and higher level. It creates trilinear sampling when doing bilinear sampling with bilinear interpolation. An example of that can be seen at Figure 23. I also zoomed into one of the Starcraft units in Figure 24 and 25 to see the difference between sampling up close and the bilinear sampling made the pixelated nearest sampling image much cleaner.
         </p>
-        <div align="middle">
-            <table style="width=100%">
-                <tr>
+        <div class="container">
+            <div class="row">
+                
                     <td align="middle">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part7_0_n.png" />
-                    <figcaption align="middle"> Figure 19: Scene from Starcraft II with level 0 MIP mapping and using nearest pixel sampling </figcaption>
+                    <p align="middle"> Figure 19: Scene from Starcraft II with level 0 MIP mapping and using nearest pixel sampling </p>
                     <img src="./images/part7_l_n.png" />
-                    <figcaption align="middle"> Figure 20: Calculated level MIP mapping using nearest pixel sampling</figcaption>
+                    <p align="middle"> Figure 20: Calculated level MIP mapping using nearest pixel sampling</p>
                     <img src="./images/part7_0_b.png" />
-                    <figcaption align="middle"> Figure 21 Level 0 MIP mapping using a bilinear filtering</figcaption>
+                    <p align="middle"> Figure 21 Level 0 MIP mapping using a bilinear filtering</p>
                     <img src="./images/part7_l_b.png" />
-                    <figcaption align="middle"> Figure 22: Calculated level MIP mapping using a bilinear filtering</figcaption>
+                    <p align="middle"> Figure 22: Calculated level MIP mapping using a bilinear filtering</p>
                     <img src="./images/part7_tri.png" />
-                    <figcaption align="middle"> Figure 23: Calculated level MIP mapping using a trilinear filtering</figcaption>
+                    <p align="middle"> Figure 23: Calculated level MIP mapping using a trilinear filtering</p>
                     <img src="./images/part7_n_zoom.png" />
-                    <figcaption align="middle"> Figure 24: Zoomed nearest pixel sampling</figcaption>
+                    <p align="middle"> Figure 24: Zoomed nearest pixel sampling</p>
                     <img src="./images/part7_b_zoom.png" />
-                    <figcaption align="middle"> Figure 25: Zoomed bilinear filtering</figcaption>
+                    <p align="middle"> Figure 25: Zoomed bilinear filtering</p>
                     </td>
                 </tr>
             </table>
@@ -272,15 +280,15 @@
     <h2 align="middle">Part 8: My drawing</h2>
        <!--  <p>Describe your original drawing and include a picture of it. This part is extremely open ended, and if you decide to devote a lot of time to making an awesome picture, it's worth explaining how you did it!</p> -->
        <p> I created a Stormtrooper from the original Star Wars trilogy based off of a drawing I made of one before which is in Figure 26. However, my Stormtrooper drawing doesnt have symmetry while I wanted my computer creation to have it. The symmetry made it easier because I could just have the left side reflect over the midpoint, 400 pixels, and create a mirror image as you can see in Figure 27. I didn't think of symmetry until after I completed the top of the helmet. That is why I have triangles that cross over the midpoint. Furthermore, the only shape I used was triangles. The overall process took me about 20 hours or so just because I changed my idea about 2 or 3 times and the stormtrooper itself took about 7 or 8 hours. I made sure all the triangles were conencted and there were no holes inside the Stormtrooper.After finishing the stromtrooper, a mainly white and black color looked REALLY BORING. So I made the background black to make the Stormtrooper pop and I made half its face shaded to add a nice lighting effect. If I wasn't way out of time, I would've made the shading much more of a gradient and much more beautiful. BUT OH WELL! I'm pretty happy with the results. It's very gratifying to be able to create art using my self created programs. </p>  
-       <div align="middle">
-            <table style="width=100%">
-                <tr>
+       <div class="container">
+            <div class="row">
+                
                     <td align="middle">
                     <!-- <img src="images/example_image.jpg" width="800px" /> -->
                     <img src="./images/part8_drawing.png" />
-                    <figcaption align="middle"> Figure 26: The inspiration for my competition creation</figcaption>
+                    <p align="middle"> Figure 26: The inspiration for my competition creation</p>
                     <img src="./images/part8_competition.png" />
-                    <figcaption align="middle"> Figure 27: Stormtrooper made out of triangles</figcaption>
+                    <p align="middle"> Figure 27: Stormtrooper made out of triangles</p>
                     </td>
                 </tr>
             </table>
