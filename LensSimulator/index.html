@@ -1,15 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+c<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<style>  
-    div.padded {  
-      padding-top: 0px;  
-      padding-right: 100px;  
-      padding-bottom: 0.25in;  
-      padding-left: 100px;  
-    }  
-  </style> 
-    <title>Vincent Escueta  |  CS 184</title>
+    <title>Vincent Escueta  |  Lens Simulator</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,82 +58,92 @@
 <br/>
 <h1 align="middle">Lens Simulator</h1>
 
-    <div class="padded">
-        <p>After implementing a pinhole camera, global illumination, and refraction and reflection of glass and mirrored objects. This project uses those and implements a camera systems to create depth of focus and field of view. By having lenses in front of the pinhole camera the camera simulation is created. Furthermore, instead of just having to manually focus to get images with an object in focus, autofocus is also implemented to easily get the right sensor depth to create higher quality images.</p> </div>
+        <p>After implementing a pinhole camera, global illumination, and refraction and reflection of glass and mirrored objects. This project uses those and implements a camera systems to create depth of focus and field of view. By having lenses in front of the pinhole camera the camera simulation is created. Furthermore, instead of just having to manually focus to get images with an object in focus, autofocus is also implemented to easily get the right sensor depth to create higher quality images.</p>
 
     <h2 align="middle">Part 1: Tracing</h2>
         <p>From rendering images using a pinhole camera to rendering images using a simulated lens system, there are many differences between the two ways to render images. A pinhole camera just displays the scene with the right lighting, shadows, and meshes. On the other hand, a lens system adds a depth of focus and depth of field which create a slight blur for objects not in focus and a field of view that changes perspective due to a viewing angle. The lens system does this by simply placing glass lenses in front of the camera for light to refract from the scene, into the camera. Figure 1 shows the result of a pinhole camera, Figure 2 shows a blurred scene due to a lens and Figure 3 shows how a fisheye lens can manipulate a photo.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part1_spheres_nolens.png" width="480px" >
-                    <figcaption align="middle">Figure 1: A rendering of spheres using a pinhole camera.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 1: A rendering of spheres using a pinhole camera.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part1_spheres_lens.png" width="480px" >
-                    <figcaption align="middle">Figure 2: A blurred rendering of spheres with a lens.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 2: A blurred rendering of spheres with a lens.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part1_spheres_len4.png" width="480px" >
-                    <figcaption align="middle">Figure 3: An image with using a fisheye lens.</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 3: An image with using a fisheye lens.</p>
+                </div>
+            </div>
         </div>
         <p> To generate the new renderings with lenses, a new way to generate rays had to be implemented to account for the camera lenses. Tracing from the objects, a ray is sent through the lenses and if the ray doesn't pass through all the lenses, the ray is discarded. Otherwise, the place where the ray hits the camera is determined. To implement and see if a ray passes through all the lenses, we use intersect and refract functions. The intersect function just checks if a ray intersects with a lens. The lens are made of spheres, so first there is a check to see if the ray its the given sphere of the lens. However, the lens only makes up a small portion of the sphere. So if there is a intersection with the sphere, it then checks if there is an intersection on the surface where the lens lies. If there is an intersection, the refract function calculates a new refracted ray from the point the old ray hits the lens. The refract function also makes sure that total internal reflection doesn't occur, if it does, the ray is discarded. Afterwords, tracing backwards from the camera to the scene and tracing from the scene to the camera can both be calculated. Figure 4 to Figure 15 show different lenses and rays being traced through them.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens1_ray1.png"/>
-                    <figcaption align="middle">Figure 4: D-GAUSS F/2 22deg HFOV rays traced forward.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 4: D-GAUSS F/2 22deg HFOV rays traced forward.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens1_ray2.png"/>
-                    <figcaption align="middle">Figure 5: D-GAUSS F/2 22deg HFOV rays traced backwords, infinite focus.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 5: D-GAUSS F/2 22deg HFOV rays traced backwords, infinite focus.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens1_ray3.png"/>
-                    <figcaption align="middle">Figure 6: D-GAUSS F/2 22deg HFOV rays traced forward with rays intersecting.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 6: D-GAUSS F/2 22deg HFOV rays traced forward with rays intersecting.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens2_ray1.png"/>
-                    <figcaption align="middle">Figure 7: Wide-angle (38-degree) lens. Nakamura. rays traced forward.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 7: Wide-angle (38-degree) lens. Nakamura. rays traced forward.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens2_ray2.png"/>
-                    <figcaption align="middle">Figure 8: Wide-angle (38-degree) lens. Nakamura. rays traced backwards.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 8: Wide-angle (38-degree) lens. Nakamura. rays traced backwards.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens2_ray3.png"/>
-                    <figcaption align="middle">Figure 9: Wide-angle (38-degree) lens. Nakamura. rays traced forward below z axis.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 9: Wide-angle (38-degree) lens. Nakamura. rays traced forward below z axis.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens3_ray1.png"/>
-                    <figcaption align="middle">Figure 10: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" rays traced backwards.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 10: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" rays traced backwards.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens3_ray2.png"/>
-                    <figcaption align="middle">Figure 11: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 11: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens3_ray3.png"/>
-                    <figcaption align="middle">Figure 12: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 12: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" forward rays.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens4_ray1.png"/>
-                    <figcaption align="middle">Figure 13: Muller 16mm/f4 155.9FOV fisheye lens forward rays intersecting.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 13: Muller 16mm/f4 155.9FOV fisheye lens forward rays intersecting.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens4_ray2.png"/>
-                    <figcaption align="middle">Figure 14: Muller 16mm/f4 155.9FOV fisheye lens backwards rays intersecting.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 14: Muller 16mm/f4 155.9FOV fisheye lens backwards rays intersecting.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_lens4_ray3.png"/>
-                    <figcaption align="middle">Figure 15: Muller 16mm/f4 155.9FOV fisheye lens demonstrating refraction.</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 15: Muller 16mm/f4 155.9FOV fisheye lens demonstrating refraction.</p>
+                </div>
+            </div>
         </div>
         <p>  Since rays can now be traced forwards and backwards, the infinity focus sensor depth, focal length, close focus distance in front of the lens could all be calculated, and close focus sensor depth. To calculate infinity focus, F', a ray is traced from negative infinity in the z axis, placed a little bit above the z axis, epsilon, and goes parallel with the z axis towards the lenses. The ray is traced backwards through the lenses and the point the ray hits the z axis is the infinity focus, F'. Using the infinity focus and the ray used to find the infinity focus, a ray is traced from the place where the last ray hits the last lens and goes the opposite direction of the last ray. When that point hits epsilon above the z axis. We take that points z position, P', and subtract the infinity focus from it. The absolute value of that subtraction gives us the focal length, f.</p>
         <p align="middle"><pre align="middle">f = |P' - F'|</pre></p>
@@ -149,70 +151,71 @@
         <p>The focal length, f, is used to find the close focus distance in front of the lens, C. C is found by finding where the front lens lies on the z axis, d, and performing the following subtraction.</p>
         <p align="middle"><pre align="middle">C = d - (1 + log(f)) * f)</pre></p> 
         <p> Lastly, the close focus is calculated using the close focus distance in front of the lens. It is simply a ray traced from the close focus distance in front of the lens on the z axis that goes diagonally towards the lenses. The point the ray hits the z axis again after being traced backwards is the close focus. Figure 16 show the results of calculations of some camera lenses.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_table.png" />
-                    <figcaption align="middle">Figure 16: Calculations of some camera lenses.</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 16: Calculations of some camera lenses.</p>
+                </div>
+            </div>
         </div>
         <p> Using the infinity focus and close focus the following graphs show 100 sensor depths evenly incremented from infinity focus to close focus demonstrate where a series of rays launched from a particular sensor depth intersect on the other side, the conjugate. Simply Figure 17 to Figure 20 are graphs of sensor depths and their conjugates for particular lenses.</p> 
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part1_Gauss.png" width="1000px">
-                    <figcaption align="middle">Figure 17: D-GAUSS F/2 22deg HFOV /  Some points are (51.2587, -1223480), (52.6039, -1925.48), (53.142, -1388.52), (56.7741, -503.47) (60.5407, -317.08), (64.5763, -234.35)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 17: D-GAUSS F/2 22deg HFOV /  Some points are (51.2587, -1223480), (52.6039, -1925.48), (53.142, -1388.52), (56.7741, -503.47) (60.5407, -317.08), (64.5763, -234.35)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part1_Wide-Angle.png" width="1000px">
-                    <figcaption align="middle">Figure 18: Wide-angle (38-degree) lens. Nakamura. / Some points are (28.7361, -13947.9), (31.0729, -229.471), (33.5072, -126.268), (35.3572, -98.3175) (37.4994, -80.6369), (38.4731, -751624)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 18: Wide-angle (38-degree) lens. Nakamura. / Some points are (28.7361, -13947.9), (31.0729, -229.471), (33.5072, -126.268), (35.3572, -98.3175) (37.4994, -80.6369), (38.4731, -751624)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/part1_SIGLER.png" width="1000px">
-                    <figcaption align="middle">Figure 19: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" / Some points are (188.754, -3.31E+06), (194.503, -11148), (202.866, -4758.76), (210.184, -3255.26) (225.341, -2053.01), (240.499, -1554.85)</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 19: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" / Some points are (188.754, -3.31E+06), (194.503, -11148), (202.866, -4758.76), (210.184, -3255.26) (225.341, -2053.01), (240.499, -1554.85)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/Fish_eye.png" width="1000px">
-                    <figcaption align="middle">Figure 20: Muller 16mm/f4 155.9FOV fisheye lens / Some points are (28.6893, -4700.97), (31.8559, -51.0458), (33.727, -39.525), (36.1739, -33.1267) (40.2041, -28.5056), (42.9388, -26.8565) </figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 20: Muller 16mm/f4 155.9FOV fisheye lens / Some points are (28.6893, -4700.97), (31.8559, -51.0458), (33.727, -39.525), (36.1739, -33.1267) (40.2041, -28.5056), (42.9388, -26.8565) </p>
+                </div>
+            </div>
         </div>
         <p> All the points given in the caption of each graph start with the conjugate at the infinity focus, some random points in the middle, and the last one is the conjugate at the close focus. As seen by the graph and by the numbers, As the sensor drops increment at a constant rate, the congjuate increases at a exponential rate from negative infinity to zero.</p>
 
         <p>Being able to manually adjust the focus and understanding the trend of the position of a sensor point and its conjugate, the following renderings, Figure 21 shows a dragon with a camera with a near focus and Figure 22 shows a coil where the camera's focus is the farther part of the coil. Notice that besides the desired depths that we want to be focused, the rest of the rendering is blurry for both pictures. That is due to the position of the sensor depth to give a depth of focus.</p>
 
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_near_focus_dragon.png" width="480px" >
-                    <figcaption align="middle">Figure 21: A rendering of a dragon with a focus on the right side of its face.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 21: A rendering of a dragon with a focus on the right side of its face.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part1_coil.png" width="480px" >
-                    <figcaption align="middle">Figure 22: A rendering of a coil with a focus towards the end of it.</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 22: A rendering of a coil with a focus towards the end of it.</p>
+                </div>
+            </div>
         </div>
-        <p> EXTRA CREDIT: For generating rays for lens cameras, instead of sending backwards rays for rays that didn't trace all the way through all the lenses and hit the camera, retracing rays until a hit occured was used instead. The amount of rays tried were kept track of. After a ray is traced all the way through, a cos^4 is measured by doing the the ray's direction to the z axis to the 4th power while in camera space.</p><
+        <p> EXTRA CREDIT: For generating rays for lens cameras, instead of sending backwards rays for rays that didn't trace all the way through all the lenses and hit the camera, retracing rays until a hit occured was used instead. The amount of rays tried were kept track of. After a ray is traced all the way through, a cos^4 is measured by doing the the ray's direction to the z axis to the 4th power while in camera space.</p>
         <p align="middle"><pre align="middle"> cos^4 = r.d.z^4   </pre></p>
-        <p>If it took more then 10 tries to trace a ray, the ray's cos^4 term is set to 0. In the pathtracer.cpp file, instead of just adding trace_ray(r,true) while in the ray_trace_pixel() function, it now adds trace_ray(r,true) * cos^4. Then when averaging the number of samples, the average is now divided by the number of rays that actually were able to trace a ray all the way through. Figure 23 shows a quick rendering of a scene with just sending backwards rays during a miss. There was a bug with the back lens sampling during the rendering of this image so the top right has less rays traced there than the bottom left, but the center of each image shows the difference of noise the two ways to deal with missed rays. Figure 24 shows the results after fixing the back lens bug and implementing the extra credit. There is a less noticeable amount of black noise on Figure 24 compared to Figure 23.</p><
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <p>If it took more then 10 tries to trace a ray, the ray's cos^4 term is set to 0. In the pathtracer.cpp file, instead of just adding trace_ray(r,true) while in the ray_trace_pixel() function, it now adds trace_ray(r,true) * cos^4. Then when averaging the number of samples, the average is now divided by the number of rays that actually were able to trace a ray all the way through. Figure 23 shows a quick rendering of a scene with just sending backwards rays during a miss. There was a bug with the back lens sampling during the rendering of this image so the top right has less rays traced there than the bottom left, but the center of each image shows the difference of noise the two ways to deal with missed rays. Figure 24 shows the results after fixing the back lens bug and implementing the extra credit. There is a less noticeable amount of black noise on Figure 24 compared to Figure 23.</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/bunny_before_tricky.png" width="480px" >
-                    <figcaption align="middle">Figure 23: Discarding rays if missed, no extra tries.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 23: Discarding rays if missed, no extra tries.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/bunny_after_tricky_no_bugs.png" width="480px" >
-                    <figcaption align="middle">Figure 24: After implementing extra credit.</figcaption></td>
-                </tr>
-            </table><
+                    <p align="middle">Figure 24: After implementing extra credit.</p>
+                </div>
+            </div>
         </div>
 
     <h2 align="middle">Part 2: Lens and LensCamera helper functions</h2>
@@ -229,48 +232,49 @@
         <p> 36 and 24 are the dimensions of the sensor and screenW and screenH are the dimensions of the screen dimensions. The square root of the dimensions is the diagonal. The division is to translate what 1 pixel size from the screen would calculate to 1 pixel on the sensor plane. zi / A is just the f number. For the most part, the f number is 2, so the constant, d, incrementing the sensor depth from infinity focus to close focus will just be</p>
          <p align="middle"><pre align="middle"> d = 2 * sqrt(36*36 + 24*24) / sqrt(screenW*screenW + screenH*screenH)</pre></p>
          <p> The focus metric is measured for a rendering at each sensor depth and the highest focus metric and its corresponding sensor depth are stored. Once all the sensor depths are incremented through, the lens' sensor depth will move to the stored sensor depth with the highest focus metric. Note that when comparing renderings with different sensor depths, only a selected, small section that contains the object wanted to be in focus and the background should be used to calculate variance. Figure 25 shows a bunny before autofocusing and Figure 26 shows after autofocus is used.</p>
-         <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+         <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_bunny1.png" width="480px" >
-                    <figcaption align="middle">Figure 25: Bunny before autofocus.</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 25: Bunny before autofocus.</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_bunny2.png" width="480px" >
-                    <figcaption align="middle">Figure 26: Bunny after autofocus.</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 26: Bunny after autofocus.</p>
+                </div>
+            </div>
         </div>
         <p>To get the autofocus to create Figure 26, Figure 27 below shows the sensor depths that were tested and the focus metric corresponding to each sensor depth.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="images/Focus_metric.png" width="1000px">
-                    <figcaption align="middle">Figure 27: Sensor depths tested in autofocus function / Some points are (51.2587, 408.701), (53.0587, 977.744), (53.8087, 1306.53), (54.4087, 1416.44) (55.1587, 1067.81), (57.1087, 487.911) (64.6087, 105.209)</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 27: Sensor depths tested in autofocus function / Some points are (51.2587, 408.701), (53.0587, 977.744), (53.8087, 1306.53), (54.4087, 1416.44) (55.1587, 1067.81), (57.1087, 487.911) (64.6087, 105.209)</p>
+                </div>
+            </div>
         </div>
          <p>The final results after implementing tracing through camera lenses and implementing autofocus give the results shown in Figure 28 to Figure 31. The captions show the lens used. Figure 28 focuses on the back of the dragon, Figure 29 focuses on the whole dragon, Figure 30 focuses on the front of the dragon, and Figure 31 focuses on the dragon as a whole, but it is more focused at the mouth of the dragon.</p>
-        <div align="center">
-            <table style="width=100%">
-                <tr>
-                    <td align="middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_dragon_lens1.png"/>
-                    <figcaption align="middle">Figure 28: D-GAUSS F/2 22deg HFOV</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 28: D-GAUSS F/2 22deg HFOV</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_dragon_lens2.png"/>
-                    <figcaption align="middle">Figure 29: Wide-angle (38-degree) lens. Nakamura.</figcaption></td>
-                </tr>
-                <tr>
-                    <td align="middle">
+                    <p align="middle">Figure 29: Wide-angle (38-degree) lens. Nakamura.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_dragon_lens3.png"/>
-                    <figcaption align="middle">Figure 30: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" lens</figcaption></td>
-                    <td align="middle">
+                    <p align="middle">Figure 30: SIGLER Super achromate telephoto, EFL=254mm, F/5.6" lens</p>
+                </div>
+                <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="images/part2_dragon_lens4.png"/>
-                    <figcaption align="middle">Figure 31: Muller 16mm/f4 155.9FOV fisheye lens</figcaption></td>
-                </tr>
-            </table>
+                    <p align="middle">Figure 31: Muller 16mm/f4 155.9FOV fisheye lens</p>
+                </div>
+            </div>
         </div>
 </section>
 <section class="bg" id="resume">
