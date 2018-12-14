@@ -57,8 +57,6 @@
 <section class="bg">
 <h1 align="middle">Image Warping and Mosaicing</h1>
     
-
-    
     <h2 align="middle">Homographies</h2>
     <p> To warp images, we must first create the homography matrix, H, by recovering 8 unknown entries of the 3x3 matrix. We can find the 8 unknowns, h, by having 4 points to sample from the source image and 4 corresponding points from the warped image. These 4 sets of points are plugged into a matrix A and a set of points, b, to use least-squares to get h. Then having h, we can form H.</p>
     <div class="container ">
