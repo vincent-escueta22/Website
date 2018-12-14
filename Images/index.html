@@ -63,10 +63,7 @@
 
     <h2 align="middle"> Results for all images </h2>
     <div class="row">
-      <div class="col-lg-2 col-sm-2">
-         <a class="prev hvr-grow" onclick="plusSlides(-1)">&#10094;</a>
-        </div>
-      <div class="col-lg-8 col-sm-2 text-center photos">
+      <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
         <div class="slideshow-container">
          <div class="slide">
                     <img src="img/emirEdgeColored.jpg"  >
@@ -140,12 +137,11 @@
                     <img src="img/settlersEdgeColored.jpg"  >
                     <p align="middle">canny edge filter settlers.jpg: R:[14 -1] G:[7 0] TIME:0.621767044067</p>
         </div>
-    </div>
-    </div>
-        <div class="col-lg-2 col-sm-2">
+         <a class="prev hvr-grow" onclick="plusSlides(-1)">&#10094;</a>
          <a class="next hvr-grow" onclick="plusSlides(1)">&#10095;</a>
-        </div>
     </div>
+    </div>
+
 
 
     <h2 align="middle">Normalized Cross Correlation (NCC)</h2>
@@ -155,11 +151,13 @@
         <p>However, a lot of images didn't produce good photos. This is because the intensities at pixels of two different colors that are of the same part of the scene may be drastically different. To account for that, I only correlated the middle 50% of the photographs because I assumed the main parts of the picture that would help provide the best correlation would be in the middle 50% of the images.</p>
         <p>Below are a few examples of the images produced using NCC. The left images(odd Figures) are results when doing NCC on the whole the whole image. The right images(even Figures) are results when doing NCC in the middle 50% of the images. Figure 0 is the original set of images that we are aligning that become Figure 1 and Figure 2.</p>
         <div class="container">
+            <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="img/monastery.jpg"  >
                     <p align="middle">Figure 0: Blue, green, and red filtered images</p>
                     </div>
                 </div>
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/monasteryBasicColored.jpg"  >
                     <p align="middle">Figure 1: all pixels of monastery.jpg: R:[8 1] G:[-6  0] TIME:0.565473079681</p>
@@ -169,6 +167,7 @@
                     <p align="middle">Figure 2: middle 50% of pixels monastery.jpg: R:[2 2] G:[-3  2] TIME:0.41522693634</p>
                     </div>
                 </div>
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/nativityBasicColored.jpg"  >
                     <p align="middle">Figure 3: all pixels of nativity.jpg: R:[7 1] G:[4 1] TIME:0.594136953354</p>
@@ -178,6 +177,7 @@
                     <p align="middle">Figure 4: middle 50% of pixels nativity.jpg: R:[8 0] G:[3 1] TIME:0.450391054153</p>
                     </div>
                 </div>
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/settlersBasicColored.jpg"  >
                     <p align="middle">Figure 5: all pixels of settlers.jpg: R:[14 -1] G:[7 0] TIME:0.823676109314</p>
@@ -193,6 +193,7 @@
         <p>To decrease the amount of time it takes to align and color the photos, we used the image pyramid. The way it works is that we continually rescaled an image down by half until rescaling the image down by half would mean that it's height would be less than 128. We then aligned and colored the image using NCC. Once we got a displacement, (x, y), we rescaled the image upward by doubling the size of the current image and did NCC with a displacement range of [(x-2, x+2), (y-2, y+2)]. We repeat this until we align and color the original sized image.</p>
         <p>The following shows the time difference between the basic scanning of the images versus using the Image Pyramid algorithm.</p>
         <div class="container">
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/cathedralTimeColored.jpg" >
                     <p align="middle">Figure 7: Naive cathedral.jpg: R:[12  3] G:[5 2] TIME:2.9832880497.</p>
@@ -202,6 +203,7 @@
                     <p align="middle">Figure 8: Image Pyramid cathedral.jpg: R:[12  3] G:[5 2] TIME:0.675570011139.</p>
                     </div>
                 </div>
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/iconTimeColored.jpg" >
                     <p align="middle">Figure 9: Naive icon.tif: R:[15 12] G:[15 14] TIME:316.376515865.</p>
@@ -216,6 +218,7 @@
             <p>The following are the larger images that used the Image Pyramid algorithm. </p>
 
         <div class="container">
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/self_portraitNaiveColored.jpg"  >
                     <p align="middle">Figure 1: middle 50% of pixels self_portrait.tif: R:[175  37] G:[78 29] TIME:13.4188771248</p>
@@ -225,6 +228,7 @@
                     <p align="middle">Figure 12: middle 50% of pixels of three_generations.tif: R:[110  12] G:[52 14] TIME:14.5100548267</p>
                     </div>
                 </div>
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/turkmenNaiveColored.jpg"  >
                     <p align="middle">Figure 13: middle 50% of pixels turkmen.tif: R:[116  28] G:[55 21] TIME:13.3178520203</p>
@@ -238,6 +242,7 @@
         <h2 align="middle">Edge Detection</h2>
         <p>Although all the images that were produced after the image pyramid were good, there were still some exceptions when using pixel intensity to align images that would produce bad results such as in Figure 29. To fix this, instead of doing NCC on raw pixels and pixel intensity, applying the canny edge filter allowed for the best results for all images. The canny edge filter was applied on each image used for calcuating NCC. Figure 29 shows NCC when looking at all the pixels, Figure 30 shows the aligning becoming worse after applying the Image Pyramid algorithm, and Figure 31 shows the alignment becoming perfect after applying the canny edge filter. The runtime increased significantly, but the results were much better</p>
         <div class="container">
+            <div class="row">
                     <div class="col-lg-6 col-sm-6 text-center photos">
                     <img src="img/emirBasicColored.jpg"  >
                     <p align="middle">Figure 15: all pixels of emir.tif: R:[107  17] G:[-3  7] TIME:14.2561810017</p>
@@ -247,6 +252,7 @@
                     <p align="middle">Figure 16: middle 50% of pixels emir.tif: R:[ 258 -213] G:[48 24] TIME:13.4975399971</p>
                     </div>
                 </div>
+            <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-sm-6 text-center photos">
                     <img src="img/emirEdgeColored.jpg"  >
                     <p align="middle">Figure 17: canny edge filter emir.tif: R:[106  41] G:[49 23] TIME:26.2144749165</p>
